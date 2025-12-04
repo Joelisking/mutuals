@@ -3,11 +3,14 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useCart } from '@/lib/context/cart-context';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { totalItems } = useCart();
+  const pathname = usePathname();
+  const isShopPage = pathname?.startsWith('/shop');
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[rgba(5,5,7,0.8)] backdrop-blur-xl border-b border-[rgba(255,255,255,0.08)]">
@@ -57,27 +60,27 @@ export default function Navbar() {
 
           {/* CTA Button + Cart (Desktop) */}
           <div className="hidden md:flex items-center gap-4">
-            <Link
-              href="/shop/cart"
-              className="relative p-2 text-[rgba(255,255,255,0.7)] hover:text-white transition-colors">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
-              {totalItems > 0 && (
+            {!isShopPage && totalItems > 0 && (
+              <Link
+                href="/shop/cart"
+                className="relative p-2 text-[rgba(255,255,255,0.7)] hover:text-white transition-colors">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
                 <span className="absolute -top-1 -right-1 bg-[#1ecbe1] text-[#050507] text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
                   {totalItems}
                 </span>
-              )}
-            </Link>
+              </Link>
+            )}
             <button className="bg-white hover:bg-[rgba(255,255,255,0.9)] transition-all rounded-sm px-5 py-2.5 text-[13px] text-[#050507] uppercase tracking-[0.12em] font-medium">
               Subscribe
             </button>
@@ -120,7 +123,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-[rgba(255,255,255,0.08)] py-6 space-y-4">
+          <div className="md:hidden border-t border-[rgba(255,255,255,0.08)] py-6 space-y-4 px-4">
             <Link
               href="/editorial"
               className="block text-[13px] text-[rgba(255,255,255,0.7)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
@@ -146,23 +149,25 @@ export default function Navbar() {
               className="block text-[13px] text-[rgba(255,255,255,0.7)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
               Shop
             </Link>
-            <Link
-              href="/shop/cart"
-              className="flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.7)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={1.5}
-                  d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
-                />
-              </svg>
-              Cart {totalItems > 0 && `(${totalItems})`}
-            </Link>
+            {!isShopPage && totalItems > 0 && (
+              <Link
+                href="/shop/cart"
+                className="flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.7)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+                  />
+                </svg>
+                Cart ({totalItems})
+              </Link>
+            )}
             <button className="w-full bg-white hover:bg-[rgba(255,255,255,0.9)] transition-all rounded-sm px-5 py-2.5 text-[13px] text-[#050507] uppercase tracking-[0.12em] font-medium mt-4">
               Subscribe
             </button>

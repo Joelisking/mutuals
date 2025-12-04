@@ -24,56 +24,67 @@ export function PlaylistCarousel({
         </h2>
       )}
 
-      {/* Stacked Layout - All 3 visible with middle prominent */}
-      <div className="relative flex items-center justify-center gap-0 mt-12">
-        {playlists.map((playlist, index) => {
-          const isMiddle = index === 1;
-          const isHovered = hoveredIndex === index;
+      {/* Mobile: Single Column Grid */}
+      <div className="block md:hidden mt-8 space-y-6">
+        {playlists.map((playlist, index) => (
+          <div key={index} className="w-full">
+            <PlaylistCard playlist={playlist} />
+          </div>
+        ))}
+      </div>
 
-          // Z-index logic: middle is on top by default, but hovered items go to front
-          const zIndex = isHovered ? 30 : isMiddle ? 20 : 10;
+      {/* Desktop: Stacked Layout - All 3 visible with middle prominent */}
+      <div className="hidden md:block relative mt-12">
+        <div className="relative flex items-center justify-center gap-0">
+          {playlists.map((playlist, index) => {
+            const isMiddle = index === 1;
+            const isHovered = hoveredIndex === index;
 
-          // Scale and positioning
-          const getTransform = () => {
-            if (index === 0) {
-              // Left playlist - extends to left edge
-              return isHovered
-                ? 'translateX(-5%) scale(1.05)'
-                : 'translateX(0%)';
-            } else if (index === 2) {
-              // Right playlist - extends to right edge
-              return isHovered
-                ? 'translateX(5%) scale(1.05)'
-                : 'translateX(0%)';
-            }
-            // Middle playlist
-            return isHovered ? 'scale(1.05)' : 'scale(1)';
-          };
+            // Z-index logic: middle is on top by default, but hovered items go to front
+            const zIndex = isHovered ? 30 : isMiddle ? 20 : 10;
 
-          return (
-            <div
-              key={index}
-              className="transition-all duration-500 ease-out"
-              style={{
-                position: index === 1 ? 'relative' : 'absolute',
-                left:
-                  index === 0
-                    ? '0'
-                    : index === 2
-                    ? 'auto'
-                    : undefined,
-                right: index === 2 ? '0' : undefined,
-                zIndex,
-                transform: getTransform(),
-                width: '40%',
-                maxWidth: '600px',
-              }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}>
-              <PlaylistCard playlist={playlist} />
-            </div>
-          );
-        })}
+            // Scale and positioning
+            const getTransform = () => {
+              if (index === 0) {
+                // Left playlist - extends to left edge
+                return isHovered
+                  ? 'translateX(-5%) scale(1.05)'
+                  : 'translateX(0%)';
+              } else if (index === 2) {
+                // Right playlist - extends to right edge
+                return isHovered
+                  ? 'translateX(5%) scale(1.05)'
+                  : 'translateX(0%)';
+              }
+              // Middle playlist
+              return isHovered ? 'scale(1.05)' : 'scale(1)';
+            };
+
+            return (
+              <div
+                key={index}
+                className="transition-all duration-500 ease-out"
+                style={{
+                  position: index === 1 ? 'relative' : 'absolute',
+                  left:
+                    index === 0
+                      ? '0'
+                      : index === 2
+                      ? 'auto'
+                      : undefined,
+                  right: index === 2 ? '0' : undefined,
+                  zIndex,
+                  transform: getTransform(),
+                  width: '40%',
+                  maxWidth: '600px',
+                }}
+                onMouseEnter={() => setHoveredIndex(index)}
+                onMouseLeave={() => setHoveredIndex(null)}>
+                <PlaylistCard playlist={playlist} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

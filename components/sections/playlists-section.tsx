@@ -14,7 +14,7 @@ export default function PlaylistsSection() {
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Playlists Header */}
         <div className="mb-3">
-          <div className="flex items-end justify-between mb-6">
+          <div className="flex items-end justify-between">
             <div>
               <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-1">
                 Playlists
@@ -28,7 +28,7 @@ export default function PlaylistsSection() {
         </div>
 
         {/* Stream on All Platforms CTA */}
-        <div className="mt-8 bg-linear-to-r from-[#1ecbe1]/10 via-[#e91e8c]/10 to-[#ff6b35]/10 border border-[rgba(255,255,255,0.08)] rounded-[4px] px-8 md:px-12 py-10 md:py-14">
+        <div className="bg-linear-to-r from-[#1ecbe1]/10 via-[#e91e8c]/10 to-[#ff6b35]/10 border border-[rgba(255,255,255,0.08)] rounded-[4px] px-8 md:px-12 py-10 md:py-14">
           <div className="text-center mb-8">
             <h3 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-2">
               Stream on All Platforms
@@ -43,8 +43,7 @@ export default function PlaylistsSection() {
             <a
               href="#"
               className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on Spotify"
-            >
+              aria-label="Listen on Spotify">
               <Image
                 src="/spotify.png"
                 alt="Spotify"
@@ -56,8 +55,7 @@ export default function PlaylistsSection() {
             <a
               href="#"
               className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on Apple Music"
-            >
+              aria-label="Listen on Apple Music">
               <Image
                 src="/apple.png"
                 alt="Apple Music"
@@ -69,8 +67,7 @@ export default function PlaylistsSection() {
             <a
               href="#"
               className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on YouTube Music"
-            >
+              aria-label="Listen on YouTube Music">
               <Image
                 src="/yt-music.png"
                 alt="YouTube Music"
@@ -82,8 +79,7 @@ export default function PlaylistsSection() {
             <a
               href="#"
               className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on SoundCloud"
-            >
+              aria-label="Listen on SoundCloud">
               <Image
                 src="/soundcloud.png"
                 alt="SoundCloud"

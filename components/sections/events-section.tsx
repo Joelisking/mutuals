@@ -7,14 +7,15 @@ export default function EventsSection() {
     <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
-        <div className="mb-12 md:mb-16">
+        <div>
           <div className="flex items-end justify-between mb-3">
             <div>
-              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-1">
+              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium">
                 Events
               </h2>
               <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
-                Experience culture in real time. Join us at our upcoming events.
+                Experience culture in real time. Join us at our
+                upcoming events.
               </p>
             </div>
             <Link
@@ -73,7 +74,7 @@ export default function EventsSection() {
                   </div>
 
                   {/* Status Badge - top right, only if sold out */}
-                  {event.status === "Sold Out" && (
+                  {event.status === 'Sold Out' && (
                     <div className="absolute top-3 right-3">
                       <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-red-600 px-2.5 py-1 rounded-[2px]">
                         Sold Out
@@ -89,7 +90,9 @@ export default function EventsSection() {
                     <span className="text-[10px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">
                       {event.date}
                     </span>
-                    <span className="text-[rgba(255,255,255,0.3)] text-[10px]">•</span>
+                    <span className="text-[rgba(255,255,255,0.3)] text-[10px]">
+                      •
+                    </span>
                     <span className="text-[10px] text-[rgba(255,255,255,0.4)] font-light">
                       {event.location}
                     </span>
@@ -103,10 +106,15 @@ export default function EventsSection() {
                   {/* Button */}
                   <div className="pt-3 border-t border-[rgba(255,255,255,0.06)] mt-auto">
                     <button
-                      className={`${event.status === "Sold Out" ? "bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] opacity-50 cursor-not-allowed text-white" : "bg-white hover:bg-[rgba(255,255,255,0.9)] text-[#050507]"} transition-all rounded-sm px-4 py-2.5 text-[11px] uppercase tracking-[0.12em] font-medium w-full`}
-                      disabled={event.status === "Sold Out"}
-                    >
-                      {event.status === "Sold Out" ? "Sold Out" : "Get Tickets"}
+                      className={`${
+                        event.status === 'Sold Out'
+                          ? 'bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] opacity-50 cursor-not-allowed text-white'
+                          : 'bg-white hover:bg-[rgba(255,255,255,0.9)] text-[#050507]'
+                      } transition-all rounded-sm px-4 py-2.5 text-[11px] uppercase tracking-[0.12em] font-medium w-full`}
+                      disabled={event.status === 'Sold Out'}>
+                      {event.status === 'Sold Out'
+                        ? 'Sold Out'
+                        : 'Get Tickets'}
                     </button>
                   </div>
                 </div>
