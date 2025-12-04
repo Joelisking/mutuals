@@ -1,0 +1,48 @@
+"use client";
+
+import { selectProfiles } from '@/lib/data/select-data';
+import { SelectCarousel } from '@/components/select/select-carousel';
+import Link from 'next/link';
+
+export default function SelectSection() {
+  return (
+    <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
+      <div className="max-w-[1440px] mx-auto">
+        {/* Header */}
+        <div className="mb-12 md:mb-16">
+          <div className="flex items-end justify-between mb-6">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium">
+                  SELECT
+                </h2>
+                <span className="text-[24px] md:text-[32px] lg:text-[38px] text-[#1ecbe1] tracking-[-0.02em] font-medium">
+                  +
+                </span>
+              </div>
+              <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
+                Spotlighting exceptional individuals shaping culture across the diaspora
+              </p>
+            </div>
+            <Link
+              href="/select"
+              className="hidden md:inline-flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.6)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium"
+            >
+              View All
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
+                <path d="M3.33333 8H12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+                <path d="M8 3.33333L12.6667 8L8 12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+              </svg>
+            </Link>
+          </div>
+        </div>
+
+        {/* Carousel - 4+ cards visible on desktop with episode numbering */}
+        <SelectCarousel
+          profiles={selectProfiles.slice(0, 8)}
+          showEpisodeNumbers={true}
+        />
+      </div>
+    </section>
+  );
+}
