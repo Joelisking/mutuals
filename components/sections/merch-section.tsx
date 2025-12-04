@@ -19,36 +19,56 @@ export default function MerchSection() {
           </p>
         </div>
 
-        {/* Merch Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+        {/* Merch Grid - Matching carousel card style */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-16">
           {merchItems.map((item, index) => (
-            <div key={index} className="bg-[#050507] rounded-none md:rounded-[4px] overflow-hidden border border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] transition-all group">
-              <div className="relative overflow-hidden">
-                <img src={item.image} alt={item.name} className="w-full aspect-square object-cover group-hover:scale-105 transition-transform duration-700" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050507] via-transparent to-transparent opacity-40" />
-                <button className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                  <div className="bg-white hover:bg-[rgba(255,255,255,0.95)] transition-colors rounded-sm px-5 py-2.5 flex items-center gap-2">
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                      <circle cx="6" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
-                      <circle cx="13" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
-                      <path d="M1 1h2l2.68 7.39a1 1 0 00.95.68h6.74a1 1 0 00.95-.68L16 4H4" stroke="#050507" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
-                    <span className="text-[12px] text-[#050507] uppercase tracking-[0.12em] font-medium">Add to Cart</span>
+            <button key={index} className="group block text-left">
+              <div className="flex flex-col h-full">
+                {/* Image Container - Reduced visual weight */}
+                <div className="relative aspect-square overflow-hidden rounded-[2px] mb-4">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+
+                  {/* Subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[rgba(0,0,0,0.4)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Tag badge - minimal styling */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+                      {item.tag}
+                    </span>
                   </div>
-                </button>
-                <div className="absolute top-4 right-4 bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] rounded-sm px-2.5 py-1">
-                  <span className="text-[11px] text-white uppercase tracking-[0.12em] font-medium">{item.tag}</span>
+
+                  {/* Add to Cart button - appears on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="bg-white hover:bg-[rgba(255,255,255,0.95)] transition-colors rounded-sm px-5 py-2.5 flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
+                        <circle cx="6" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
+                        <circle cx="13" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
+                        <path d="M1 1h2l2.68 7.39a1 1 0 00.95.68h6.74a1 1 0 00.95-.68L16 4H4" stroke="#050507" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span className="text-[12px] text-[#050507] uppercase tracking-[0.12em] font-medium">Add to Cart</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content - Typography-led structure */}
+                <div className="flex flex-col flex-1">
+                  {/* Product Name */}
+                  <h4 className="text-[18px] md:text-[20px] text-white tracking-[-0.01em] font-medium mb-2 leading-tight group-hover:text-[#1ecbe1] transition-colors">
+                    {item.name}
+                  </h4>
+
+                  {/* Price */}
+                  <p className="text-[15px] text-[rgba(255,255,255,0.7)] font-light">
+                    {item.price}
+                  </p>
                 </div>
               </div>
-              <div className="p-5">
-                <h4 className="text-[16px] md:text-[18px] text-white tracking-[-0.01em] font-medium mb-1">
-                  {item.name}
-                </h4>
-                <p className="text-[15px] text-[rgba(255,255,255,0.7)] font-light">
-                  {item.price}
-                </p>
-              </div>
-            </div>
+            </button>
           ))}
         </div>
 

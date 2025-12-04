@@ -67,11 +67,6 @@ function SelectCard({
 }: SelectCardProps) {
   const [isHovered, setIsHovered] = useState(false);
 
-  // Format episode number (e.g., 1 -> "001")
-  const formatEpisodeNumber = (num: number) => {
-    return num.toString().padStart(3, '0');
-  };
-
   return (
     <Link
       href={`/select/${profile.slug}`}
@@ -106,14 +101,9 @@ function SelectCard({
           {/* Episode Number Badge - SELECT+ branding */}
           {showEpisodeNumber && profile.episodeNumber && (
             <div className="absolute top-3 left-3">
-              <div className="flex items-baseline gap-1.5">
-                <span className="text-[11px] text-[#1ecbe1] uppercase tracking-[0.15em] font-bold">
-                  SELECT+ EP.
-                </span>
-                <span className="text-[16px] text-white font-bold tracking-tight">
-                  {formatEpisodeNumber(profile.episodeNumber)}
-                </span>
-              </div>
+              <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+                EP {profile.episodeNumber.toString().padStart(2, '0')}
+              </span>
             </div>
           )}
 

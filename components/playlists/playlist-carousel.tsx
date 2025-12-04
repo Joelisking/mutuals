@@ -12,18 +12,20 @@ export function PlaylistCarousel({
   playlists,
   title,
 }: PlaylistCarouselProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(
+    null
+  );
 
   return (
     <div className="w-full">
       {title && (
-        <h2 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-8">
+        <h2 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-3">
           {title}
         </h2>
       )}
 
       {/* Stacked Layout - All 3 visible with middle prominent */}
-      <div className="relative flex items-center justify-center gap-0 px-4 md:px-8">
+      <div className="relative flex items-center justify-center gap-0 mt-12">
         {playlists.map((playlist, index) => {
           const isMiddle = index === 1;
           const isHovered = hoveredIndex === index;
@@ -34,11 +36,15 @@ export function PlaylistCarousel({
           // Scale and positioning
           const getTransform = () => {
             if (index === 0) {
-              // Left playlist
-              return isHovered ? 'translateX(10%) scale(1.05)' : 'translateX(20%)';
+              // Left playlist - extends to left edge
+              return isHovered
+                ? 'translateX(-5%) scale(1.05)'
+                : 'translateX(0%)';
             } else if (index === 2) {
-              // Right playlist
-              return isHovered ? 'translateX(-10%) scale(1.05)' : 'translateX(-20%)';
+              // Right playlist - extends to right edge
+              return isHovered
+                ? 'translateX(5%) scale(1.05)'
+                : 'translateX(0%)';
             }
             // Middle playlist
             return isHovered ? 'scale(1.05)' : 'scale(1)';
@@ -50,16 +56,20 @@ export function PlaylistCarousel({
               className="transition-all duration-500 ease-out"
               style={{
                 position: index === 1 ? 'relative' : 'absolute',
-                left: index === 0 ? '0' : index === 2 ? 'auto' : undefined,
+                left:
+                  index === 0
+                    ? '0'
+                    : index === 2
+                    ? 'auto'
+                    : undefined,
                 right: index === 2 ? '0' : undefined,
                 zIndex,
                 transform: getTransform(),
-                width: '45%',
-                maxWidth: '660px',
+                width: '40%',
+                maxWidth: '600px',
               }}
               onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-            >
+              onMouseLeave={() => setHoveredIndex(null)}>
               <PlaylistCard playlist={playlist} />
             </div>
           );

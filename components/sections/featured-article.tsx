@@ -2,29 +2,21 @@ export default function FeaturedArticle() {
   return (
     <section className="bg-[#050507] py-16 md:py-24 lg:py-32 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1440px] mx-auto">
-        <div
-          className="relative rounded-none md:rounded-[4px] overflow-hidden border border-[rgba(255,255,255,0.08)] group hover:border-[rgba(255,255,255,0.15)] transition-all h-[600px] md:h-[700px] lg:h-[800px]"
-          style={{
-            backgroundImage: `url(/assets/featured-afrobeats.png)`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}>
-          {/* Animated background scale on hover */}
+        <div className="relative rounded-none md:rounded-[4px] overflow-hidden border border-[rgba(255,255,255,0.08)] group transition-all h-[600px] md:h-[700px] lg:h-[800px]">
+          {/* Background image layer */}
           <div
-            className="absolute inset-0 transition-transform duration-700 group-hover:scale-105"
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
             style={{
               backgroundImage: `url(/assets/featured-afrobeats.png)`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
             }}
           />
 
-          {/* Dramatic gradient overlay */}
-          <div className="absolute inset-0 bg-linear-to-t from-[#050507] via-[rgba(5,5,7,0.75)] to-[rgba(5,5,7,0.3)]" />
+          {/* Dark overlay - positioned above the background */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/60 to-black/30" />
 
           {/* Noise texture overlay for depth */}
           <div
-            className="absolute inset-0 opacity-[0.03] mix-blend-overlay"
+            className="absolute inset-0 opacity-[0.03] mix-blend-overlay pointer-events-none"
             style={{
               backgroundImage:
                 "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' /%3E%3C/svg%3E\")",

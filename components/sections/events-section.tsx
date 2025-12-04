@@ -1,4 +1,5 @@
 import { events } from '@/lib/data/events-data';
+import Link from 'next/link';
 import Image from 'next/image';
 
 export default function EventsSection() {
@@ -7,76 +8,110 @@ export default function EventsSection() {
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
         <div className="mb-12 md:mb-16">
-          <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-3">
-            Events
-          </h2>
-          <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
-            Experience culture in real time. Join us at our upcoming events.
-          </p>
+          <div className="flex items-end justify-between mb-3">
+            <div>
+              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-1">
+                Events
+              </h2>
+              <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
+                Experience culture in real time. Join us at our upcoming events.
+              </p>
+            </div>
+            <Link
+              href="/events"
+              className="hidden md:inline-flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.6)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
+              View All
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 16 16">
+                <path
+                  d="M3.33333 8H12.6667"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M8 3.33333L12.6667 8L8 12.6667"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
 
-        {/* Events List */}
-        <div className="space-y-6">
-          {events.map((event, index) => (
-            <div key={index} className="bg-[#0a0a0f] rounded-none md:rounded-[4px] overflow-hidden border border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] transition-all">
-              <div className="flex flex-col lg:flex-row">
-                <div className="relative w-full lg:w-[45%] h-[300px] lg:h-auto overflow-hidden">
-                  <img src={event.image} alt={event.title} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-b lg:bg-gradient-to-r from-transparent to-[#0a0a0f]/80" />
-                  <div className="absolute top-5 left-5 flex flex-wrap gap-2">
-                    <div className={`${event.status === "Sold Out" ? "bg-red-600" : "bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)]"} rounded-sm px-3 py-1.5`}>
-                      <span className="text-[11px] text-white uppercase tracking-[0.12em] font-medium">{event.status}</span>
-                    </div>
+        {/* Events Grid - 4 columns, 8 events */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-8">
+          {events.slice(0, 8).map((event, index) => (
+            <Link
+              key={index}
+              href={`/events/${index + 1}`}
+              className="group block">
+              <div className="flex flex-col h-full">
+                {/* Image Container - Portrait aspect ratio */}
+                <div className="relative aspect-3/4 overflow-hidden rounded-[2px] mb-4">
+                  <Image
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    width={600}
+                    height={800}
+                  />
+
+                  {/* Subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-linear-to-t from-[rgba(0,0,0,0.4)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Type Badge - top left */}
+                  <div className="absolute top-3 left-3">
+                    <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+                      {event.type}
+                    </span>
                   </div>
-                  <div className="absolute bottom-5 left-5">
-                    <div className="bg-[rgba(0,0,0,0.5)] backdrop-blur-sm border border-[rgba(255,255,255,0.15)] rounded-sm px-3 py-1.5">
-                      <span className="text-[11px] text-white uppercase tracking-[0.12em] font-medium">{event.type}</span>
+
+                  {/* Status Badge - top right, only if sold out */}
+                  {event.status === "Sold Out" && (
+                    <div className="absolute top-3 right-3">
+                      <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-red-600 px-2.5 py-1 rounded-[2px]">
+                        Sold Out
+                      </span>
                     </div>
-                  </div>
+                  )}
                 </div>
-                <div className="w-full lg:w-[55%] p-8 md:p-10 lg:p-12 flex flex-col justify-center">
-                  <h3 className="text-[28px] md:text-[32px] lg:text-[36px] text-white tracking-[-0.02em] font-medium mb-8">
+
+                {/* Content - Separated from image */}
+                <div className="flex flex-col flex-1">
+                  {/* Date and Location - subtle */}
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[10px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">
+                      {event.date}
+                    </span>
+                    <span className="text-[rgba(255,255,255,0.3)] text-[10px]">•</span>
+                    <span className="text-[10px] text-[rgba(255,255,255,0.4)] font-light">
+                      {event.location}
+                    </span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-[18px] md:text-[20px] text-white tracking-[-0.01em] font-medium mb-3 leading-tight line-clamp-2 group-hover:text-[#1ecbe1] transition-colors">
                     {event.title}
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white rounded-sm p-3">
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-                          <rect x="3" y="4" width="14" height="14" rx="2" stroke="#050507" strokeWidth="1.5" />
-                          <path d="M3 8h14M7 2v4M13 2v4" stroke="#050507" strokeWidth="1.5" strokeLinecap="round" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.12em] mb-1 font-medium">Date</p>
-                        <p className="text-[15px] text-white font-light">{event.date}</p>
-                      </div>
-                    </div>
-                    <div className="flex items-center gap-4">
-                      <div className="bg-white rounded-sm p-3">
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 20 20">
-                          <path d="M10 9a2 2 0 100-4 2 2 0 000 4zM10 9c-3.314 0-6 2.462-6 5.5v.5h12v-.5c0-3.038-2.686-5.5-6-5.5z" stroke="#050507" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                      </div>
-                      <div>
-                        <p className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.12em] mb-1 font-medium">Location</p>
-                        <p className="text-[15px] text-white font-light">{event.location}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
+
+                  {/* Button */}
+                  <div className="pt-3 border-t border-[rgba(255,255,255,0.06)] mt-auto">
                     <button
-                      className={`${event.status === "Sold Out" ? "bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] opacity-50 cursor-not-allowed text-white" : "bg-white hover:bg-[rgba(255,255,255,0.9)] text-[#050507]"} transition-all rounded-sm px-6 py-3.5 text-[13px] uppercase tracking-[0.12em] font-medium flex items-center justify-center gap-2`}
+                      className={`${event.status === "Sold Out" ? "bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] opacity-50 cursor-not-allowed text-white" : "bg-white hover:bg-[rgba(255,255,255,0.9)] text-[#050507]"} transition-all rounded-sm px-4 py-2.5 text-[11px] uppercase tracking-[0.12em] font-medium w-full`}
                       disabled={event.status === "Sold Out"}
                     >
                       {event.status === "Sold Out" ? "Sold Out" : "Get Tickets"}
                     </button>
-                    <button className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] hover:bg-[rgba(255,255,255,0.08)] transition-colors rounded-sm px-6 py-3.5 text-[13px] text-white uppercase tracking-[0.12em] font-medium">
-                      Learn More
-                    </button>
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

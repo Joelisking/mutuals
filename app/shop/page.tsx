@@ -48,16 +48,16 @@ export default function ShopPage() {
 
       <div className="pt-32 md:pt-36">
         <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          {/* Products Grid - Matching carousel card style */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-12">
             {filteredProducts.map((product) => (
               <Link
                 key={product.id}
                 href={`/shop/${product.slug}`}
-                className="group">
-                <div className="bg-[#0a0a0f] rounded-[4px] overflow-hidden border border-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.15)] transition-all">
-                  {/* Product Image */}
-                  <div className="relative overflow-hidden aspect-square">
+                className="group block">
+                <div className="flex flex-col h-full">
+                  {/* Product Image - Reduced visual weight */}
+                  <div className="relative aspect-square overflow-hidden rounded-[2px] mb-4">
                     <Image
                       src={product.images[0]}
                       alt={product.name}
@@ -65,62 +65,61 @@ export default function ShopPage() {
                       width={800}
                       height={800}
                     />
-                    <div className="absolute inset-0 bg-linear-to-t from-[#0a0a0f] via-transparent to-transparent opacity-40" />
 
-                    {/* Stock Badge */}
+                    {/* Subtle gradient overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-[rgba(0,0,0,0.4)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                    {/* Stock Badge - Top right */}
                     {product.stockLevel !== 'in-stock' && (
-                      <div className="absolute top-4 right-4">
-                        <div
-                          className={`${
+                      <div className="absolute top-3 right-3">
+                        <span
+                          className={`text-[10px] text-white uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-[2px] ${
                             product.stockLevel === 'sold-out'
                               ? 'bg-red-600'
                               : 'bg-[#ff6b35]'
-                          } px-3 py-1.5 rounded-sm`}>
-                          <span className="text-[11px] text-white uppercase tracking-[0.12em] font-medium">
-                            {product.stockLevel === 'sold-out'
-                              ? 'Sold Out'
-                              : 'Low Stock'}
-                          </span>
-                        </div>
+                          }`}>
+                          {product.stockLevel === 'sold-out'
+                            ? 'Sold Out'
+                            : 'Low Stock'}
+                        </span>
                       </div>
                     )}
 
-                    {/* Tags */}
+                    {/* Tag badge - minimal styling */}
                     {product.tags.length > 0 &&
                       product.stockLevel === 'in-stock' && (
-                        <div className="absolute top-4 left-4">
-                          <div className="bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] px-3 py-1 rounded-sm">
-                            <span className="text-[11px] text-white uppercase tracking-[0.12em] font-medium">
-                              {product.tags[0]}
-                            </span>
-                          </div>
+                        <div className="absolute top-3 left-3">
+                          <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+                            {product.tags[0]}
+                          </span>
                         </div>
                       )}
 
-                    {/* Hover Overlay */}
-                    <div className="absolute inset-0 bg-[#1ecbe1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    {/* Hover Overlay - View Details */}
+                    {/* <div className="absolute inset-0 bg-[#1ecbe1]/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="bg-white hover:bg-[rgba(255,255,255,0.95)] transition-colors rounded-sm px-6 py-3">
                         <span className="text-[13px] text-[#050507] uppercase tracking-[0.12em] font-medium">
                           View Details
                         </span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
 
-                  {/* Product Info */}
-                  <div className="p-5">
-                    <div className="flex items-start justify-between gap-2 mb-2">
-                      <h3 className="text-[16px] md:text-[18px] text-white tracking-[-0.01em] font-medium leading-tight">
-                        {product.name}
-                      </h3>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p className="text-[15px] text-[rgba(255,255,255,0.5)] font-light">
+                  {/* Product Info - Typography-led structure */}
+                  <div className="flex flex-col flex-1">
+                    {/* Product Name */}
+                    <h3 className="text-[18px] md:text-[20px] text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-1 group-hover:text-[#1ecbe1] transition-colors">
+                      {product.name}
+                    </h3>
+
+                    {/* Category and Price */}
+                    <div className="flex items-center justify-between border-t border-[rgba(255,255,255,0.06)]">
+                      <span className="text-[11px] text-[rgba(255,255,255,0.5)] font-light uppercase tracking-[0.15em]">
                         {product.category}
-                      </p>
-                      <p className="text-[18px] text-white font-medium">
+                      </span>
+                      <span className="text-[16px] text-white font-medium">
                         ${product.price}
-                      </p>
+                      </span>
                     </div>
                   </div>
                 </div>

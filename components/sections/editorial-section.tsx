@@ -1,19 +1,18 @@
-"use client";
+'use client';
 
 import { articles } from '@/lib/data/articles-data';
 import { EditorialCarousel } from '@/components/editorial/editorial-carousel';
 import Link from 'next/link';
 
 export default function EditorialSection() {
-
   return (
-    <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
+    <section className="bg-[#050507] py-16 px-4 md:px-8 lg:px-16">
       <div className="max-w-[1440px] mx-auto">
         {/* Header */}
-        <div className="mb-12 md:mb-16">
-          <div className="flex items-end justify-between mb-6">
+        <div>
+          <div className="flex items-end justify-between mb-3">
             <div>
-              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-3">
+              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-1">
                 Editorial
               </h2>
               <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
@@ -22,12 +21,26 @@ export default function EditorialSection() {
             </div>
             <Link
               href="/editorial"
-              className="hidden md:inline-flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.6)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium"
-            >
+              className="hidden md:inline-flex items-center gap-2 text-[13px] text-[rgba(255,255,255,0.6)] hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               View All
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                <path d="M3.33333 8H12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
-                <path d="M8 3.33333L12.6667 8L8 12.6667" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 16 16">
+                <path
+                  d="M3.33333 8H12.6667"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                />
+                <path
+                  d="M8 3.33333L12.6667 8L8 12.6667"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                />
               </svg>
             </Link>
           </div>
