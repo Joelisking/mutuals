@@ -17,11 +17,14 @@ interface EditorialCarouselProps {
   title?: string;
 }
 
-export function EditorialCarousel({ articles, title }: EditorialCarouselProps) {
+export function EditorialCarousel({
+  articles,
+  title,
+}: EditorialCarouselProps) {
   return (
     <div className="w-full">
       {title && (
-        <h2 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-8">
+        <h2 className="text-2xl md:text-4xl text-white tracking-[-0.02em] font-medium mb-8">
           {title}
         </h2>
       )}
@@ -31,14 +34,12 @@ export function EditorialCarousel({ articles, title }: EditorialCarouselProps) {
           align: 'start',
           slidesToScroll: 1,
         }}
-        className="w-full"
-      >
+        className="w-full">
         <CarouselContent className="-ml-3">
           {articles.map((article) => (
             <CarouselItem
               key={article.id}
-              className="pl-3 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
-            >
+              className="pl-3 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
               <EditorialCard article={article} />
             </CarouselItem>
           ))}
@@ -62,11 +63,10 @@ function EditorialCard({ article }: EditorialCardProps) {
       href={`/editorial/${article.slug}`}
       className="group block"
       onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+      onMouseLeave={() => setIsHovered(false)}>
       <div className="flex flex-col h-full">
         {/* Image/Video Container - Reduced visual weight, no heavy borders */}
-        <div className="relative aspect-[16/9] overflow-hidden rounded-[2px] mb-4">
+        <div className="relative aspect-video overflow-hidden rounded-[2px] mb-4">
           {article.video && isHovered ? (
             <video
               src={article.video}
@@ -87,11 +87,11 @@ function EditorialCard({ article }: EditorialCardProps) {
           )}
 
           {/* Subtle gradient overlay instead of heavy frame */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.4)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
           {/* Tag badge - minimal styling */}
           <div className="absolute top-3 left-3">
-            <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+            <span className="text-xs text-white uppercase tracking-[0.15em] font-semibold bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-sm">
               {article.tag}
             </span>
           </div>
@@ -101,31 +101,31 @@ function EditorialCard({ article }: EditorialCardProps) {
         <div className="flex flex-col flex-1">
           {/* Category and Date - subtle, no heavy separators */}
           <div className="flex items-center gap-2 mb-2">
-            <span className="text-[10px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">
+            <span className="text-xs text-white/50 uppercase tracking-[0.15em] font-medium">
               {article.category}
             </span>
-            <span className="text-[rgba(255,255,255,0.3)] text-[10px]">•</span>
-            <span className="text-[10px] text-[rgba(255,255,255,0.4)] font-light">
+            <span className="text-white/30 text-xs">•</span>
+            <span className="text-xs text-white/40 font-light">
               {article.date}
             </span>
           </div>
 
           {/* Title - Typography leads */}
-          <h3 className="text-[18px] md:text-[20px] text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-2 group-hover:text-[#1ecbe1] transition-colors">
+          <h3 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-2 group-hover:text-[#1ecbe1] transition-colors">
             {article.title}
           </h3>
 
           {/* Excerpt - light and readable */}
-          <p className="text-[13px] text-[rgba(255,255,255,0.6)] font-light leading-relaxed line-clamp-2 mb-3 flex-1">
+          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3 flex-1">
             {article.excerpt}
           </p>
 
           {/* Author and Read Time - minimal separator */}
-          <div className="flex items-center justify-between pt-3 border-t border-[rgba(255,255,255,0.06)]">
-            <span className="text-[11px] text-[rgba(255,255,255,0.5)] font-light">
+          <div className="flex items-center justify-between pt-3 border-t border-white/6">
+            <span className="text-xs text-white/50 font-light">
               {article.author}
             </span>
-            <span className="text-[11px] text-[rgba(255,255,255,0.4)] font-light">
+            <span className="text-xs text-white/40 font-light">
               {article.readTime}
             </span>
           </div>

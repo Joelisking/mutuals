@@ -11,15 +11,15 @@ export default function PlaylistsSection() {
       <div className="absolute bg-[#5b4fed] blur-[200px] right-[10%] opacity-[0.08] rounded-full w-[600px] h-[600px] top-0" />
       <div className="absolute bg-[#e91e8c] blur-[180px] left-0 opacity-[0.06] rounded-full w-[500px] h-[500px] bottom-[10%]" />
 
-      <div className="max-w-[1440px] mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto relative z-10">
         {/* Playlists Header */}
         <div className="mb-3">
           <div className="flex items-end justify-between">
             <div>
-              <h2 className="text-[28px] md:text-[36px] lg:text-[44px] text-white tracking-[-0.02em] font-medium mb-1">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-white tracking-[-0.02em] font-medium mb-1">
                 Playlists
               </h2>
-              <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.5)] font-light max-w-[600px]">
+              <p className="text-base md:text-base text-white/50 font-light max-w-2xl">
                 Curated sounds from the culture. Stream now on Apple
                 Music.
               </p>
@@ -28,12 +28,12 @@ export default function PlaylistsSection() {
         </div>
 
         {/* Stream on All Platforms CTA */}
-        <div className="bg-linear-to-r from-[#1ecbe1]/10 via-[#e91e8c]/10 to-[#ff6b35]/10 border border-[rgba(255,255,255,0.08)] rounded-[4px] px-8 md:px-12 py-10 md:py-14">
+        <div className="bg-linear-to-r from-[#1ecbe1]/10 via-[#e91e8c]/10 to-[#ff6b35]/10 border border-white/8 rounded px-8 md:px-12 py-10 md:py-14">
           <div className="text-center mb-8">
-            <h3 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-2">
+            <h3 className="text-2xl md:text-4xl text-white tracking-[-0.02em] font-medium mb-2">
               Stream on All Platforms
             </h3>
-            <p className="text-[15px] md:text-[16px] text-[rgba(255,255,255,0.6)] font-light">
+            <p className="text-base md:text-base text-white/60 font-light">
               Full playlist collection available now
             </p>
           </div>

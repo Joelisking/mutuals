@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#050507] border-t border-[rgba(255,255,255,0.08)]">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20">
+    <footer className="bg-[#050507] border-t border-white/8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20">
         {/* Footer Links Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16">
           {/* Brand */}
@@ -13,9 +13,9 @@ export default function Footer() {
               alt="Mutuals+"
               width={100}
               height={28}
-              className="h-[24px] md:h-[28px] mb-4 w-auto"
+              className="h-6 md:h-7 mb-4 w-auto"
             />
-            <p className="text-[14px] text-[rgba(255,255,255,0.5)] leading-relaxed mb-6 font-light">
+            <p className="text-sm text-white/50 leading-relaxed mb-6 font-light">
               A culture-forward platform spotlighting emerging
               artists, DJs, designers, and creatives across the
               African diaspora and beyond.
@@ -23,7 +23,7 @@ export default function Footer() {
             <div className="flex gap-3">
               <a
                 href="#"
-                className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-sm p-2.5 hover:bg-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.2)] transition-all">
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
                 <svg
                   className="w-4 h-4"
                   fill="white"
@@ -33,7 +33,7 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-sm p-2.5 hover:bg-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.2)] transition-all">
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
                 <svg
                   className="w-4 h-4"
                   fill="white"
@@ -57,7 +57,7 @@ export default function Footer() {
               </a>
               <a
                 href="#"
-                className="bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-sm p-2.5 hover:bg-[rgba(255,255,255,0.08)] hover:border-[rgba(255,255,255,0.2)] transition-all">
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
                 <svg
                   className="w-4 h-4"
                   fill="white"
@@ -70,35 +70,35 @@ export default function Footer() {
 
           {/* Editorial Links */}
           <div>
-            <h4 className="text-[12px] text-[rgba(255,255,255,0.7)] uppercase tracking-[0.12em] mb-6 font-medium">
+            <h4 className="text-xs text-white/70 uppercase tracking-[0.12em] mb-6 font-medium">
               Editorial
             </h4>
             <ul className="space-y-3.5">
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Latest Stories
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Artist Profiles
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Interviews
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Culture News
                 </a>
               </li>
@@ -107,35 +107,35 @@ export default function Footer() {
 
           {/* Platform Links */}
           <div>
-            <h4 className="text-[12px] text-[rgba(255,255,255,0.7)] uppercase tracking-[0.12em] mb-6 font-medium">
+            <h4 className="text-xs text-white/70 uppercase tracking-[0.12em] mb-6 font-medium">
               Platform
             </h4>
             <ul className="space-y-3.5">
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   About Us
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Submit Your Work
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Partnerships
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Contact
                 </a>
               </li>
@@ -144,35 +144,35 @@ export default function Footer() {
 
           {/* Legal Links */}
           <div>
-            <h4 className="text-[12px] text-[rgba(255,255,255,0.7)] uppercase tracking-[0.12em] mb-6 font-medium">
+            <h4 className="text-xs text-white/70 uppercase tracking-[0.12em] mb-6 font-medium">
               Legal
             </h4>
             <ul className="space-y-3.5">
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Privacy Policy
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Terms of Service
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Cookie Policy
                 </a>
               </li>
               <li>
                 <a
                   href="#"
-                  className="text-[14px] text-[rgba(255,255,255,0.5)] hover:text-white transition-colors font-light">
+                  className="text-sm text-white/50 hover:text-white transition-colors font-light">
                   Accessibility
                 </a>
               </li>
@@ -181,9 +181,9 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-[rgba(255,255,255,0.08)] pt-8">
+        <div className="border-t border-white/8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-[13px] text-[rgba(255,255,255,0.4)] font-light">
+            <p className="text-sm text-white/40 font-light">
               © 2025 Mutuals+. All rights reserved.
             </p>
           </div>

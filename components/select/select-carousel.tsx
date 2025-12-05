@@ -26,7 +26,7 @@ export function SelectCarousel({
   return (
     <div className="w-full">
       {title && (
-        <h2 className="text-[24px] md:text-[32px] text-white tracking-[-0.02em] font-medium mb-8">
+        <h2 className="text-2xl md:text-4xl text-white tracking-[-0.02em] font-medium mb-8">
           {title}
         </h2>
       )}
@@ -75,7 +75,7 @@ function SelectCard({
       onMouseLeave={() => setIsHovered(false)}>
       <div className="flex flex-col h-full">
         {/* Image/Video Container - Reduced visual weight */}
-        <div className="relative aspect-[16/9] overflow-hidden rounded-[2px] mb-4">
+        <div className="relative aspect-video overflow-hidden rounded-[2px] mb-4">
           {profile.video && isHovered ? (
             <video
               src={profile.video}
@@ -96,12 +96,12 @@ function SelectCard({
           )}
 
           {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.5)] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/50 via-transparent to-transparent" />
 
           {/* Episode Number Badge - SELECT+ branding */}
           {showEpisodeNumber && profile.episodeNumber && (
             <div className="absolute top-3 left-3">
-              <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+              <span className="text-xs text-white uppercase tracking-[0.15em] font-semibold bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-sm">
                 EP {profile.episodeNumber.toString().padStart(2, '0')}
               </span>
             </div>
@@ -110,7 +110,7 @@ function SelectCard({
           {/* Category Badge - For non-episode based */}
           {!showEpisodeNumber && (
             <div className="absolute top-3 left-3">
-              <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(30,203,225,0.2)] backdrop-blur-sm px-2.5 py-1 rounded-[2px] border border-[rgba(30,203,225,0.3)]">
+              <span className="text-xs text-white uppercase tracking-[0.15em] font-semibold bg-[#1ecbe1]/20 backdrop-blur-sm px-2.5 py-1 rounded-sm border border-[#1ecbe1]/30">
                 {profile.category}
               </span>
             </div>
@@ -120,7 +120,7 @@ function SelectCard({
           <div className="absolute bottom-3 left-3">
             <div className="flex items-center gap-1.5">
               <svg
-                className="w-3 h-3 text-[rgba(255,255,255,0.6)]"
+                className="w-3 h-3 text-white/60"
                 fill="none"
                 viewBox="0 0 12 12">
                 <circle
@@ -132,7 +132,7 @@ function SelectCard({
                 />
                 <circle cx="6" cy="6" r="1.5" fill="currentColor" />
               </svg>
-              <span className="text-[10px] text-[rgba(255,255,255,0.7)] font-light">
+              <span className="text-xs text-white/70 font-light">
                 {profile.location}
               </span>
             </div>
@@ -142,17 +142,17 @@ function SelectCard({
         {/* Content - Typography-led structure */}
         <div className="flex flex-col flex-1">
           {/* Name - Bold and prominent */}
-          <h3 className="text-[20px] md:text-[22px] text-white tracking-[-0.01em] font-medium mb-1 leading-tight line-clamp-1 group-hover:text-[#1ecbe1] transition-colors">
+          <h3 className="text-xl md:text-2xl text-white tracking-[-0.01em] font-medium mb-1 leading-tight line-clamp-1 group-hover:text-[#1ecbe1] transition-colors">
             {profile.name}
           </h3>
 
           {/* Title - Accent color */}
-          <p className="text-[12px] text-[#1ecbe1] uppercase tracking-[0.15em] font-semibold mb-2">
+          <p className="text-xs text-[#1ecbe1] uppercase tracking-[0.15em] font-semibold mb-2">
             {profile.title}
           </p>
 
           {/* Description */}
-          <p className="text-[13px] text-[rgba(255,255,255,0.6)] font-light leading-relaxed line-clamp-2 flex-1">
+          <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 flex-1">
             {profile.description}
           </p>
         </div>
