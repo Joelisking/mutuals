@@ -5,15 +5,18 @@ export interface Playlist {
 
 export const playlists: Playlist[] = [
   {
-    name: "Afro Vibez",
-    embedUrl: "https://embed.music.apple.com/us/playlist/afro-vibez/pl.u-11zBP8Vh8pGoDP8"
+    name: 'ALTE+',
+    embedUrl:
+      'https://embed.music.apple.com/us/playlist/alte/pl.u-06oxpyxT7LE831J',
   },
   {
-    name: "Holy Flow: I Do",
-    embedUrl: "https://embed.music.apple.com/us/playlist/holy-flow-i-do/pl.u-DdANrR6TNyRWNW"
+    name: 'TAP IN+',
+    embedUrl:
+      'https://embed.music.apple.com/us/playlist/tap-in/pl.u-yZyVEAXtZXk3ARB',
   },
   {
-    name: "Holy Flow: Bars on Bars",
-    embedUrl: "https://embed.music.apple.com/us/playlist/holy-flow-bars-on-bars/pl.4ef7d6f69250491c8a8a4b048f4161b7"
-  }
+    name: 'Holy Flow: Bars on Bars',
+    embedUrl:
+      'https://embed.music.apple.com/us/playlist/sound-up/pl.u-XkD0vRZcgY8lbEB',
+  },
 ];

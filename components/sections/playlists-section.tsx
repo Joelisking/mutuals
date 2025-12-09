@@ -11,7 +11,7 @@ export default function PlaylistsSection() {
       <div className="absolute bg-[#5b4fed] blur-[200px] right-[10%] opacity-[0.08] rounded-full w-[600px] h-[600px] top-0" />
       <div className="absolute bg-[#e91e8c] blur-[180px] left-0 opacity-[0.06] rounded-full w-[500px] h-[500px] bottom-[10%]" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-7xl mx-auto overflow-hidden relative z-10">
         {/* Playlists Header */}
         <div className="mb-3">
           <div className="flex items-end justify-between">
@@ -45,7 +45,7 @@ export default function PlaylistsSection() {
               className="opacity-70 hover:opacity-100 transition-opacity"
               aria-label="Listen on Spotify">
               <Image
-                src="/spotify.png"
+                src="/spotify.svg"
                 alt="Spotify"
                 width={120}
                 height={48}
@@ -57,7 +57,7 @@ export default function PlaylistsSection() {
               className="opacity-70 hover:opacity-100 transition-opacity"
               aria-label="Listen on Apple Music">
               <Image
-                src="/apple.png"
+                src="/apple.svg"
                 alt="Apple Music"
                 width={120}
                 height={48}
@@ -69,7 +69,7 @@ export default function PlaylistsSection() {
               className="opacity-70 hover:opacity-100 transition-opacity"
               aria-label="Listen on YouTube Music">
               <Image
-                src="/yt-music.png"
+                src="/yt-music.svg"
                 alt="YouTube Music"
                 width={120}
                 height={48}
@@ -81,7 +81,7 @@ export default function PlaylistsSection() {
               className="opacity-70 hover:opacity-100 transition-opacity"
               aria-label="Listen on SoundCloud">
               <Image
-                src="/soundcloud.png"
+                src="/soundcloud.svg"
                 alt="SoundCloud"
                 width={120}
                 height={48}
