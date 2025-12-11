@@ -15,7 +15,7 @@ export const playlists: Playlist[] = [
       'https://embed.music.apple.com/us/playlist/tap-in/pl.u-yZyVEAXtZXk3ARB',
   },
   {
-    name: 'Holy Flow: Bars on Bars',
+    name: 'SOUND UP+',
     embedUrl:
       'https://embed.music.apple.com/us/playlist/sound-up/pl.u-XkD0vRZcgY8lbEB',
   },

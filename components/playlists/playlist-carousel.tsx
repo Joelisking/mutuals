@@ -29,9 +29,9 @@ export function PlaylistCarousel({
       </div>
 
       {/* Desktop: Horizontal Scrollable Carousel - Maintains wide cards for 2-column Apple Music layout */}
-      <div className="hidden md:block mt-12 -mx-4 md:-mx-8 lg:-mx-16">
+      <div className="hidden md:block mt-12 ">
         <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex gap-6 px-4 md:px-8 lg:px-16 pb-4">
+          <div className="flex gap-6 px-4 md:px-8 lg:px-16 pb-4 lg:-ml-16">
             {playlists.map((playlist, index) => (
               <div key={index} className="shrink-0 w-[500px]">
                 <PlaylistCard playlist={playlist} />

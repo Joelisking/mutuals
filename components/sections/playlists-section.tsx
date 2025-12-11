@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { playlists } from '@/lib/data/playlist-data';
 import { PlaylistCarousel } from '@/components/playlists/playlist-carousel';
+import { Button } from '../ui/button';
+import Link from 'next/link';
 
 export default function PlaylistsSection() {
   return (
@@ -20,8 +22,7 @@ export default function PlaylistsSection() {
                 Playlists
               </h2>
               <p className="text-base md:text-base text-white/50 font-light max-w-2xl">
-                Curated sounds from the culture. Stream now on Apple
-                Music.
+                Discover our full collection of curated playlists.
               </p>
             </div>
           </div>
@@ -31,63 +32,98 @@ export default function PlaylistsSection() {
         <div className="bg-linear-to-r from-[#1ecbe1]/10 via-[#e91e8c]/10 to-[#ff6b35]/10 border border-white/8 rounded px-8 md:px-12 py-10 md:py-14">
           <div className="text-center mb-8">
             <h3 className="text-2xl md:text-4xl text-white tracking-[-0.02em] font-medium mb-2">
-              Stream on All Platforms
+              Stream our curator playlists
             </h3>
-            <p className="text-base md:text-base text-white/60 font-light">
+            {/* <p className="text-base md:text-base text-white/60 font-light">
               Full playlist collection available now
-            </p>
+            </p> */}
+          </div>
+
+          <div className="flex justify-center">
+            <Button
+              variant="outline"
+              className="px-9 py-5 transition-all duration-200 hover:scale-105 hover:bg-white/10">
+              LISTEN
+            </Button>
           </div>
 
           {/* Platform Logos */}
-          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8">
-            <a
-              href="#"
-              className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on Spotify">
+          <div className="flex flex-wrap items-center justify-center gap-6 md:gap-8 mt-12">
+            <Link
+              href="https://x.com/mutualsplus"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
+              aria-label="Visit us on X">
               <Image
-                src="/spotify.svg"
-                alt="Spotify"
+                src="/X.svg"
+                alt="X"
                 width={120}
                 height={48}
-                className="h-10 md:h-12 w-auto"
+                className="h-9 w-auto"
+              />
+            </Link>
+            <Link
+              href="https://www.instagram.com/mutualsplus"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
+              aria-label="Visit us on Instagram">
+              <Image
+                src="/instagram.svg"
+                alt="Instagram"
+                width={120}
+                height={48}
+                className="h-10 w-auto"
+              />
+            </Link>
+            <a
+              href="https://www.youtube.com/@mutualsplus?sub_confirmation=1"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
+              aria-label="Listen on YouTube">
+              <Image
+                src="/youtube.svg"
+                alt="YouTube"
+                width={120}
+                height={48}
+                className="h-10 w-auto"
               />
             </a>
             <a
-              href="#"
-              className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on Apple Music">
-              <Image
-                src="/apple.svg"
-                alt="Apple Music"
-                width={120}
-                height={48}
-                className="h-10 md:h-12 w-auto"
-              />
-            </a>
-            <a
-              href="#"
-              className="opacity-70 hover:opacity-100 transition-opacity"
-              aria-label="Listen on YouTube Music">
-              <Image
-                src="/yt-music.svg"
-                alt="YouTube Music"
-                width={120}
-                height={48}
-                className="h-10 md:h-12 w-auto"
-              />
-            </a>
-            <a
-              href="#"
-              className="opacity-70 hover:opacity-100 transition-opacity"
+              href="https://on.soundcloud.com/LVuwO2SJ22C8G8lCTn"
+              target="_blank"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
               aria-label="Listen on SoundCloud">
               <Image
                 src="/soundcloud.svg"
                 alt="SoundCloud"
                 width={120}
                 height={48}
-                className="h-10 md:h-12 w-auto"
+                className="h-10 w-auto"
               />
             </a>
+            <Link
+              href="https://open.spotify.com/user/31tc2jki3w4bc7dzmbiwxwui6g7m?nd=1&dlsi=e718363bffd44b12"
+              target="_blank"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
+              aria-label="Listen on Spotify">
+              <Image
+                src="/spotify.svg"
+                alt="Spotify"
+                width={120}
+                height={48}
+                className="h-10 w-auto"
+              />
+            </Link>
+            <Link
+              href="https://music.apple.com/profile/mutualsplus"
+              target="_blank"
+              className="opacity-100 hover:scale-105 transition-all duration-150"
+              aria-label="Listen on Apple Music">
+              <Image
+                src="/apple.svg"
+                alt="Apple"
+                width={120}
+                height={48}
+                className="h-10 w-auto"
+              />
+            </Link>
           </div>
         </div>
 
