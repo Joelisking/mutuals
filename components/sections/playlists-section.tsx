@@ -13,7 +13,7 @@ export default function PlaylistsSection() {
       <div className="absolute bg-[#5b4fed] blur-[200px] right-[10%] opacity-[0.08] rounded-full w-[600px] h-[600px] top-0" />
       <div className="absolute bg-[#e91e8c] blur-[180px] left-0 opacity-[0.06] rounded-full w-[500px] h-[500px] bottom-[10%]" />
 
-      <div className="max-w-7xl mx-auto overflow-hidden relative z-10">
+      <div className="max-w-screen-2xl mx-auto overflow-hidden relative z-10">
         {/* Playlists Header */}
         <div className="mb-3">
           <div className="flex items-end justify-between">

@@ -14,7 +14,7 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050507]/80 backdrop-blur-xl border-b border-white/8">
-      <div className="max-w-7xl mx-auto ">
+      <div className="max-w-screen-2xl mx-auto ">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
@@ -47,7 +47,7 @@ export default function Navbar() {
               Playlists
             </Link>
             <Link
-              href="/#events"
+              href="/events"
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               Events
             </Link>
@@ -81,9 +81,11 @@ export default function Navbar() {
                 </span>
               </Link>
             )}
-            <button className="bg-white hover:bg-white/90 transition-all rounded-sm px-5 py-2.5 text-sm text-[#050507] uppercase tracking-[0.12em] font-medium">
-              Subscribe
-            </button>
+            <Link
+              href="/submissions"
+              className="bg-white hover:bg-white/90 transition-all rounded-sm px-5 py-2.5 text-sm text-[#050507] uppercase tracking-[0.12em] font-medium">
+              Submissions
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}

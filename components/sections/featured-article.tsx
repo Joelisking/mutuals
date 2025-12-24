@@ -1,7 +1,7 @@
 export default function FeaturedArticle() {
   return (
     <section className="bg-[#050507] py-16 md:py-24 lg:py-32 px-4 md:px-8 lg:px-16">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="relative rounded-none md:rounded overflow-hidden border border-white/8 group transition-all h-[600px] md:h-[700px] lg:h-[800px]">
           {/* Background image layer */}
           <div
@@ -40,9 +40,7 @@ export default function FeaturedArticle() {
                 <span className="text-xs md:text-xs text-white/60 uppercase tracking-[0.12em] font-medium">
                   Music
                 </span>
-                <span className="text-white/40">
-                  •
-                </span>
+                <span className="text-white/40">•</span>
                 <span className="text-xs md:text-xs text-white/60 uppercase tracking-[0.12em] font-medium">
                   Profile
                 </span>

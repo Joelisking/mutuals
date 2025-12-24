@@ -1,5 +1,4 @@
 import { merchItems } from '@/lib/data/merch-data';
-import Image from 'next/image';
 
 export default function MerchSection() {
   return (
@@ -8,7 +7,7 @@ export default function MerchSection() {
       <div className="absolute bg-[#1ecbe1] blur-[200px] left-0 opacity-[0.06] rounded-full w-[500px] h-[500px] top-1/4" />
       <div className="absolute bg-[#ff6b35] blur-[220px] right-[10%] opacity-[0.06] rounded-full w-[600px] h-[600px] top-[30%]" />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-screen-2xl mx-auto relative z-10">
         {/* Header */}
         <div className="mb-3">
           <h2 className="text-3xl md:text-4xl lg:text-5xl text-white tracking-[-0.02em] font-medium mb-1">
