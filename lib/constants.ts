@@ -8,7 +8,7 @@ const getBackendUrl = () => {
   // Server-side: use environment variable or fallback to localhost
   return process.env.BACKEND_URL
     ? `${process.env.BACKEND_URL}/api/v1`
-    : 'http://localhost:4000/api/v1';
+    : '/api/v1';
 };
 
 export const BASE_URL = getBackendUrl();
