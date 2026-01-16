@@ -1,10 +1,21 @@
 'use client';
 
-import { articles } from '@/lib/data/articles-data';
 import { EditorialCarousel } from '@/components/editorial/editorial-carousel';
+import { useGetArticlesQuery } from '@/lib/redux/api/openapi.generated';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
+import { Article, ApiResponse } from '@/lib/types/api';
 
 export default function EditorialSection() {
+  const { data, isLoading } = useGetArticlesQuery({
+    limit: 8,
+    status: 'PUBLISHED',
+  });
+
+  // Handle response structure - cast to proper type
+  const response = data as ApiResponse<Article[]> | undefined;
+  const articles: Article[] = response?.data || [];
+
   return (
     <section className="bg-[#050507] py-16 px-4 md:px-8 lg:px-16">
       <div className="max-w-screen-2xl mx-auto">
@@ -46,8 +57,24 @@ export default function EditorialSection() {
           </div>
         </div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-6 h-6 animate-spin text-white/50" />
+          </div>
+        )}
+
         {/* Carousel - 4+ cards visible on desktop */}
-        <EditorialCarousel articles={articles.slice(0, 8)} />
+        {!isLoading && articles.length > 0 && (
+          <EditorialCarousel articles={articles} />
+        )}
+
+        {/* Empty State */}
+        {!isLoading && articles.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-white/50">No articles available at the moment.</p>
+          </div>
+        )}
       </div>
     </section>
   );

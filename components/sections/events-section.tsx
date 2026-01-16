@@ -1,9 +1,22 @@
-import { events } from '@/lib/data/events-data';
+'use client';
+
 import Link from 'next/link';
 import { Icon } from '../ui/icon';
 import EventCard from './event-card';
+import { useGetEventsQuery } from '@/lib/redux/api/openapi.generated';
+import { Loader2 } from 'lucide-react';
+import { Event, ApiResponse } from '@/lib/types/api';
 
 export default function EventsSection() {
+  const { data, isLoading } = useGetEventsQuery({
+    limit: 8,
+    status: 'UPCOMING',
+  });
+
+  // Handle response structure - cast to proper type
+  const response = data as ApiResponse<Event[]> | undefined;
+  const events: Event[] = response?.data || [];
+
   return (
     <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
       <div className="max-w-screen-2xl mx-auto">
@@ -28,12 +41,28 @@ export default function EventsSection() {
           </div>
         </div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex justify-center py-12">
+            <Loader2 className="w-6 h-6 animate-spin text-white/50" />
+          </div>
+        )}
+
         {/* Events Grid - 4 columns, 8 events */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-8">
-          {events.slice(0, 8).map((event, index) => (
-            <EventCard key={index} event={event} index={index} />
-          ))}
-        </div>
+        {!isLoading && events.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-8">
+            {events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!isLoading && events.length === 0 && (
+          <div className="text-center py-12">
+            <p className="text-white/50">No upcoming events at the moment.</p>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -153,6 +153,7 @@ export const api = createApi({
     'Media',
     'Homepage',
     'User',
+    'Settings',
   ],
   endpoints: (_builder) => ({}),
 });

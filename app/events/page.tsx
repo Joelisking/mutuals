@@ -1,8 +1,21 @@
-import { events } from '@/lib/data/events-data';
+'use client';
+
 import EventCard from '@/components/sections/event-card';
 import Link from 'next/link';
+import { useGetEventsQuery } from '@/lib/redux/api/openapi.generated';
+import { Loader2 } from 'lucide-react';
+import { Event, ApiResponse } from '@/lib/types/api';
 
 export default function EventsPage() {
+  const { data, isLoading, error } = useGetEventsQuery({
+    limit: 20,
+    status: 'UPCOMING',
+  });
+
+  // Handle response structure - cast to proper type
+  const response = data as ApiResponse<Event[]> | undefined;
+  const events: Event[] = response?.data || [];
+
   return (
     <div className="min-h-screen bg-[#050507] pt-12">
       <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
@@ -18,15 +31,33 @@ export default function EventsPage() {
           </p>
         </div>
 
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex justify-center py-20">
+            <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="text-center py-20">
+            <p className="text-lg text-red-400 font-light">
+              Failed to load events. Please try again later.
+            </p>
+          </div>
+        )}
+
         {/* Events Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
-          {events.map((event, index) => (
-            <EventCard key={index} event={event} index={index} />
-          ))}
-        </div>
+        {!isLoading && !error && events.length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 gap-y-10">
+            {events.map((event) => (
+              <EventCard key={event.id} event={event} />
+            ))}
+          </div>
+        )}
 
         {/* Empty State (if no events) */}
-        {events.length === 0 && (
+        {!isLoading && !error && events.length === 0 && (
           <div className="text-center py-20">
             <p className="text-lg text-white/50 font-light">
               No events scheduled at the moment. Check back soon!

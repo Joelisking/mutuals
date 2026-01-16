@@ -1,8 +1,14 @@
+'use client';
+
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-import { events } from '@/lib/data/events-data';
 import { Button } from '@/components/ui/button';
+import { useGetEventsByIdQuery } from '@/lib/redux/api/openapi.generated';
+import { Loader2 } from 'lucide-react';
+import { format } from 'date-fns';
+import React from 'react';
+import { Event, ApiResponse } from '@/lib/types/api';
 
 interface EventPageProps {
   params: Promise<{
@@ -10,39 +16,50 @@ interface EventPageProps {
   }>;
 }
 
-export function generateStaticParams() {
-  return events.map((_, index) => ({
-    id: (index + 1).toString(),
-  }));
-}
+export default function EventPage({ params }: EventPageProps) {
+  const { id } = React.use(params);
+  const { data, isLoading, error } = useGetEventsByIdQuery({ id });
 
-export default async function EventPage({ params }: EventPageProps) {
-  const { id } = await params;
-  const eventIndex = parseInt(id, 10) - 1;
+  // Handle response structure - cast to proper type
+  const response = data as ApiResponse<Event> | undefined;
+  const event: Event | undefined = response?.data;
 
-  if (
-    isNaN(eventIndex) ||
-    eventIndex < 0 ||
-    eventIndex >= events.length
-  ) {
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#050507] flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-white/50" />
+      </div>
+    );
+  }
+
+  if (error || !event) {
     notFound();
   }
 
-  const event = events[eventIndex];
+  const isSoldOut = event.ticketStatus?.toLowerCase() === 'sold out';
+  const ctaLabel = isSoldOut ? 'Sold Out' : event.ticketLink ? 'Get Tickets' : 'Request to Attend';
 
-  if (!event) {
-    notFound();
-  }
+  // Format date
+  const formattedDate = event.eventDate
+    ? format(new Date(event.eventDate), 'MMMM d, yyyy')
+    : '';
 
-  const isSoldOut = event.status === 'Sold Out';
-  const ctaLabel = isSoldOut ? 'Sold Out' : 'Request to Attend';
+  const formattedTime = event.eventTime || '';
+
+  // Image URL with fallback
+  const imageUrl = event.flyerUrl || '/assets/editorial-visual-culture.png';
+
+  // Location display
+  const displayLocation = [event.venue, event.city, event.country]
+    .filter(Boolean)
+    .join(', ');
 
   return (
     <div className="relative min-h-screen bg-[#050507] text-white">
       {/* Blurred hero background - top only */}
       <div className="absolute top-0 left-0 right-0 h-[40vh] overflow-hidden">
         <Image
-          src={event.image}
+          src={imageUrl}
           alt={event.title}
           fill
           priority
@@ -56,7 +73,7 @@ export default async function EventPage({ params }: EventPageProps) {
         {/* Top bar / back link */}
         <div className="flex items-center justify-between gap-4 mb-10 md:mb-16">
           <Link
-            href="/#events"
+            href="/events"
             className="inline-flex items-center gap-2 text-xs md:text-sm text-white/70 hover:text-white uppercase tracking-[0.14em] font-medium transition-colors group">
             <svg
               className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
@@ -80,73 +97,47 @@ export default async function EventPage({ params }: EventPageProps) {
           <div className="flex-1 max-w-2xl space-y-10">
             {/* Title block */}
             <div>
-              <p className="text-xs md:text-sm uppercase tracking-[0.16em] text-white/60 mb-2">
-                {event.type}
-              </p>
+              {event.type && (
+                <p className="text-xs md:text-sm uppercase tracking-[0.16em] text-white/60 mb-2">
+                  {event.type}
+                </p>
+              )}
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-semibold tracking-[-0.03em] leading-tight mb-6">
                 {event.title}
               </h1>
 
               <div className="space-y-2 text-sm md:text-base">
-                <p className="text-white/70">
-                  Get on the list to see location
-                </p>
                 <p className="text-white/90 font-light">
-                  {event.date}
+                  {formattedDate} {formattedTime && `at ${formattedTime}`}
                 </p>
+                <p className="text-white/70">{displayLocation}</p>
               </div>
             </div>
 
             {/* About section */}
-            <div className="border-t border-white/10 pt-8 mt-4 space-y-6">
-              <div>
-                <h2 className="text-sm md:text-base uppercase tracking-[0.16em] text-white/60 mb-3">
-                  About this event
-                </h2>
-                <p className="text-sm md:text-base font-semibold leading-relaxed text-white">
-                  WEAR YOUR CRAZIEST HOLIDAY COSTUME – $1,000 CASH
-                  PRIZE FOR BEST COSTUME
-                </p>
+            {event.description && (
+              <div className="border-t border-white/10 pt-8 mt-4 space-y-6">
+                <div>
+                  <h2 className="text-sm md:text-base uppercase tracking-[0.16em] text-white/60 mb-3">
+                    About this event
+                  </h2>
+                  <div className="space-y-4 text-sm md:text-base text-white/70 font-light leading-relaxed">
+                    <p>{event.description}</p>
+                  </div>
+                </div>
               </div>
+            )}
 
-              <div className="space-y-4 text-sm md:text-base text-white/70 font-light leading-relaxed">
-                <p>
-                  Experience an unforgettable night of culture, music,
-                  and community at {event.title}. This{' '}
-                  {event.type.toLowerCase()} brings together students,
-                  creators, and culture enthusiasts for an immersive
-                  celebration of creativity.
-                </p>
-                <p>
-                  Join us in {event.location} as we showcase the best
-                  of contemporary campus culture, featuring music,
-                  interactive moments, and exclusive experiences that
-                  capture the energy of Purdue Fort Wayne.
-                </p>
-                <p>
-                  Whether you&apos;re a long-time supporter or
-                  discovering Campus Connect for the first time, this
-                  event promises to deliver moments you&apos;ll
-                  remember long after the night ends.
-                </p>
-              </div>
-            </div>
-
-            {/* What to expect – optional section below the fold */}
+            {/* What to expect */}
             <div className="border-t border-white/10 pt-8 space-y-4">
               <h2 className="text-sm md:text-base uppercase tracking-[0.16em] text-white/60">
                 What to expect
               </h2>
               <ul className="space-y-2 text-sm md:text-base text-white/70 font-light">
                 <li>• Curated music and live performances</li>
-                <li>
-                  • Holiday-themed photo moments and activations
-                </li>
-                <li>• Meet-ups with fellow students and creatives</li>
-                <li>
-                  • Limited-capacity experience – early RSVP
-                  recommended
-                </li>
+                <li>• Photo moments and activations</li>
+                <li>• Meet-ups with fellow creatives</li>
+                <li>• Limited-capacity experience – early RSVP recommended</li>
               </ul>
             </div>
           </div>
@@ -156,7 +147,7 @@ export default async function EventPage({ params }: EventPageProps) {
             <div className="bg-black/60 border border-white/15 rounded-2xl p-4 md:p-5 shadow-[0_22px_60px_rgba(0,0,0,0.8)] backdrop-blur-xl">
               <div className="relative w-full aspect-3/4 overflow-hidden rounded-2xl">
                 <Image
-                  src={event.image}
+                  src={imageUrl}
                   alt={event.title}
                   fill
                   className="object-cover"
@@ -166,10 +157,10 @@ export default async function EventPage({ params }: EventPageProps) {
 
               <div className="mt-5 space-y-2 text-xs md:text-sm text-white/70">
                 <div className="flex items-center justify-between gap-4">
-                  <span className="truncate">{event.date}</span>
+                  <span className="truncate">{formattedDate}</span>
                   <span className="text-white/40">•</span>
                   <span className="truncate text-right">
-                    {event.location}
+                    {event.city || event.location}
                   </span>
                 </div>
                 {event.status && (
@@ -180,17 +171,36 @@ export default async function EventPage({ params }: EventPageProps) {
               </div>
             </div>
 
-            {/* RSVP Button */}
-            <Button
-              variant="outline"
-              className={`w-full py-6 md:py-7 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] transition-all duration-200 ${
-                isSoldOut
-                  ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:bg-transparent'
-                  : 'hover:scale-105 hover:bg-white/10'
-              }`}
-              disabled={isSoldOut}>
-              {ctaLabel}
-            </Button>
+            {/* RSVP/Tickets Button */}
+            {event.ticketLink ? (
+              <a
+                href={event.ticketLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`block w-full ${isSoldOut ? 'pointer-events-none' : ''}`}>
+                <Button
+                  variant="outline"
+                  className={`w-full py-6 md:py-7 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] transition-all duration-200 ${
+                    isSoldOut
+                      ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:bg-transparent'
+                      : 'hover:scale-105 hover:bg-white/10'
+                  }`}
+                  disabled={isSoldOut}>
+                  {ctaLabel}
+                </Button>
+              </a>
+            ) : (
+              <Button
+                variant="outline"
+                className={`w-full py-6 md:py-7 text-xs md:text-sm font-semibold uppercase tracking-[0.2em] transition-all duration-200 ${
+                  isSoldOut
+                    ? 'opacity-50 cursor-not-allowed hover:scale-100 hover:bg-transparent'
+                    : 'hover:scale-105 hover:bg-white/10'
+                }`}
+                disabled={isSoldOut}>
+                {ctaLabel}
+              </Button>
+            )}
           </div>
         </div>
       </div>
