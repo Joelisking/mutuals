@@ -76,33 +76,33 @@ export default function SubmissionsPage() {
   const categories = [
     {
       id: 'dj',
-      label: 'DJ / Music',
-      description: 'DJ Mixes, Original Tracks, Remixes',
+      label: 'Music & Artists',
+      description: 'DJ Mixes, Original Tracks, Remixes, Performance, Sound Design',
     },
     {
       id: 'photographer',
       label: 'Photography',
-      description: 'Photography, Visual Art',
+      description: 'Photography, Visual Art, Photo Essays',
     },
     {
       id: 'designer',
       label: 'Design',
-      description: 'Fashion, Graphics, Branding',
+      description: 'Fashion, Graphics, Branding, Visual Identity',
     },
     {
       id: 'writer',
       label: 'Writing',
-      description: 'Poetry, Essays, Journalism',
+      description: 'Poetry, Essays, Journalism, Editorial',
     },
     {
       id: 'stylist',
       label: 'Styling',
-      description: 'Fashion Styling, Creative Direction',
+      description: 'Fashion Styling, Creative Direction, Art Direction',
     },
     {
-      id: 'artist',
-      label: 'Artist',
-      description: 'Performance, Installation, Mixed Media',
+      id: 'other',
+      label: 'Other',
+      description: 'Other creative work, collaborations, or projects',
     },
   ];
 
@@ -184,7 +184,7 @@ export default function SubmissionsPage() {
   return (
     <div className="min-h-screen w-full bg-[#050507]">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-linear-to-b from-[#0a0a0f] to-[#050507] pb-20 md:pb-32 py-32 md:py-48 px-4 md:px-8 lg:px-16">
+      <section className="relative overflow-hidden bg-linear-to-b from-[#0a0a0f] to-[#050507] pb-20 md:pb-32 py-32 md:py-48 lg:py-56 px-4 md:px-8 lg:px-16">
         {/* Ambient blurs */}
         <div
           className="absolute bg-[#5b4fed] blur-[250px] right-[20%] opacity-[0.08] rounded-full w-[500px] h-[500px] top-0 animate-pulse"
@@ -198,17 +198,17 @@ export default function SubmissionsPage() {
         <div className="max-w-[1440px] mx-auto relative z-10">
           <div className="max-w-[900px] mx-auto text-center space-y-6">
             {/* Badge */}
-            <div className="inline-flex items-center justify-center">
+            {/* <div className="inline-flex items-center justify-center">
               <div className="bg-[rgba(255,255,255,0.1)] backdrop-blur-md border border-[rgba(255,255,255,0.2)] px-5 py-2 rounded-sm">
                 <span className="text-[12px] text-white uppercase tracking-[0.15em] font-medium">
-                  Join The Movement
+                  Submissions
                 </span>
               </div>
-            </div>
+            </div> */}
 
             {/* Heading */}
-            <h1 className="text-[48px] md:text-[64px] lg:text-[80px] text-white leading-[1.05] tracking-[-0.03em] font-medium">
-              Share Your Vision
+            <h1 className="text-[48px] md:text-[64px] lg:text-[80px] text-white leading-[1.05] tracking-[-0.03em] font-semibold uppercase">
+              Submissions
             </h1>
 
             {/* Description */}
@@ -219,7 +219,7 @@ export default function SubmissionsPage() {
             </p>
 
             {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-8 md:gap-12 pt-8">
+            {/* <div className="flex flex-wrap justify-center gap-8 md:gap-12 pt-8">
               <div className="text-center">
                 <p className="text-[32px] md:text-[40px] text-white font-medium">
                   500+
@@ -244,7 +244,7 @@ export default function SubmissionsPage() {
                   Independent
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

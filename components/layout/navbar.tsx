@@ -14,17 +14,17 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050507]/80 backdrop-blur-xl border-b border-white/8">
-      <div className="max-w-screen-2xl mx-auto ">
+      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-16 xl:px-0">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
                 src="/assets/mutuals-logo.png"
-                alt="Mutuals+"
+                alt="Mutuals+ Logo"
                 width={120}
                 height={40}
-                className="h-8 md:h-10 w-auto"
+                className="w-full"
               />
             </Link>
           </div>
@@ -37,11 +37,6 @@ export default function Navbar() {
               Editorial
             </Link>
             <Link
-              href="/select"
-              className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
-              SELECT+
-            </Link>
-            <Link
               href="/#playlists"
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               Playlists
@@ -50,6 +45,11 @@ export default function Navbar() {
               href="/events"
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               Events
+            </Link>
+            <Link
+              href="/submissions"
+              className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
+              Submissions
             </Link>
             <Link
               href="/shop"
@@ -82,9 +82,9 @@ export default function Navbar() {
               </Link>
             )}
             <Link
-              href="/submissions"
-              className="bg-white hover:bg-white/90 transition-all rounded-sm px-5 py-2.5 text-sm text-[#050507] uppercase tracking-[0.12em] font-medium">
-              Submissions
+              href="/select-plus"
+              className="bg-white hover:bg-white/90 transition-all rounded-sm px-5 py-2.5 text-sm text-[#050507] uppercase tracking-[0.12em] font-bold">
+              SELECT +
             </Link>
           </div>
 
