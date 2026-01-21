@@ -124,5 +124,40 @@ export interface MediaFile {
   createdAt: string;
 }
 
+// Product Types
+export interface Product {
+  id: string;
+  name: string;
+  slug: string;
+  description?: string;
+  price: number;
+  compareAtPrice?: number;
+  category: string;
+  tags?: string[];
+  status: 'ACTIVE' | 'DRAFT' | 'ARCHIVED';
+  featured?: boolean;
+  images?: ProductImage[];
+  variants?: ProductVariant[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ProductImage {
+  id: string;
+  productId: string;
+  imageUrl: string;
+  altText?: string;
+  order: number;
+}
+
+export interface ProductVariant {
+  id: string;
+  productId: string;
+  name: string;
+  sku?: string;
+  price: number;
+  stock: number;
+}
+
 // Helper type for API response extraction
 export type ExtractData<T> = T extends ApiResponse<infer D> ? D : T;

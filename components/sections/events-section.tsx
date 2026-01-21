@@ -6,6 +6,7 @@ import EventCard from './event-card';
 import { useGetEventsQuery } from '@/lib/redux/api/openapi.generated';
 import { Loader2 } from 'lucide-react';
 import { Event, ApiResponse } from '@/lib/types/api';
+import { events as staticEvents } from '@/lib/data/events-data';
 
 export default function EventsSection() {
   const { data, isLoading } = useGetEventsQuery({
@@ -15,7 +16,27 @@ export default function EventsSection() {
 
   // Handle response structure - cast to proper type
   const response = data as ApiResponse<Event[]> | undefined;
-  const events: Event[] = response?.data || [];
+  const apiEvents: Event[] = response?.data || [];
+
+  // Map static data to Event format for fallback
+  const fallbackEvents: Event[] = staticEvents.map((item, index) => ({
+    id: `static-${index}`,
+    title: item.title,
+    description: '',
+    flyerUrl: item.image,
+    eventDate: item.date,
+    venue: item.location,
+    location: item.location,
+    ticketStatus: item.status,
+    type: item.type,
+    status: 'UPCOMING' as const,
+    creatorId: '',
+    createdAt: item.date,
+    updatedAt: item.date,
+  }));
+
+  // Use API data if available, otherwise fall back to static data
+  const events = apiEvents.length > 0 ? apiEvents : fallbackEvents;
 
   return (
     <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
@@ -48,13 +69,29 @@ export default function EventsSection() {
           </div>
         )}
 
-        {/* Events Grid - 4 columns, 8 events */}
+        {/* Events - Horizontal scroll on mobile, grid on desktop */}
         {!isLoading && events.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-8">
-            {events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            ))}
-          </div>
+          <>
+            {/* Mobile: Horizontal Scrollable with peek */}
+            <div className="block sm:hidden">
+              <div className="overflow-x-auto scrollbar-hide">
+                <div className="flex gap-3 pb-4">
+                  {events.map((event) => (
+                    <div key={event.id} className="shrink-0 w-[85%]">
+                      <EventCard event={event} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Desktop: Grid layout */}
+            <div className="hidden sm:grid sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-8">
+              {events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              ))}
+            </div>
+          </>
         )}
 
         {/* Empty State */}
