@@ -39,7 +39,7 @@ export function EditorialCarousel({
           {articles.map((article) => (
             <CarouselItem
               key={article.id}
-              className="pl-3 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+              className="pl-3 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
               <EditorialCard article={article} />
             </CarouselItem>
           ))}

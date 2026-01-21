@@ -41,7 +41,7 @@ export function SelectCarousel({
           {profiles.map((profile) => (
             <CarouselItem
               key={profile.id}
-              className="pl-3 basis-full sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+              className="pl-3 basis-[85%] sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
               <SelectCard
                 profile={profile}
                 showEpisodeNumber={showEpisodeNumbers}
