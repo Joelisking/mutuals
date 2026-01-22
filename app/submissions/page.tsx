@@ -288,7 +288,7 @@ export default function SubmissionsPage() {
                   {/* Header */}
                   <div className="space-y-3 pb-6 border-b border-[rgba(255,255,255,0.08)]">
                     <h2 className="text-[28px] md:text-[36px] text-white tracking-[-0.02em] font-medium">
-                      Submit Your Work
+                      Submissions
                     </h2>
                     <p className="text-[15px] text-[rgba(255,255,255,0.6)] font-light">
                       Fill out the form below and we&apos;ll review
