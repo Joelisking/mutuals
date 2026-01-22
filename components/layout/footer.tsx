@@ -120,9 +120,9 @@ export default function Footer() {
               </li>
               <li>
                 <a
-                  href="#"
+                  href="/submissions"
                   className="text-sm text-white/50 hover:text-white transition-colors font-light">
-                  Submit Your Work
+                  Submissions
                 </a>
               </li>
               <li>

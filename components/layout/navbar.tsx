@@ -46,11 +46,11 @@ export default function Navbar() {
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               Events
             </Link>
-            <Link
+            {/* <Link
               href="/submissions"
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
               Submissions
-            </Link>
+            </Link> */}
             <Link
               href="/shop"
               className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
