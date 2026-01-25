@@ -22,18 +22,24 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a
-                href="#"
-                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
+                href="https://x.com/mutualsplus"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all"
+                aria-label="X">
                 <svg
                   className="w-4 h-4"
                   fill="white"
                   viewBox="0 0 24 24">
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" />
+                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
                 </svg>
               </a>
               <a
-                href="#"
-                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
+                href="https://www.instagram.com/mutualsplus"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all"
+                aria-label="Instagram">
                 <svg
                   className="w-4 h-4"
                   fill="white"
@@ -56,13 +62,16 @@ export default function Footer() {
                 </svg>
               </a>
               <a
-                href="#"
-                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all">
+                href="https://www.youtube.com/@mutualsplus"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/5 border border-white/10 rounded-sm p-2.5 hover:bg-white/8 hover:border-white/20 transition-all"
+                aria-label="YouTube">
                 <svg
                   className="w-4 h-4"
                   fill="white"
                   viewBox="0 0 24 24">
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                 </svg>
               </a>
             </div>

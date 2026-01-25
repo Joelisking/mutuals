@@ -43,7 +43,9 @@ export default function PlaylistsSection() {
             <Button
               variant="outline"
               className="px-9 py-5 transition-all duration-200 hover:scale-105 hover:bg-white/10">
+                <Link href={'https://linktr.ee/mutuals.plus'} target='_blank'>
               LISTEN
+                </Link>
             </Button>
           </div>
 
