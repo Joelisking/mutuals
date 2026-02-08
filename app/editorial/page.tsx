@@ -8,7 +8,15 @@ import { Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import { Article, ApiResponse } from '@/lib/types/api';
 
-const categories = ['All', 'Art', 'Fashion', 'Music', 'Photography', 'Literature', 'Film'];
+const categories = [
+  'All',
+  'Art',
+  'Fashion',
+  'Music',
+  'Photography',
+  'Literature',
+  'Film',
+];
 
 export default function EditorialPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -16,7 +24,9 @@ export default function EditorialPage() {
   const { data, isLoading, error } = useGetArticlesQuery({
     limit: 50,
     status: 'PUBLISHED',
-    category: selectedCategory === 'All' ? undefined : selectedCategory,
+    category:
+      selectedCategory === 'All' ? undefined : selectedCategory,
+    excludeCategory: 'Select+',
   });
 
   // Handle response structure - cast to proper type
@@ -24,14 +34,16 @@ export default function EditorialPage() {
   const articles: Article[] = response?.data || [];
 
   // Get featured article for "All" view
-  const featuredArticle = selectedCategory === 'All'
-    ? articles.find((a) => a.featured)
-    : null;
+  const featuredArticle =
+    selectedCategory === 'All'
+      ? articles.find((a) => a.featured)
+      : null;
 
   // Get non-featured articles (or all if not on "All" view)
-  const displayArticles = selectedCategory === 'All'
-    ? articles.filter((a) => !a.featured)
-    : articles;
+  const displayArticles =
+    selectedCategory === 'All'
+      ? articles.filter((a) => !a.featured)
+      : articles;
 
   // Format date helper
   const formatDate = (dateString?: string) => {
@@ -44,26 +56,40 @@ export default function EditorialPage() {
   };
 
   // Get author name
-  const getAuthorName = (author?: { firstName: string; lastName: string }) => {
+  const getAuthorName = (author?: {
+    firstName: string;
+    lastName: string;
+  }) => {
     if (!author) return 'Mutuals+';
     return `${author.firstName} ${author.lastName}`;
   };
 
   // Get image URL with fallback
   const getImageUrl = (article: Article) => {
-    return article.heroMediaUrl || '/assets/editorial-visual-culture.png';
+    return (
+      article.heroMediaUrl || '/assets/editorial-visual-culture.png'
+    );
   };
 
   return (
-    <div className="min-h-screen bg-[#050507] pt-32 md:pt-36">
-      <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+    <div className="relative min-h-screen bg-[#050507] pt-32 md:pt-36 overflow-hidden">
+      {/* Ambient background */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute top-0 left-0 w-full h-[50vh] bg-linear-to-b from-[#1ecbe1]/2 via-transparent to-transparent" />
+        <div className="absolute top-[20%] right-[10%] w-[40vw] h-[40vw] rounded-full bg-[#e91e8c]/3 blur-[100px]" />
+        <div className="absolute top-[60%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#1ecbe1]/3 blur-[100px]" />
+      </div>
+
+      <div className="relative max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-[56px] md:text-[72px] lg:text-[96px] text-white tracking-[-0.03em] font-medium mb-6">
             Editorial
           </h1>
           <p className="text-[16px] md:text-[18px] text-[rgba(255,255,255,0.6)] max-w-[600px] font-light leading-relaxed">
-            In-depth features, interviews, and stories celebrating culture, creativity, and innovation across the African diaspora.
+            In-depth features, interviews, and stories celebrating
+            culture, creativity, and innovation across the African
+            diaspora.
           </p>
         </div>
 
@@ -78,8 +104,7 @@ export default function EditorialPage() {
                   selectedCategory === category
                     ? 'bg-white text-[#050507]'
                     : 'bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.15)] text-[rgba(255,255,255,0.7)] hover:bg-[rgba(255,255,255,0.08)] hover:text-white'
-                }`}
-              >
+                }`}>
                 {category}
               </button>
             ))}
@@ -103,23 +128,22 @@ export default function EditorialPage() {
         )}
 
         {!isLoading && !error && (
-          <>
+          <div className="space-y-20">
             {/* Featured Article */}
             {featuredArticle && (
               <div className="mb-20">
                 <Link
                   href={`/editorial/${featuredArticle.slug}`}
-                  className="group block"
-                >
+                  className="group block">
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 bg-[#0a0a0f] border border-[rgba(255,255,255,0.08)] rounded-[4px] overflow-hidden hover:border-[rgba(255,255,255,0.15)] transition-all">
                     {/* Image */}
-                    <div className="relative aspect-[4/3] lg:aspect-auto overflow-hidden">
+                    <div className="relative aspect-4/3 lg:aspect-auto overflow-hidden min-h-[400px]">
                       <Image
                         src={getImageUrl(featuredArticle)}
                         alt={featuredArticle.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                        width={800}
-                        height={600}
+                        width={1200}
+                        height={900}
                       />
                       <div className="absolute top-6 left-6">
                         <span className="bg-[#1ecbe1] px-4 py-2 rounded-sm text-[11px] text-[#050507] uppercase tracking-[0.12em] font-bold">
@@ -134,24 +158,32 @@ export default function EditorialPage() {
                         <span className="text-[11px] text-[#1ecbe1] uppercase tracking-[0.12em] font-medium">
                           {featuredArticle.tags?.[0] || 'Editorial'}
                         </span>
-                        <span className="text-[rgba(255,255,255,0.3)]">•</span>
+                        <span className="text-[rgba(255,255,255,0.3)]">
+                          •
+                        </span>
                         <span className="text-[11px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.12em] font-medium">
                           {featuredArticle.category}
                         </span>
                       </div>
 
-                      <h2 className="text-[32px] md:text-[40px] text-white tracking-[-0.02em] font-medium mb-4 leading-tight">
+                      <h2 className="text-[32px] md:text-[40px] lg:text-[48px] text-white tracking-[-0.02em] font-medium mb-4 leading-tight">
                         {featuredArticle.title}
                       </h2>
 
-                      <p className="text-[16px] text-[rgba(255,255,255,0.7)] mb-6 font-light leading-relaxed">
-                        {featuredArticle.excerpt || featuredArticle.subtitle || featuredArticle.description}
+                      <p className="text-[16px] text-[rgba(255,255,255,0.7)] mb-6 font-light leading-relaxed max-w-lg">
+                        {featuredArticle.excerpt ||
+                          featuredArticle.subtitle ||
+                          featuredArticle.description}
                       </p>
 
                       <div className="flex items-center gap-4 text-[13px] text-[rgba(255,255,255,0.5)] font-light">
-                        <span>{getAuthorName(featuredArticle.author)}</span>
+                        <span>
+                          {getAuthorName(featuredArticle.author)}
+                        </span>
                         <span>•</span>
-                        <span>{formatDate(featuredArticle.publishDate)}</span>
+                        <span>
+                          {formatDate(featuredArticle.publishDate)}
+                        </span>
                         {featuredArticle.readTime && (
                           <>
                             <span>•</span>
@@ -162,9 +194,18 @@ export default function EditorialPage() {
 
                       <div className="mt-8">
                         <span className="inline-flex items-center gap-2 text-[13px] text-white uppercase tracking-[0.12em] font-medium group-hover:gap-3 transition-all">
-                          Read Article
-                          <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                            <path d="M6 3L11 8L6 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                          Read Feature
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 16 16">
+                            <path
+                              d="M6 3L11 8L6 13"
+                              stroke="currentColor"
+                              strokeWidth="1.5"
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                            />
                           </svg>
                         </span>
                       </div>
@@ -176,31 +217,27 @@ export default function EditorialPage() {
 
             {/* Articles Grid */}
             {displayArticles.length > 0 && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {displayArticles.map((article) => (
                   <Link
                     key={article.id}
                     href={`/editorial/${article.slug}`}
-                    className="group block"
-                  >
-                    <div className="flex flex-col h-full">
+                    className="group block">
+                    <div className="flex flex-col h-full bg-[#0a0a0f] border border-transparent hover:border-[rgba(255,255,255,0.08)] rounded-[4px] p-4 transition-all">
                       {/* Image Container */}
-                      <div className="relative aspect-[16/9] overflow-hidden rounded-[2px] mb-4">
+                      <div className="relative aspect-16/10 overflow-hidden rounded-[2px] mb-5">
                         <Image
                           src={getImageUrl(article)}
                           alt={article.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                           width={800}
-                          height={450}
+                          height={500}
                         />
-
-                        {/* Subtle gradient overlay */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.4)] via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                         {/* Tag badge */}
                         {article.tags?.[0] && (
                           <div className="absolute top-3 left-3">
-                            <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[rgba(0,0,0,0.6)] backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
+                            <span className="text-[10px] text-white uppercase tracking-[0.15em] font-semibold bg-[#050507]/80 backdrop-blur-sm px-2.5 py-1 rounded-[2px]">
                               {article.tags[0]}
                             </span>
                           </div>
@@ -210,36 +247,38 @@ export default function EditorialPage() {
                       {/* Content */}
                       <div className="flex flex-col flex-1">
                         {/* Category and Date */}
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-[10px] text-[rgba(255,255,255,0.5)] uppercase tracking-[0.15em] font-medium">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="text-[11px] text-[#1ecbe1] uppercase tracking-[0.12em] font-medium">
                             {article.category}
                           </span>
-                          <span className="text-[rgba(255,255,255,0.3)] text-[10px]">•</span>
-                          <span className="text-[10px] text-[rgba(255,255,255,0.4)] font-light">
+                          <span className="text-[rgba(255,255,255,0.3)] text-[10px]">
+                            •
+                          </span>
+                          <span className="text-[11px] text-[rgba(255,255,255,0.4)] font-light">
                             {formatDate(article.publishDate)}
                           </span>
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-[18px] md:text-[20px] text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-2 group-hover:text-[#1ecbe1] transition-colors">
+                        <h3 className="text-[20px] md:text-[24px] text-white tracking-[-0.02em] font-medium mb-3 leading-tight group-hover:text-[#1ecbe1] transition-colors">
                           {article.title}
                         </h3>
 
                         {/* Excerpt */}
-                        <p className="text-[13px] text-[rgba(255,255,255,0.6)] font-light leading-relaxed line-clamp-2 mb-3 flex-1">
-                          {article.excerpt || article.subtitle || article.description}
+                        <p className="text-[14px] text-[rgba(255,255,255,0.6)] font-light leading-relaxed line-clamp-2 mb-4 flex-1">
+                          {article.excerpt ||
+                            article.subtitle ||
+                            article.description}
                         </p>
 
-                        {/* Author and Read Time */}
-                        <div className="flex items-center justify-between pt-3 border-t border-[rgba(255,255,255,0.06)]">
+                        {/* Author */}
+                        <div className="flex items-center justify-between pt-4 border-t border-[rgba(255,255,255,0.08)] mt-auto">
                           <span className="text-[11px] text-[rgba(255,255,255,0.5)] font-light">
-                            {getAuthorName(article.author)}
+                            By {getAuthorName(article.author)}
                           </span>
-                          {article.readTime && (
-                            <span className="text-[11px] text-[rgba(255,255,255,0.4)] font-light">
-                              {article.readTime}
-                            </span>
-                          )}
+                          <span className="text-[11px] text-[rgba(255,255,255,0.3)] uppercase tracking-[0.12em] group-hover:text-white transition-colors">
+                            Read
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -250,13 +289,13 @@ export default function EditorialPage() {
 
             {/* Empty State */}
             {articles.length === 0 && (
-              <div className="text-center py-20">
+              <div className="text-center py-20 border border-[rgba(255,255,255,0.08)] rounded-[4px] bg-[rgba(255,255,255,0.02)]">
                 <p className="text-[18px] text-[rgba(255,255,255,0.5)] font-light">
-                  No articles found in this category.
+                  No stories found in this category yet.
                 </p>
               </div>
             )}
-          </>
+          </div>
         )}
       </div>
     </div>

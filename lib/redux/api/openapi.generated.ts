@@ -25,6 +25,7 @@ const injectedRtkApi = api
             page: queryArg.page,
             limit: queryArg.limit,
             category: queryArg.category,
+            excludeCategory: queryArg.excludeCategory,
             status: queryArg.status,
             featured: queryArg.featured,
             search: queryArg.search,
@@ -939,6 +940,8 @@ export type GetArticlesApiArg = {
   limit?: number;
   /** Filter by category */
   category?: string;
+  /** Exclude articles with this category */
+  excludeCategory?: string;
   /** Filter by status */
   status?: "DRAFT" | "PUBLISHED" | "ARCHIVED";
   /** Filter by featured */

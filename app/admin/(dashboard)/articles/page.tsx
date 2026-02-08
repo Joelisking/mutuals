@@ -63,12 +63,11 @@ export default function ArticlesPage() {
         ? undefined
         : (statusFilter as 'DRAFT' | 'PUBLISHED' | 'ARCHIVED'),
     category: categoryFilter === 'ALL' ? undefined : categoryFilter,
+    excludeCategory: 'Select+',
     featured:
-      featuredFilter === 'ALL'
+      !featuredFilter || featuredFilter === 'ALL'
         ? undefined
-        : featuredFilter === 'true'
-          ? true
-          : false,
+        : featuredFilter === 'true',
     search: debouncedSearch || undefined,
   });
 

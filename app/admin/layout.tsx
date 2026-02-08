@@ -1,12 +1,11 @@
-
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-background font-sans antialiased">
-        {children}
+    <div className="min-h-screen bg-background font-sans antialiased mt-20">
+      {children}
     </div>
   );
 }

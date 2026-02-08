@@ -11,6 +11,7 @@ export default function EditorialSection() {
   const { data, isLoading } = useGetArticlesQuery({
     limit: 8,
     status: 'PUBLISHED',
+    excludeCategory: 'Select+',
   });
 
   // Handle response structure - cast to proper type

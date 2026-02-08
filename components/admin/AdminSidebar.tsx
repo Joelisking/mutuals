@@ -11,6 +11,7 @@ import {
   Settings,
   Image as ImageIcon,
   ChevronDown,
+  Star,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -24,6 +25,11 @@ const sidebarItems = [
     title: 'Articles',
     href: '/admin/articles',
     icon: FileText,
+  },
+  {
+    title: 'Select+',
+    href: '/admin/select',
+    icon: Star,
   },
   {
     title: 'Events',

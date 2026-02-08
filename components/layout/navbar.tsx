@@ -66,7 +66,7 @@ export default function Navbar() {
                 Shop
               </Link>
               <Link
-                href="/select-plus"
+                href="/select"
                 className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
                 SELECT+
               </Link>
@@ -158,7 +158,7 @@ export default function Navbar() {
                 Editorial
               </Link>
               <Link
-                href="/select-plus"
+                href="/select"
                 className="block text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
                 SELECT+
               </Link>

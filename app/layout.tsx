@@ -5,6 +5,7 @@ import { CartProvider } from "@/lib/context/cart-context";
 import { Providers } from "@/lib/providers";
 import Navbar from "@/components/layout/navbar";
 import Footer from "@/components/layout/footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -30,6 +31,7 @@ export default function RootLayout({
             <Navbar />
             {children}
             <Footer />
+            <Toaster theme="dark" position="bottom-right" />
           </CartProvider>
         </Providers>
       </body>

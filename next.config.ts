@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: 'alabaster-demo.s3.us-east-1.amazonaws.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '/**',
+      },
     ],
   },
   async rewrites() {
