@@ -48,6 +48,25 @@ export interface Article {
   }>;
 }
 
+// Select+ specific article with extra creative fields
+export interface SelectArticle extends Article {
+  bio?: string;
+  creativeName?: string;
+  creativeRole?: string;
+  location?: string;
+  episodeNumber?: number;
+  video?: string;
+  socialLinks?: {
+    instagram?: string;
+    twitter?: string;
+    website?: string;
+  };
+  stats?: {
+    label: string;
+    value: string;
+  }[];
+}
+
 export interface RelatedArticle {
   id: string;
   title: string;
