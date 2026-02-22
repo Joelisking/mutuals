@@ -29,7 +29,7 @@ export function SelectPreview({ article }: SelectPreviewProps) {
         className="sticky top-0 h-screen flex flex-col justify-between items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${imageUrl})` }}>
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/50" />
+        {/* <div className="absolute inset-0 bg-black/50" /> */}
 
         <div className="relative text-white px-4 mt-[20vh]">
           {tagParts.length > 0 && (
@@ -37,18 +37,18 @@ export function SelectPreview({ article }: SelectPreviewProps) {
               {tagParts.join('  /  ')}
             </p>
           )}
-          <h2 className="uppercase text-4xl text-center sm:text-6xl lg:text-8xl font-medium">
+          {/* <h2 className="uppercase text-4xl text-center sm:text-6xl lg:text-8xl font-medium">
             {displayName}
-          </h2>
+          </h2> */}
         </div>
 
-        {article.bio && (
+        {/* {article.bio && (
           <div className="absolute bottom-25 right-10">
             <p className="max-w-sm text-xs md:text-sm uppercase tracking-wide text-white/70 font-medium">
               {article.bio}
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </Link>
   );
