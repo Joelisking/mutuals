@@ -76,7 +76,7 @@ export default function EventPage({ params }: EventPageProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-0 pt-8 md:pt-26 pb-32">
+      <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-16 pt-8 md:pt-26 pb-32">
         {/* Top bar / back link */}
         <div className="flex items-center justify-between gap-4 mb-10 md:mb-16">
           <button
