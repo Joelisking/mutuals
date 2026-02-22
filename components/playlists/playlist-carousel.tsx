@@ -32,16 +32,14 @@ export function PlaylistCarousel({
         </div>
       </div>
 
-      {/* Desktop: Horizontal Scrollable Carousel - Maintains wide cards for 2-column Apple Music layout */}
-      <div className="hidden md:block mt-12 ">
-        <div className="overflow-x-auto scrollbar-hide">
-          <div className="flex gap-6 px-4 md:px-8 lg:px-16 pb-4 lg:-ml-16">
-            {playlists.map((playlist, index) => (
-              <div key={index} className="shrink-0 w-[500px]">
-                <PlaylistCard playlist={playlist} />
-              </div>
-            ))}
-          </div>
+      {/* Desktop: Full-width equal columns */}
+      <div className="hidden md:block mt-12">
+        <div className="flex gap-6">
+          {playlists.map((playlist, index) => (
+            <div key={index} className="flex-1 min-w-0">
+              <PlaylistCard playlist={playlist} />
+            </div>
+          ))}
         </div>
       </div>
     </div>
@@ -55,19 +53,16 @@ interface PlaylistCardProps {
 function PlaylistCard({ playlist }: PlaylistCardProps) {
   return (
     <div className="rounded-lg overflow-hidden h-full">
-      {/* Apple Music Embed - Original light theme */}
       <iframe
-        allow="autoplay *; encrypted-media *;"
-        height="450"
-        style={{
-          width: '100%',
-          overflow: 'hidden',
-          borderRadius: '8px',
-          display: 'block',
-        }}
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation"
         src={playlist.embedUrl}
         title={playlist.name}
+        width="100%"
+        height="500"
+        frameBorder={0}
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+        style={{ borderRadius: '12px', display: 'block' }}
       />
     </div>
   );

@@ -1,22 +1,19 @@
 export interface Playlist {
   name: string;
-  embedUrl: string; // Apple Music embed URL
+  embedUrl: string;
 }
 
 export const playlists: Playlist[] = [
   {
     name: 'ALTE+',
-    embedUrl:
-      'https://embed.music.apple.com/us/playlist/alte/pl.u-06oxpyxT7LE831J',
+    embedUrl: 'https://open.spotify.com/embed/playlist/5SWGitla2ckYWNEY2GzZXX?utm_source=generator&theme=0',
   },
   {
     name: 'TAP IN+',
-    embedUrl:
-      'https://embed.music.apple.com/us/playlist/tap-in/pl.u-yZyVEAXtZXk3ARB',
+    embedUrl: 'https://open.spotify.com/embed/playlist/3xhI6PhfgA04ZeTNvy7PQJ?utm_source=generator&theme=0',
   },
   {
     name: 'SOUND UP+',
-    embedUrl:
-      'https://embed.music.apple.com/us/playlist/sound-up/pl.u-XkD0vRZcgY8lbEB',
+    embedUrl: 'https://open.spotify.com/embed/playlist/5y3Nt0j3IqC5o7DZYtbWw2?utm_source=generator&theme=0',
   },
 ];
