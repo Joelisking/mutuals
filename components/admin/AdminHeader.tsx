@@ -4,6 +4,7 @@
 import { User } from "lucide-react";
 import { useDispatch, useSelector } from "@/lib/redux/store";
 import { authActions, selectUser } from "@/lib/redux/slices/auth";
+import { MUTUALS_COOKIE_ID } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import {
   DropdownMenu,
@@ -22,6 +23,8 @@ export function AdminHeader() {
   const user = useSelector(selectUser);
 
   const handleLogout = () => {
+    // Clear the auth cookie so Next.js middleware stops allowing access
+    document.cookie = `${MUTUALS_COOKIE_ID}=; path=/; max-age=0; SameSite=Strict`;
     dispatch(authActions.logout());
     router.push("/admin/login");
   };

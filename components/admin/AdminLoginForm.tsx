@@ -1,8 +1,7 @@
-
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -10,6 +9,7 @@ import { Loader2, Eye, EyeOff } from "lucide-react";
 import { usePostAuthLoginMutation } from "@/lib/redux/api/openapi.generated";
 import { useDispatch } from "@/lib/redux/store";
 import { authActions } from "@/lib/redux/slices/auth";
+import { MUTUALS_COOKIE_ID } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -31,8 +31,11 @@ const formSchema = z.object({
   }),
 });
 
+const SEVEN_DAYS_IN_SECONDS = 60 * 60 * 24 * 7;
+
 export function AdminLoginForm() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const dispatch = useDispatch();
   const [login, { isLoading }] = usePostAuthLoginMutation();
   const [showPassword, setShowPassword] = useState(false);
@@ -54,35 +57,29 @@ export function AdminLoginForm() {
         },
       }).unwrap();
 
-      // Dispatch login success action to store user and token
-      // We need to decode the token or assume the backend returns user info.
-      // The generated type PostAuthLoginApiResponse doesn't seem to have data fields visible here, 
-      // but usually it mimics the success response.
-      // Let's assume result.data contains user and tokens as per common patterns or check the type definition.
-      // Based on typical API we might need to fetch user profile after login or the login response has it.
-      // The swagger says "Login successful" but didn't explicitly show the schema of the response data in the summary I saw.
-      // However, usually it returns { success: true, data: { user, accessToken, refreshToken } }
-      
-      // Let's inspect the result structure in console if needed, but standard practice:
-      
-      // Assuming structure based on auth slice expectation:
-      if (result && (result as any).data) {
-          const { user, accessToken, refreshToken } = (result as any).data;
-          dispatch(authActions.loginSuccess({ user, accessToken, refreshToken }));
-          toast.success("Login successful");
-          router.push("/admin/dashboard");
-      } else {
-           // Fallback or if structure is different. 
-           // If the API only returns a message, we might need to call /auth/me
-           // But auth slice expects user.
-           // For now, let's assume standard response.
-           
-           // If 'data' is missing, it might be that the result IS the data if unwrapped?
-           // No, unwrap returns the payload.
-           
-          toast.error("Login failed: Invalid response format");
+      const data = (result as any)?.data;
+
+      if (!data?.user || !data?.accessToken) {
+        toast.error("Login failed: unexpected response from server");
+        return;
       }
 
+      const { user, accessToken, refreshToken } = data;
+
+      // Persist token in a cookie so the Next.js middleware can read it
+      document.cookie = [
+        `${MUTUALS_COOKIE_ID}=${accessToken}`,
+        `path=/`,
+        `max-age=${SEVEN_DAYS_IN_SECONDS}`,
+        `SameSite=Strict`,
+      ].join('; ');
+
+      dispatch(authActions.loginSuccess({ user, accessToken, refreshToken }));
+      toast.success("Login successful");
+
+      // Redirect to the originally requested page, or dashboard
+      const from = searchParams.get("from") || "/admin/dashboard";
+      router.push(from);
     } catch (error: any) {
       console.error("Login Error:", error);
       const errorMessage = error?.data?.message || "Invalid email or password";

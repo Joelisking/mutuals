@@ -133,7 +133,7 @@ async function handleLogout(api: any) {
 
   // Redirect to login page
   if (typeof window !== 'undefined') {
-    window.location.href = '/auth/login?session_expired=true';
+    window.location.href = '/admin/login?session_expired=true';
   }
 }
 
