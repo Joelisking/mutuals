@@ -25,7 +25,7 @@ export default function SelectSection() {
   const articles = apiArticles.length > 0 ? apiArticles : fallbackArticles;
 
   return (
-    <section className="bg-[#050507] py-16  px-4 md:px-8 lg:px-16">
+    <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
       <div className="max-w-screen-2xl mx-auto">
         {/* Header */}
         <div>

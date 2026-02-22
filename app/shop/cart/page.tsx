@@ -18,8 +18,8 @@ export default function CartPage() {
     return (
       <>
         <ShopSubNav />
-        <div className="min-h-screen bg-[#050507] pt-32 md:pt-36">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+        <div className="min-h-screen bg-[#050507] pt-32 md:pt-36 px-4 md:px-8 lg:px-16">
+          <div className="max-w-screen-2xl mx-auto py-16 md:py-24">
             <h1 className="text-5xl md:text-6xl text-white tracking-[-0.03em] font-medium mb-8">
               Your Cart
             </h1>
@@ -57,8 +57,8 @@ export default function CartPage() {
   return (
     <>
       <ShopSubNav />
-      <div className="min-h-screen bg-[#050507] pt-32 md:pt-36">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+      <div className="min-h-screen bg-[#050507] pt-32 md:pt-36 px-4 md:px-8 lg:px-16">
+        <div className="max-w-screen-2xl mx-auto py-16 md:py-24">
           <div className="flex items-center justify-between mb-12">
             <h1 className="text-5xl md:text-6xl text-white tracking-[-0.03em] font-medium">
               Your Cart
@@ -112,7 +112,7 @@ export default function CartPage() {
                               updateQuantity(
                                 item.product.id,
                                 item.size,
-                                item.quantity - 1
+                                item.quantity - 1,
                               )
                             }
                             className="px-4 py-2 text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors">
@@ -126,7 +126,7 @@ export default function CartPage() {
                               updateQuantity(
                                 item.product.id,
                                 item.size,
-                                item.quantity + 1
+                                item.quantity + 1,
                               )
                             }
                             className="px-4 py-2 text-white hover:bg-[rgba(255,255,255,0.05)] transition-colors">
@@ -150,7 +150,7 @@ export default function CartPage() {
                       <p className="text-[20px] md:text-[24px] text-white font-medium">
                         $
                         {(item.product.price * item.quantity).toFixed(
-                          2
+                          2,
                         )}
                       </p>
                     </div>

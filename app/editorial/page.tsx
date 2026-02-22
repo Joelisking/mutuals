@@ -80,7 +80,7 @@ export default function EditorialPage() {
         <div className="absolute top-[60%] left-[-10%] w-[40vw] h-[40vw] rounded-full bg-[#1ecbe1]/3 blur-[100px]" />
       </div>
 
-      <div className="relative max-w-[1440px] mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+      <div className="relative max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-[56px] md:text-[72px] lg:text-[96px] text-white tracking-[-0.03em] font-medium mb-6">

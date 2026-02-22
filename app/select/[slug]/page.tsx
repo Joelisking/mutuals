@@ -19,12 +19,16 @@ interface SelectArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-export default function SelectArticlePage({ params }: SelectArticlePageProps) {
+export default function SelectArticlePage({
+  params,
+}: SelectArticlePageProps) {
   const { slug } = React.use(params);
   const articleRef = useRef<HTMLDivElement>(null);
   const [showScrollTop, setShowScrollTop] = React.useState(false);
 
-  const { data, isLoading, error } = useGetArticlesBySlugQuery({ slug });
+  const { data, isLoading, error } = useGetArticlesBySlugQuery({
+    slug,
+  });
 
   const response = data as ApiResponse<SelectArticle> | undefined;
   const article = response?.data;
@@ -32,9 +36,11 @@ export default function SelectArticlePage({ params }: SelectArticlePageProps) {
   // Related Select+ articles for the carousel
   const { data: relatedData } = useGetArticlesQuery(
     { category: 'Select+', status: 'PUBLISHED', limit: 6 },
-    { skip: !article }
+    { skip: !article },
   );
-  const relatedResponse = relatedData as ApiResponse<Article[]> | undefined;
+  const relatedResponse = relatedData as
+    | ApiResponse<Article[]>
+    | undefined;
   const relatedArticles = (relatedResponse?.data || [])
     .filter((a) => a.id !== article?.id)
     .slice(0, 5);
@@ -61,25 +67,31 @@ export default function SelectArticlePage({ params }: SelectArticlePageProps) {
     notFound();
   }
 
-  const creativeName = article.subtitle?.split('|')[0]?.trim() || article.title;
+  const creativeName =
+    article.subtitle?.split('|')[0]?.trim() || article.title;
   const creativeRole = article.subtitle?.split('|')[1]?.trim();
 
   return (
     <div className="relative min-h-screen bg-[#050507] text-white overflow-x-hidden">
       {/* ── Full-bleed hero — no overlay, no text ── */}
-      <div className="relative w-full h-screen">
+      <div className="w-full mt-20">
         <Image
-          src={article.heroMediaUrl || '/images/placeholder-article.jpg'}
+          src={
+            article.heroMediaUrl || '/images/placeholder-article.jpg'
+          }
           alt={article.title}
-          fill
-          className="object-cover"
+          width={1920}
+          height={1080}
+          className="w-full h-auto"
           priority
           sizes="100vw"
         />
       </div>
 
       {/* ── Back button sits just below the hero ── */}
-      <div ref={articleRef} className="max-w-7xl mx-auto px-4 md:px-8">
+      <div
+        ref={articleRef}
+        className="max-w-screen-2xl mx-auto px-4 md:px-8">
         <div className="py-8 border-b border-white/10">
           <Link
             href="/select"
@@ -94,7 +106,13 @@ export default function SelectArticlePage({ params }: SelectArticlePageProps) {
           <span className="text-[#1ecbe1] text-[10px] uppercase font-bold tracking-widest">
             Select+
             {article.tags?.find((t) => t.startsWith('EP:')) && (
-              <> &nbsp;·&nbsp; {article.tags.find((t) => t.startsWith('EP:'))?.replace('EP:', 'EP.')}</>
+              <>
+                {' '}
+                &nbsp;·&nbsp;{' '}
+                {article.tags
+                  .find((t) => t.startsWith('EP:'))
+                  ?.replace('EP:', 'EP.')}
+              </>
             )}
           </span>
 
@@ -140,10 +158,14 @@ export default function SelectArticlePage({ params }: SelectArticlePageProps) {
 
       {/* Back to top */}
       <button
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        onClick={() =>
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+        }
         className={cn(
           'fixed bottom-8 right-8 z-40 bg-white text-black p-3 rounded-full shadow-lg hover:scale-110 transition-all duration-300',
-          showScrollTop ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+          showScrollTop
+            ? 'translate-y-0 opacity-100'
+            : 'translate-y-20 opacity-0',
         )}>
         <ArrowUp className="w-5 h-5" />
       </button>

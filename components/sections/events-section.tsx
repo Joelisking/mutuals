@@ -45,7 +45,7 @@ export default function EventsSection() {
         <div>
           <div className="flex items-end justify-between mb-3">
             <div>
-              <h2 className="text-3xl md:text-4xl lg:text-5xl text-white tracking-[-0.02em] font-medium">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl text-white tracking-[-0.02em] font-medium mb-1">
                 Events
               </h2>
               <p className="text-base md:text-base text-white/50 font-light max-w-2xl">

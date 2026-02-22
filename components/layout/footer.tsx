@@ -2,8 +2,8 @@ import Image from 'next/image';
 
 export default function Footer() {
   return (
-    <footer className="bg-[#050507] border-t border-white/8">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-20">
+    <footer className="bg-[#050507] border-t border-white/8 px-4 md:px-8 lg:px-16 py-16 md:py-20">
+      <div className="max-w-screen-2xl mx-auto">
         {/* Footer Links Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 mb-16">
           {/* Brand */}

@@ -46,8 +46,8 @@ export default function ShopPage() {
         onCategoryChange={handleCategoryChange}
       />
 
-      <div className="pt-32 md:pt-36">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+      <div className="pt-32 md:pt-36 px-4 md:px-8 lg:px-16">
+        <div className="max-w-screen-2xl mx-auto py-16 md:py-24">
           {/* Products Grid - Matching carousel card style */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 gap-y-12">
             {filteredProducts.map((product) => (

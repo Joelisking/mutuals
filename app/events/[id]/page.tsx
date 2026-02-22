@@ -8,6 +8,7 @@ import { useGetEventsByIdQuery } from '@/lib/redux/api/openapi.generated';
 import { Loader2 } from 'lucide-react';
 import { format } from 'date-fns';
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { Event, ApiResponse } from '@/lib/types/api';
 
 interface EventPageProps {
@@ -18,6 +19,7 @@ interface EventPageProps {
 
 export default function EventPage({ params }: EventPageProps) {
   const { id } = React.use(params);
+  const router = useRouter();
   const { data, isLoading, error } = useGetEventsByIdQuery({ id });
 
   // Handle response structure - cast to proper type
@@ -37,7 +39,11 @@ export default function EventPage({ params }: EventPageProps) {
   }
 
   const isSoldOut = event.ticketStatus?.toLowerCase() === 'sold out';
-  const ctaLabel = isSoldOut ? 'Sold Out' : event.ticketLink ? 'Get Tickets' : 'Request to Attend';
+  const ctaLabel = isSoldOut
+    ? 'Sold Out'
+    : event.ticketLink
+      ? 'Get Tickets'
+      : 'Request to Attend';
 
   // Format date
   const formattedDate = event.eventDate
@@ -47,7 +53,8 @@ export default function EventPage({ params }: EventPageProps) {
   const formattedTime = event.eventTime || '';
 
   // Image URL with fallback
-  const imageUrl = event.flyerUrl || '/assets/editorial-visual-culture.png';
+  const imageUrl =
+    event.flyerUrl || '/assets/editorial-visual-culture.png';
 
   // Location display
   const displayLocation = [event.venue, event.city, event.country]
@@ -69,11 +76,11 @@ export default function EventPage({ params }: EventPageProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 lg:px-0 pt-8 md:pt-26 pb-32">
+      <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-0 pt-8 md:pt-26 pb-32">
         {/* Top bar / back link */}
         <div className="flex items-center justify-between gap-4 mb-10 md:mb-16">
-          <Link
-            href="/events"
+          <button
+            onClick={() => router.back()}
             className="inline-flex items-center gap-2 text-xs md:text-sm text-white/70 hover:text-white uppercase tracking-[0.14em] font-medium transition-colors group">
             <svg
               className="w-4 h-4 group-hover:-translate-x-1 transition-transform"
@@ -87,8 +94,8 @@ export default function EventPage({ params }: EventPageProps) {
                 strokeLinejoin="round"
               />
             </svg>
-            Back to Events
-          </Link>
+            Back
+          </button>
         </div>
 
         {/* Main two-column layout */}
@@ -108,7 +115,8 @@ export default function EventPage({ params }: EventPageProps) {
 
               <div className="space-y-2 text-sm md:text-base">
                 <p className="text-white/90 font-light">
-                  {formattedDate} {formattedTime && `at ${formattedTime}`}
+                  {formattedDate}{' '}
+                  {formattedTime && `at ${formattedTime}`}
                 </p>
                 <p className="text-white/70">{displayLocation}</p>
               </div>
@@ -137,7 +145,10 @@ export default function EventPage({ params }: EventPageProps) {
                 <li>• Curated music and live performances</li>
                 <li>• Photo moments and activations</li>
                 <li>• Meet-ups with fellow creatives</li>
-                <li>• Limited-capacity experience – early RSVP recommended</li>
+                <li>
+                  • Limited-capacity experience – early RSVP
+                  recommended
+                </li>
               </ul>
             </div>
           </div>

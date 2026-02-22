@@ -42,7 +42,7 @@ export function ArticleHero({ article }: ArticleHeroProps) {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 md:px-8 pb-16 md:pb-24 flex flex-col items-center justify-center h-full text-center">
+      <div className="relative z-10 w-full max-w-screen-2xl mx-auto px-4 md:px-8 pb-16 md:pb-24 flex flex-col items-center justify-center h-full text-center">
         <div className="max-w-4xl flex flex-col items-center">
           <div className="flex items-center gap-4 mb-6">
             <span className="bg-[#1ecbe1] text-black text-[10px] uppercase font-bold tracking-widest px-2 py-1">

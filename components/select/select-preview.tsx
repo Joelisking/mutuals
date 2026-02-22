@@ -8,7 +8,7 @@ interface SelectPreviewProps {
 }
 
 export function SelectPreview({ article }: SelectPreviewProps) {
-  const displayName = article.creativeName || article.title;
+  // const displayName = article.creativeName || article.title;
   const displayRole = article.creativeRole || '';
   const location = article.location;
   const episodeNumber = article.episodeNumber;
@@ -26,7 +26,7 @@ export function SelectPreview({ article }: SelectPreviewProps) {
   return (
     <Link href={`/select/${article.slug}`} className="cursor-none">
       <div
-        className="sticky top-0 h-screen flex flex-col justify-between items-center bg-cover bg-center"
+        className="sticky top-0 min-h-screen flex flex-col justify-between items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${imageUrl})` }}>
         {/* Dark overlay */}
         {/* <div className="absolute inset-0 bg-black/50" /> */}

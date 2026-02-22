@@ -17,8 +17,8 @@ export default function EventsPage() {
   const events: Event[] = response?.data || [];
 
   return (
-    <div className="min-h-screen bg-[#050507] pt-12">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16 py-16 md:py-24">
+    <div className="min-h-screen bg-[#050507] pt-12 px-4 md:px-8 lg:px-16">
+      <div className="max-w-screen-2xl mx-auto py-16 md:py-24">
         {/* Header */}
         <div className="mb-16">
           <h1 className="text-4xl md:text-6xl lg:text-7xl text-white tracking-[-0.03em] font-medium mb-6">

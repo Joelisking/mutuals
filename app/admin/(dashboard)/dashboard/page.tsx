@@ -57,8 +57,8 @@ export default function DashboardPage() {
 
   const { data: newsletterData, isLoading: newsletterLoading } = useGetNewsletterStatsQuery();
 
-  const totalArticles = (articlesData as any)?.data?.meta?.total ?? "--";
-  const upcomingEvents = (eventsData as any)?.data?.meta?.total ?? "--";
+  const totalArticles = (articlesData as any)?.meta?.total ?? "--";
+  const upcomingEvents = (eventsData as any)?.meta?.total ?? "--";
   const newSubmissions =
     (submissionsData as any)?.data?.new ??
     (submissionsData as any)?.data?.NEW ??

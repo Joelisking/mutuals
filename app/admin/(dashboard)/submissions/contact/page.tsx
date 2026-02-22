@@ -94,8 +94,8 @@ export default function ContactSubmissionsPage() {
     }
   ], [router]);
 
-  const submissions = (data as any)?.data?.items || (data as any)?.data || [];
-  const total = (data as any)?.data?.meta?.total || (data as any)?.meta?.total || 0;
+  const submissions = (data as any)?.data ?? [];
+  const total = (data as any)?.meta?.total ?? 0;
 
   return (
     <div className="flex flex-col gap-6">

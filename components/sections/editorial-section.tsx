@@ -19,27 +19,30 @@ export default function EditorialSection() {
   const apiArticles: Article[] = response?.data || [];
 
   // Map static data to Article format for fallback
-  const fallbackArticles: Article[] = editorialItems.map((item, index) => ({
-    id: `static-${index}`,
-    title: item.title,
-    slug: item.title.toLowerCase().replace(/\s+/g, '-'),
-    description: item.description,
-    content: '',
-    category: item.category,
-    tags: [item.tag],
-    status: 'PUBLISHED' as const,
-    publishDate: item.date,
-    heroMediaUrl: item.image,
-    authorId: '',
-    createdAt: item.date,
-    updatedAt: item.date,
-  }));
+  const fallbackArticles: Article[] = editorialItems.map(
+    (item, index) => ({
+      id: `static-${index}`,
+      title: item.title,
+      slug: item.title.toLowerCase().replace(/\s+/g, '-'),
+      description: item.description,
+      content: '',
+      category: item.category,
+      tags: [item.tag],
+      status: 'PUBLISHED' as const,
+      publishDate: item.date,
+      heroMediaUrl: item.image,
+      authorId: '',
+      createdAt: item.date,
+      updatedAt: item.date,
+    }),
+  );
 
   // Use API data if available, otherwise fall back to static data
-  const articles = apiArticles.length > 0 ? apiArticles : fallbackArticles;
+  const articles =
+    apiArticles.length > 0 ? apiArticles : fallbackArticles;
 
   return (
-    <section className="bg-[#050507] py-16 px-4 md:px-8 lg:px-16">
+    <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
       <div className="max-w-screen-2xl mx-auto">
         {/* Header */}
         <div>

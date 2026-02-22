@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -11,17 +11,26 @@ interface ShopSubNavProps {
 }
 
 export default function ShopSubNav({
-  categories = ['ALL', 'NEW IN', 'T-SHIRTS & TOPS', 'HOODIES', 'ACCESSORIES', 'ICON TEES', 'SALE', 'COLLECTIONS'],
+  categories = [
+    'ALL',
+    'NEW IN',
+    'T-SHIRTS & TOPS',
+    'HOODIES',
+    'ACCESSORIES',
+    'ICON TEES',
+    'SALE',
+    'COLLECTIONS',
+  ],
   selectedCategory = 'ALL',
-  onCategoryChange
+  onCategoryChange,
 }: ShopSubNavProps) {
   const pathname = usePathname();
   const isShopRoot = pathname === '/shop';
   const { totalItems } = useCart();
 
   return (
-    <div className="fixed top-16 md:top-20 left-0 right-0 z-40 bg-black border-b border-white/8">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-16">
+    <div className="fixed top-16 md:top-20 left-0 right-0 z-40 bg-black border-b border-white/8 px-4 md:px-8 lg:px-16">
+      <div className="max-w-screen-2xl mx-auto">
         <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide py-4">
           {categories.map((category) => (
             <button
@@ -31,8 +40,7 @@ export default function ShopSubNav({
                 selectedCategory === category
                   ? 'text-white'
                   : 'text-white/50 hover:text-white'
-              }`}
-            >
+              }`}>
               {category}
             </button>
           ))}
@@ -49,8 +57,7 @@ export default function ShopSubNav({
         </button>
         <Link
           href="/shop/cart"
-          className="relative flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
-        >
+          className="relative flex items-center gap-2 text-white/70 hover:text-white transition-colors group">
           <svg
             className="w-5 h-5"
             fill="none"

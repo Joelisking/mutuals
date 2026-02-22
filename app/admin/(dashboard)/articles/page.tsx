@@ -55,10 +55,11 @@ export default function ArticlesPage() {
 
   const debouncedSearch = useDebounce(searchTerm, 500);
 
-  const isAllStatuses = !statusFilter;
-
-  // Shared filter params (everything except status)
-  const sharedParams = {
+  const { data } = useGetArticlesQuery({
+    page: pagination.pageIndex + 1,
+    limit: pagination.pageSize,
+    // Pass 'ALL' when no filter selected — backend returns every status for this value
+    status: (statusFilter || 'ALL') as any,
     category: categoryFilter === 'ALL' ? undefined : categoryFilter,
     excludeCategory: 'Select+',
     featured:
@@ -66,34 +67,7 @@ export default function ArticlesPage() {
         ? undefined
         : featuredFilter === 'true',
     search: debouncedSearch || undefined,
-  };
-
-  // When a specific status is selected, use a single server-paginated query.
-  const { data: filteredData } = useGetArticlesQuery(
-    {
-      page: pagination.pageIndex + 1,
-      limit: pagination.pageSize,
-      status: statusFilter as 'DRAFT' | 'PUBLISHED' | 'ARCHIVED',
-      ...sharedParams,
-    },
-    { skip: isAllStatuses }
-  );
-
-  // When "All Statuses" is selected the API defaults to PUBLISHED only when no
-  // status param is sent, so we run three parallel queries and merge client-side.
-  const ALL_LIMIT = 100;
-  const { data: draftData } = useGetArticlesQuery(
-    { page: 1, limit: ALL_LIMIT, status: 'DRAFT', ...sharedParams },
-    { skip: !isAllStatuses }
-  );
-  const { data: publishedData } = useGetArticlesQuery(
-    { page: 1, limit: ALL_LIMIT, status: 'PUBLISHED', ...sharedParams },
-    { skip: !isAllStatuses }
-  );
-  const { data: archivedData } = useGetArticlesQuery(
-    { page: 1, limit: ALL_LIMIT, status: 'ARCHIVED', ...sharedParams },
-    { skip: !isAllStatuses }
-  );
+  });
 
   const columns: ColumnDef<Record<string, any>>[] = useMemo(
     () => [
@@ -179,36 +153,8 @@ export default function ArticlesPage() {
     []
   );
 
-  const articles = useMemo(() => {
-    if (isAllStatuses) {
-      const drafts = (draftData as any)?.data?.items ?? [];
-      const published = (publishedData as any)?.data?.items ?? [];
-      const archived = (archivedData as any)?.data?.items ?? [];
-      const merged = [...drafts, ...published, ...archived].sort(
-        (a, b) =>
-          new Date(b.publishDate ?? b.createdAt ?? 0).getTime() -
-          new Date(a.publishDate ?? a.createdAt ?? 0).getTime()
-      );
-      const start = pagination.pageIndex * pagination.pageSize;
-      return merged.slice(start, start + pagination.pageSize);
-    }
-    return (filteredData as any)?.data?.items ?? (filteredData as any)?.data ?? [];
-  }, [isAllStatuses, draftData, publishedData, archivedData, filteredData, pagination]);
-
-  const total = useMemo(() => {
-    if (isAllStatuses) {
-      return (
-        ((draftData as any)?.data?.meta?.total ?? 0) +
-        ((publishedData as any)?.data?.meta?.total ?? 0) +
-        ((archivedData as any)?.data?.meta?.total ?? 0)
-      );
-    }
-    return (
-      (filteredData as any)?.data?.meta?.total ??
-      (filteredData as any)?.meta?.total ??
-      0
-    );
-  }, [isAllStatuses, draftData, publishedData, archivedData, filteredData]);
+  const articles = (data as any)?.data ?? [];
+  const total = (data as any)?.meta?.total ?? 0;
 
   return (
     <div className="flex flex-col gap-6">

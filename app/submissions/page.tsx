@@ -77,7 +77,8 @@ export default function SubmissionsPage() {
     {
       id: 'dj',
       label: 'Music & Artists',
-      description: 'DJ Mixes, Original Tracks, Remixes, Performance, Sound Design',
+      description:
+        'DJ Mixes, Original Tracks, Remixes, Performance, Sound Design',
     },
     {
       id: 'photographer',
@@ -97,7 +98,8 @@ export default function SubmissionsPage() {
     {
       id: 'stylist',
       label: 'Styling',
-      description: 'Fashion Styling, Creative Direction, Art Direction',
+      description:
+        'Fashion Styling, Creative Direction, Art Direction',
     },
     {
       id: 'other',
@@ -107,7 +109,7 @@ export default function SubmissionsPage() {
   ];
 
   const handleFileChange = (
-    e: React.ChangeEvent<HTMLInputElement>
+    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     if (e.target.files) {
       setFiles(Array.from(e.target.files));
@@ -127,7 +129,7 @@ export default function SubmissionsPage() {
       }).unwrap();
 
       toast.success(
-        "Message sent successfully! We'll get back to you soon."
+        "Message sent successfully! We'll get back to you soon.",
       );
 
       setIsSubmitted(true);
@@ -136,7 +138,7 @@ export default function SubmissionsPage() {
     } catch (error) {
       const err = error as { data?: { message?: string } };
       toast.error(
-        err?.data?.message || 'Failed to submit. Please try again.'
+        err?.data?.message || 'Failed to submit. Please try again.',
       );
     }
   };
@@ -162,7 +164,7 @@ export default function SubmissionsPage() {
       }).unwrap();
 
       toast.success(
-        "Application submitted successfully! We'll review it and get back to you."
+        "Application submitted successfully! We'll review it and get back to you.",
       );
 
       setIsSubmitted(true);
@@ -172,7 +174,7 @@ export default function SubmissionsPage() {
     } catch (error) {
       const err = error as { data?: { message?: string } };
       toast.error(
-        err?.data?.message || 'Failed to submit. Please try again.'
+        err?.data?.message || 'Failed to submit. Please try again.',
       );
     }
   };
@@ -195,7 +197,7 @@ export default function SubmissionsPage() {
           style={{ animationDuration: '8s' }}
         />
 
-        <div className="max-w-[1440px] mx-auto relative z-10">
+        <div className="max-w-screen-2xl mx-auto relative z-10">
           <div className="max-w-[900px] mx-auto text-center space-y-6">
             {/* Badge */}
             {/* <div className="inline-flex items-center justify-center">

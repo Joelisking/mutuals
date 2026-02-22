@@ -38,13 +38,15 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     },
     {
       skip: !article?.category,
-    }
+    },
   );
 
   // Fallback: fetch recent articles if no same-category results
-  const categoryResponse = categoryData as ApiResponse<Article[]> | undefined;
+  const categoryResponse = categoryData as
+    | ApiResponse<Article[]>
+    | undefined;
   const categoryArticles = (categoryResponse?.data || []).filter(
-    (a) => a.id !== article?.id
+    (a) => a.id !== article?.id,
   );
   const { data: fallbackData } = useGetArticlesQuery(
     {
@@ -52,7 +54,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     },
     {
       skip: categoryArticles.length > 0 || !article,
-    }
+    },
   );
 
   useEffect(() => {
@@ -74,16 +76,22 @@ export default function ArticlePage({ params }: ArticlePageProps) {
   }
 
   // Use category matches, or fall back to recent articles
-  const fallbackResponse = fallbackData as ApiResponse<Article[]> | undefined;
+  const fallbackResponse = fallbackData as
+    | ApiResponse<Article[]>
+    | undefined;
   const fallbackArticles = (fallbackResponse?.data || []).filter(
-    (a) => a.id !== article.id
+    (a) => a.id !== article.id,
   );
   const relatedArticles = (
     categoryArticles.length > 0 ? categoryArticles : fallbackArticles
   ).slice(0, 5);
 
-  const prevArticle = relatedArticles.length > 1 ? relatedArticles[0] : undefined;
-  const nextArticle = relatedArticles.length > 0 ? relatedArticles[relatedArticles.length - 1] : undefined;
+  const prevArticle =
+    relatedArticles.length > 1 ? relatedArticles[0] : undefined;
+  const nextArticle =
+    relatedArticles.length > 0
+      ? relatedArticles[relatedArticles.length - 1]
+      : undefined;
 
   return (
     <div className="relative min-h-screen bg-[#050507] text-white overflow-x-hidden">
@@ -97,7 +105,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
         <ArticleHero article={article} />
 
         {/* Main Content Layout */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8">
+        <div className="relative z-10 max-w-screen-2xl mx-auto px-4 md:px-8">
           <div className="flex flex-col lg:flex-row gap-12 lg:gap-24 relative">
             {/* Article Text */}
             <div className="w-full max-w-3xl mx-auto pb-16 md:pb-24 pt-12 md:pt-16">
@@ -124,7 +132,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                   <button
                     onClick={() => {
                       navigator.clipboard.writeText(
-                        `https://mutualsplus.com/editorial/${article.slug}`
+                        `https://mutualsplus.com/editorial/${article.slug}`,
                       );
                     }}
                     className="flex items-center gap-2 text-xs uppercase tracking-widest text-[#1ecbe1] hover:text-white transition-colors">

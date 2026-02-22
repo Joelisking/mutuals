@@ -27,8 +27,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050507]/80 backdrop-blur-xl border-b border-white/8">
-        <div className="max-w-screen-2xl mx-auto px-4 md:px-8 lg:px-16">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050507]/80 backdrop-blur-xl border-b border-white/8 px-4 md:px-8 lg:px-16">
+        <div className="max-w-screen-2xl mx-auto">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
             <div className="flex items-center">
@@ -242,14 +242,14 @@ export default function Navbar() {
               About
             </h2>
             <p className="text-white/70 text-base leading-relaxed mb-8">
-              Mutuals+ is a culture-forward platform spotlighting emerging
-              artists, DJs, designers, and creatives across the African
-              diaspora and beyond.
+              Mutuals+ is a culture-forward platform spotlighting
+              emerging artists, DJs, designers, and creatives across
+              the African diaspora and beyond.
             </p>
             <p className="text-white/50 text-sm leading-relaxed">
-              We curate and amplify the voices shaping contemporary culture
-              through editorial content, curated playlists, events, and
-              community-driven initiatives.
+              We curate and amplify the voices shaping contemporary
+              culture through editorial content, curated playlists,
+              events, and community-driven initiatives.
             </p>
           </div>
 

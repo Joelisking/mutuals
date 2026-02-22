@@ -45,7 +45,7 @@ export default function SelectPage() {
   }, []);
 
   return (
-    <main className="relative bg-[#050507]">
+    <main className="relative bg-[#050507] mt-20">
       {/* Header */}
       {/* <section className="relative h-screen flex flex-col justify-center px-6 md:px-16 lg:px-24">
         <div className="pointer-events-none absolute inset-0">
