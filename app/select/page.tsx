@@ -2,7 +2,7 @@
 
 import { useRef, useCallback, useState, useEffect } from 'react';
 import { useGetArticlesQuery } from '@/lib/redux/api/openapi.generated';
-import { Article, ApiResponse, SelectArticle } from '@/lib/types/api';
+import { ApiResponse, SelectArticle } from '@/lib/types/api';
 import { selectProfiles } from '@/lib/data/select-data';
 import { mapSelectProfileToArticle } from '@/lib/utils/select-helpers';
 import { SelectPreview } from '@/components/select/select-preview';
@@ -18,7 +18,7 @@ export default function SelectPage() {
   const response = data as ApiResponse<SelectArticle[]> | undefined;
   const apiArticles: SelectArticle[] = response?.data || [];
   const fallbackArticles: SelectArticle[] = selectProfiles.map(
-    mapSelectProfileToArticle
+    mapSelectProfileToArticle,
   );
   const articles =
     apiArticles.length > 0 ? apiArticles : fallbackArticles;

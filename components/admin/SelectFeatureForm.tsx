@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @next/next/no-img-element */
 
-"use client";
+'use client';
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
-import { Loader2, Upload, X } from "lucide-react";
-import { useState } from "react";
-import { usePostMediaUploadMutation } from "@/lib/redux/api/openapi.generated";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { Loader2, Upload, X } from 'lucide-react';
+import { useState } from 'react';
+import { usePostMediaUploadMutation } from '@/lib/redux/api/openapi.generated';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -19,29 +19,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { RichTextEditor } from "@/components/admin/RichTextEditor";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { RichTextEditor } from '@/components/admin/RichTextEditor';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
+} from '@/components/ui/select';
+import { Checkbox } from '@/components/ui/checkbox';
 
 const formSchema = z.object({
-  creativeName: z.string().min(1, "Creative name is required").max(255),
-  creativeRole: z.string().min(1, "Creative role is required").max(255),
+  creativeName: z
+    .string()
+    .min(1, 'Creative name is required')
+    .max(255),
+  creativeRole: z
+    .string()
+    .min(1, 'Creative role is required')
+    .max(255),
   episodeNumber: z.string().optional(),
   location: z.string().optional(),
   genre: z.string().optional(),
-  description: z.string().min(1, "Short bio is required"),
-  content: z.string().min(1, "Feature article content is required"),
+  description: z.string().min(1, 'Short bio is required'),
+  content: z.string().min(1, 'Feature article content is required'),
   heroMediaUrl: z.string().optional(),
-  status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
+  status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']),
   featured: z.boolean().default(false),
   readTime: z.string().optional(),
 });
@@ -54,59 +60,77 @@ interface SelectFeatureFormProps {
   isLoading: boolean;
 }
 
-export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFeatureFormProps) {
-  const [uploadMedia, { isLoading: isUploading }] = usePostMediaUploadMutation();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(initialData?.heroMediaUrl || "");
+export function SelectFeatureForm({
+  initialData,
+  onSubmit,
+  isLoading,
+}: SelectFeatureFormProps) {
+  const [uploadMedia, { isLoading: isUploading }] =
+    usePostMediaUploadMutation();
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(
+    initialData?.heroMediaUrl || '',
+  );
 
   // Parse existing article data back into form fields
-  const parsedSubtitle = initialData?.subtitle?.includes("|")
-    ? initialData.subtitle.split("|").map((s: string) => s.trim())
-    : [initialData?.title || "", ""];
+  const parsedSubtitle = initialData?.subtitle?.includes('|')
+    ? initialData.subtitle.split('|').map((s: string) => s.trim())
+    : [initialData?.title || '', ''];
 
-  const existingEp = initialData?.tags?.find((t: string) => t.startsWith("EP:"));
-  const existingGenre = initialData?.tags?.find(
-    (t: string) => !t.startsWith("EP:") && !t.includes(",") && t !== "Select+"
+  const existingEp = initialData?.tags?.find((t: string) =>
+    t.startsWith('EP:'),
   );
-  const existingLocation = initialData?.tags?.find((t: string) => t.includes(","));
+  const existingGenre = initialData?.tags?.find(
+    (t: string) =>
+      !t.startsWith('EP:') && !t.includes(',') && t !== 'Select+',
+  );
+  const existingLocation = initialData?.tags?.find((t: string) =>
+    t.includes(','),
+  );
 
   const form = useForm<SelectFeatureFormValues>({
     resolver: zodResolver(formSchema) as any,
     defaultValues: {
-      creativeName: initialData ? parsedSubtitle[0] || initialData.title : "",
-      creativeRole: initialData ? parsedSubtitle[1] || "" : "",
-      episodeNumber: existingEp ? existingEp.replace("EP:", "") : "",
-      location: existingLocation || "",
-      genre: existingGenre || "",
-      description: initialData?.description || "",
-      content: initialData?.content || "",
-      heroMediaUrl: initialData?.heroMediaUrl || "",
-      status: initialData?.status || "DRAFT",
+      creativeName: initialData
+        ? parsedSubtitle[0] || initialData.title
+        : '',
+      creativeRole: initialData ? parsedSubtitle[1] || '' : '',
+      episodeNumber: existingEp ? existingEp.replace('EP:', '') : '',
+      location: existingLocation || '',
+      genre: existingGenre || '',
+      description: initialData?.description || '',
+      content: initialData?.content || '',
+      heroMediaUrl: initialData?.heroMediaUrl || '',
+      status: initialData?.status || 'DRAFT',
       featured: initialData?.featured || false,
-      readTime: initialData?.readTime || "",
+      readTime: initialData?.readTime || '',
     },
   });
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
-      toast.error("Please upload an image file");
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file');
       return;
     }
 
     if (file.size > 10 * 1024 * 1024) {
-      toast.error("File size must be less than 10MB");
+      toast.error('File size must be less than 10MB');
       return;
     }
 
     try {
       const formData = new FormData();
-      formData.append("file", file);
-      formData.append("folder", "select");
-      formData.append("type", "IMAGE");
+      formData.append('file', file);
+      formData.append('folder', 'select');
+      formData.append('type', 'IMAGE');
 
-      const result = await uploadMedia({ body: formData as any }).unwrap();
+      const result = await uploadMedia({
+        body: formData as any,
+      }).unwrap();
 
       const mediaUrl =
         (result as any)?.data?.filePath ||
@@ -114,37 +138,41 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
         (result as any)?.url;
       if (mediaUrl) {
         setUploadedImageUrl(mediaUrl);
-        form.setValue("heroMediaUrl", mediaUrl);
-        toast.success("Image uploaded successfully");
+        form.setValue('heroMediaUrl', mediaUrl);
+        toast.success('Image uploaded successfully');
       } else {
-        toast.error("Upload succeeded but no URL returned");
+        toast.error('Upload succeeded but no URL returned');
       }
     } catch (error: any) {
-      console.error("Upload error:", error);
-      toast.error(error?.data?.message || "Failed to upload image");
+      console.error('Upload error:', error);
+      toast.error(error?.data?.message || 'Failed to upload image');
     }
   };
 
   const handleRemoveImage = () => {
-    setUploadedImageUrl("");
-    form.setValue("heroMediaUrl", "");
+    setUploadedImageUrl('');
+    form.setValue('heroMediaUrl', '');
   };
 
-  const handleFormSubmit = async (values: SelectFeatureFormValues) => {
+  const handleFormSubmit = async (
+    values: SelectFeatureFormValues,
+  ) => {
     const epTag = values.episodeNumber
-      ? `EP:${values.episodeNumber.padStart(3, "0")}`
+      ? `EP:${values.episodeNumber.padStart(3, '0')}`
       : undefined;
 
-    const tags = [epTag, values.genre, values.location].filter(Boolean) as string[];
+    const tags = [epTag, values.genre, values.location].filter(
+      Boolean,
+    ) as string[];
 
     const payload = {
       title: values.creativeName,
       subtitle: `${values.creativeName} | ${values.creativeRole}`,
       description: values.description,
       content: values.content,
-      category: "Select+",
+      category: 'Select+',
       heroMediaUrl: values.heroMediaUrl,
-      heroMediaType: "IMAGE",
+      heroMediaType: 'IMAGE',
       status: values.status,
       featured: values.featured,
       readTime: values.readTime,
@@ -154,11 +182,21 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
     await onSubmit(payload);
   };
 
-  const genres = ["Music", "Fashion", "Art", "Photography", "Business", "Film", "Literature"];
+  const genres = [
+    'Music',
+    'Fashion',
+    'Art',
+    'Photography',
+    'Business',
+    'Film',
+    'Literature',
+  ];
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-8">
+      <form
+        onSubmit={form.handleSubmit(handleFormSubmit)}
+        className="space-y-8">
         {/* Creative Identity */}
         <div>
           <h4 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-4">
@@ -186,7 +224,10 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                 <FormItem>
                   <FormLabel>Creative Role</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Sound Architect" {...field} />
+                    <Input
+                      placeholder="e.g. Sound Architect"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -200,7 +241,7 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
           <h4 className="text-sm font-medium text-zinc-400 uppercase tracking-wider mb-4">
             Details
           </h4>
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-3 items-start">
             <FormField
               control={form.control}
               name="episodeNumber"
@@ -210,7 +251,9 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                   <FormControl>
                     <Input placeholder="e.g. 001" {...field} />
                   </FormControl>
-                  <FormDescription>For SELECT+ EP. numbering</FormDescription>
+                  <FormDescription>
+                    For SELECT+ EP. numbering
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -222,7 +265,9 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Genre / Category</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}>
                     <FormControl>
                       <SelectTrigger>
                         <SelectValue placeholder="Select genre" />
@@ -248,7 +293,10 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. Lagos, Nigeria" {...field} />
+                    <Input
+                      placeholder="e.g. Lagos, Nigeria"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -271,7 +319,9 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                   {...field}
                 />
               </FormControl>
-              <FormDescription>Displayed on the Select+ landing page hero module.</FormDescription>
+              <FormDescription>
+                Displayed on the Select+ landing page hero module.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -291,7 +341,10 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                   placeholder="Write the full feature article..."
                 />
               </FormControl>
-              <FormDescription>The full editorial feature linked from the Select+ page.</FormDescription>
+              <FormDescription>
+                The full editorial feature linked from the Select+
+                page.
+              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -319,8 +372,7 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                           variant="destructive"
                           size="icon"
                           className="absolute top-2 right-2"
-                          onClick={handleRemoveImage}
-                        >
+                          onClick={handleRemoveImage}>
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
@@ -330,9 +382,14 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                           <div className="flex flex-col items-center justify-center pt-5 pb-6">
                             <Upload className="w-10 h-10 mb-3 text-zinc-400" />
                             <p className="mb-2 text-sm text-zinc-400">
-                              <span className="font-semibold">Click to upload</span> or drag and drop
+                              <span className="font-semibold">
+                                Click to upload
+                              </span>{' '}
+                              or drag and drop
                             </p>
-                            <p className="text-xs text-zinc-500">PNG, JPG, GIF up to 10MB</p>
+                            <p className="text-xs text-zinc-500">
+                              PNG, JPG, GIF up to 10MB
+                            </p>
                           </div>
                           <input
                             type="file"
@@ -352,7 +409,10 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                     )}
                   </div>
                 </FormControl>
-                <FormDescription>Portrait or square images work best for split-screen layout.</FormDescription>
+                <FormDescription>
+                  Portrait or square images work best for split-screen
+                  layout.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -381,7 +441,9 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
             render={({ field }) => (
               <FormItem className="w-[200px]">
                 <FormLabel>Status</FormLabel>
-                <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Status" />
@@ -389,7 +451,9 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
                   </FormControl>
                   <SelectContent>
                     <SelectItem value="DRAFT">Draft</SelectItem>
-                    <SelectItem value="PUBLISHED">Published</SelectItem>
+                    <SelectItem value="PUBLISHED">
+                      Published
+                    </SelectItem>
                     <SelectItem value="ARCHIVED">Archived</SelectItem>
                   </SelectContent>
                 </Select>
@@ -421,8 +485,10 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
         </div>
 
         <Button type="submit" disabled={isLoading}>
-          {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          {initialData ? "Update Feature" : "Create Feature"}
+          {isLoading && (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          )}
+          {initialData ? 'Update Feature' : 'Create Feature'}
         </Button>
       </form>
     </Form>

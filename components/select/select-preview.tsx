@@ -24,7 +24,7 @@ export function SelectPreview({ article }: SelectPreviewProps) {
   ].filter(Boolean);
 
   return (
-    <Link href={`/editorial/${article.slug}`} className="cursor-none">
+    <Link href={`/select/${article.slug}`} className="cursor-none">
       <div
         className="sticky top-0 h-screen flex flex-col justify-between items-center bg-cover bg-center"
         style={{ backgroundImage: `url(${imageUrl})` }}>
