@@ -109,15 +109,17 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
 
     try {
       setUploadProgress(0);
-      const result = await uploadMedia({
-        body: {
-          file,
-          folder: 'events',
-          type: 'IMAGE',
-        }
-      }).unwrap();
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'events');
+      formData.append('type', 'IMAGE');
 
-      const mediaUrl = (result as any)?.data?.url || (result as any)?.url;
+      const result = await uploadMedia({ body: formData as any }).unwrap();
+
+      const mediaUrl =
+        (result as any)?.data?.filePath ||
+        (result as any)?.data?.url ||
+        (result as any)?.url;
       if (mediaUrl) {
         setUploadedFlyerUrl(mediaUrl);
         form.setValue('flyerUrl', mediaUrl);

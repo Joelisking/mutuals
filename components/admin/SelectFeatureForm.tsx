@@ -101,11 +101,17 @@ export function SelectFeatureForm({ initialData, onSubmit, isLoading }: SelectFe
     }
 
     try {
-      const result = await uploadMedia({
-        body: { file, folder: "select", type: "IMAGE" },
-      }).unwrap();
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("folder", "select");
+      formData.append("type", "IMAGE");
 
-      const mediaUrl = (result as any)?.data?.url || (result as any)?.url;
+      const result = await uploadMedia({ body: formData as any }).unwrap();
+
+      const mediaUrl =
+        (result as any)?.data?.filePath ||
+        (result as any)?.data?.url ||
+        (result as any)?.url;
       if (mediaUrl) {
         setUploadedImageUrl(mediaUrl);
         form.setValue("heroMediaUrl", mediaUrl);
