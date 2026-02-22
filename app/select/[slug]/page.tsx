@@ -92,7 +92,7 @@ export default function SelectArticlePage({
       <div
         ref={articleRef}
         className="max-w-screen-2xl mx-auto px-4 md:px-8">
-        <div className="py-8 border-b border-white/10">
+        <div className="py-8 border-b border-white/10 max-w-3xl mx-auto">
           <Link
             href="/select"
             className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors uppercase text-xs tracking-widest font-medium">
@@ -102,7 +102,7 @@ export default function SelectArticlePage({
         </div>
 
         {/* ── Article header ── */}
-        <div className="pt-12 pb-8 flex flex-col gap-3">
+        <div className="pt-12 pb-8 flex flex-col gap-3 max-w-3xl mx-auto">
           <span className="text-[#1ecbe1] text-[10px] uppercase font-bold tracking-widest">
             Select+
             {article.tags?.find((t) => t.startsWith('EP:')) && (
@@ -128,7 +128,7 @@ export default function SelectArticlePage({
         </div>
 
         {/* ── Body content ── */}
-        <div className="w-full max-w-3xl pb-24">
+        <div className="w-full max-w-3xl mx-auto pb-24">
           <article
             className="article-content prose prose-invert prose-lg md:prose-xl max-w-none"
             dangerouslySetInnerHTML={{
@@ -149,12 +149,12 @@ export default function SelectArticlePage({
             </div>
           )}
         </div>
-      </div>
 
-      {/* Related Select+ carousel */}
-      {relatedArticles.length > 0 && (
-        <RelatedCarousel articles={relatedArticles} />
-      )}
+        {/* Related Select+ carousel */}
+        {relatedArticles.length > 0 && (
+          <RelatedCarousel articles={relatedArticles} />
+        )}
+      </div>
 
       {/* Back to top */}
       <button

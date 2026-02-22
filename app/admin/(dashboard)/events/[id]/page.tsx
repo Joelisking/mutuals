@@ -19,7 +19,7 @@ export default function EditEventPage({ params }: { params: Promise<{ id: string
     try {
        const payload = {
           ...values,
-           ticketLink: values.ticketingLink,
+          ticketLink: values.ticketLink || undefined,
        };
       await updateEvent({ id, body: payload }).unwrap();
       toast.success("Event updated successfully");

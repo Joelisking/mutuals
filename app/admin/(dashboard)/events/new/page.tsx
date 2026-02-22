@@ -15,7 +15,7 @@ export default function CreateEventPage() {
     try {
       const payload = {
         ...values,
-        ticketLink: values.ticketingLink, // Mapping back to API name
+        ticketLink: values.ticketLink || undefined,
       };
 
       await createEvent({ body: payload }).unwrap();

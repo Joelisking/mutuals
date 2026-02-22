@@ -43,13 +43,13 @@ const formSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
   description: z.string().optional(),
   eventDate: z.string().min(1, "Event date is required"), // DateTime string
-  eventTime: z.string().optional(),
   venue: z.string().min(1, "Venue is required"),
   location: z.string().min(1, "Location is required"),
-  city: z.string().optional(),
-  country: z.string().optional(),
   flyerUrl: z.string().optional(),
-  ticketingLink: z.string().optional(),
+  ticketLink: z.string().optional().refine(
+    (val) => !val || z.string().url().safeParse(val).success,
+    { message: "Must be a valid URL (e.g. https://...)" }
+  ),
   ticketPlatform: z.string().optional(),
   ticketStatus: z.string().optional(), // On Sale, Sold Out
   type: z.string().optional(),
@@ -76,13 +76,10 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
       title: initialData?.title || "",
       description: initialData?.description || "",
       eventDate: initialData?.eventDate ? initialData.eventDate : "",
-      eventTime: initialData?.eventTime || "",
       venue: initialData?.venue || "",
       location: initialData?.location || "",
-      city: initialData?.city || "",
-      country: initialData?.country || "",
       flyerUrl: initialData?.flyerUrl || "",
-      ticketingLink: initialData?.ticketLink || "",
+      ticketLink: initialData?.ticketLink || "",
       ticketPlatform: initialData?.ticketPlatform || "",
       ticketStatus: initialData?.ticketStatus || "On Sale",
       type: initialData?.type || "Concert",
@@ -199,8 +196,7 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
           )}
         />
 
-        <div className="grid gap-4 md:grid-cols-2">
-            <FormField
+        <FormField
             control={form.control}
             name="eventDate"
             render={({ field }) => (
@@ -279,27 +275,10 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
                         </SelectContent>
                     </Select>
                 </div>
-                <FormDescription>Used for sorting and strict timing.</FormDescription>
                 <FormMessage />
                 </FormItem>
             )}
             />
-
-             <FormField
-            control={form.control}
-            name="eventTime"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Display Time</FormLabel>
-                <FormControl>
-                    <Input placeholder="e.g. 8:00 PM - Late" {...field} />
-                </FormControl>
-                <FormDescription>Text displayed to users.</FormDescription>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-        </div>
 
         <div className="grid gap-4 md:grid-cols-2">
             <FormField
@@ -324,32 +303,6 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
                 <FormLabel>Address / Display Location</FormLabel>
                 <FormControl>
                     <Input placeholder="e.g. London, UK" {...field} />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-             <FormField
-            control={form.control}
-            name="city"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>City</FormLabel>
-                <FormControl>
-                    <Input placeholder="e.g. London" {...field} />
-                </FormControl>
-                <FormMessage />
-                </FormItem>
-            )}
-            />
-             <FormField
-            control={form.control}
-            name="country"
-            render={({ field }) => (
-                <FormItem>
-                <FormLabel>Country</FormLabel>
-                <FormControl>
-                    <Input placeholder="e.g. United Kingdom" {...field} />
                 </FormControl>
                 <FormMessage />
                 </FormItem>
@@ -419,7 +372,7 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
         <div className="grid gap-4 md:grid-cols-3">
              <FormField
                 control={form.control}
-                name="ticketingLink"
+                name="ticketLink"
                 render={({ field }) => (
                     <FormItem>
                     <FormLabel>Ticket Link</FormLabel>
