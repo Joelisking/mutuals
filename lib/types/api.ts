@@ -22,6 +22,12 @@ export interface Author {
   email?: string;
 }
 
+export interface ArticleVideoItem {
+  url: string;
+  title?: string;
+  description?: string;
+}
+
 export interface Article {
   id: string;
   title: string;
@@ -32,6 +38,8 @@ export interface Article {
   excerpt?: string;
   heroMediaUrl?: string;
   heroMediaType?: 'IMAGE' | 'VIDEO';
+  thumbnailUrl?: string;
+  videos?: ArticleVideoItem[];
   category: string;
   tags?: string[];
   status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';

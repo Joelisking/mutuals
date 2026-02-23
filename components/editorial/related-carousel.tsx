@@ -51,7 +51,11 @@ export function RelatedCarousel({ articles }: RelatedCarouselProps) {
           {articles.map((article) => (
             <Link
               key={article.id}
-              href={`/editorial/${article.slug}`}
+              href={
+                article.category === 'Select+'
+                  ? `/select/${article.slug}`
+                  : `/editorial/${article.slug}`
+              }
               className="min-w-[300px] md:min-w-[350px] group snap-start">
               <div className="relative aspect-4/3 overflow-hidden bg-zinc-900 mb-4">
                 <Image

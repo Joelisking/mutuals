@@ -12,6 +12,7 @@ import { Article, ApiResponse } from '@/lib/types/api';
 import { ArticleHero } from '@/components/editorial/article-hero';
 import { ArticleNavigation } from '@/components/editorial/article-navigation';
 import { RelatedCarousel } from '@/components/editorial/related-carousel';
+import { ArticleVideo } from '@/components/editorial/article-video';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -115,6 +116,11 @@ export default function ArticlePage({ params }: ArticlePageProps) {
                   __html: DOMPurify.sanitize(article.content),
                 }}
               />
+
+              {/* Article Video */}
+              {article.videos && article.videos.length > 0 && (
+                <ArticleVideo videos={article.videos} />
+              )}
 
               {/* Social Share / Tags Footer */}
               <div className="mt-16 pt-10 border-t border-white/10 flex flex-col md:flex-row gap-8 justify-between items-start md:items-center">

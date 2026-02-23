@@ -13,6 +13,7 @@ import {
 } from '@/lib/redux/api/openapi.generated';
 import { Article, SelectArticle, ApiResponse } from '@/lib/types/api';
 import { RelatedCarousel } from '@/components/editorial/related-carousel';
+import { ArticleVideo } from '@/components/editorial/article-video';
 import { cn } from '@/lib/utils';
 
 interface SelectArticlePageProps {
@@ -135,6 +136,11 @@ export default function SelectArticlePage({
               __html: DOMPurify.sanitize(article.content),
             }}
           />
+
+          {/* Article Video */}
+          {article.videos && article.videos.length > 0 && (
+            <ArticleVideo videos={article.videos} />
+          )}
 
           {/* Tags footer */}
           {article.tags && article.tags.length > 0 && (

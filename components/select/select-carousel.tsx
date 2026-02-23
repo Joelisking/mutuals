@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article } from '@/lib/types/api';
-import { getEpisodeNumber, parseCreativeInfo, getLocation } from '@/lib/utils/select-helpers';
+import {
+  getEpisodeNumber,
+  parseCreativeInfo,
+  getLocation,
+} from '@/lib/utils/select-helpers';
 import {
   Carousel,
   CarouselContent,
@@ -72,23 +76,26 @@ function SelectCard({
   const creativeInfo = parseCreativeInfo(article.subtitle);
   const location = getLocation(article.tags);
   const categoryTag = article.tags?.find(
-    (t) => !t.startsWith('EP:') && !t.includes(',')
+    (t) => !t.startsWith('EP:') && !t.includes(','),
   );
 
   const displayName = creativeInfo?.name || article.title;
   const displayRole = creativeInfo?.role || article.subtitle || '';
-  const imageUrl = article.heroMediaUrl || '/assets/editorial-visual-culture.png';
+  const imageUrl =
+    article.heroMediaUrl || '/assets/editorial-visual-culture.png';
 
   return (
     <Link
-      href={`/editorial/${article.slug}`}
+      href={`/select/${article.slug}`}
       className="group block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
       <div className="flex flex-col h-full">
         {/* Image Container */}
         <div className="relative aspect-video overflow-hidden rounded-[2px] mb-4">
-          {article.heroMediaType === 'VIDEO' && article.heroMediaUrl && isHovered ? (
+          {article.heroMediaType === 'VIDEO' &&
+          article.heroMediaUrl &&
+          isHovered ? (
             <video
               src={article.heroMediaUrl}
               autoPlay

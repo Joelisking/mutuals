@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Loader2, Upload, X } from 'lucide-react';
 import { useState } from 'react';
-import { usePostMediaUploadMutation } from '@/lib/redux/api/openapi.generated';
+import { getCookie } from 'cookies-next';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import {
@@ -47,9 +47,9 @@ const formSchema = z.object({
   description: z.string().min(1, 'Short bio is required'),
   content: z.string().min(1, 'Feature article content is required'),
   heroMediaUrl: z.string().optional(),
+  thumbnailUrl: z.string().optional(),
   status: z.enum(['DRAFT', 'PUBLISHED', 'ARCHIVED']),
   featured: z.boolean().default(false),
-  readTime: z.string().optional(),
 });
 
 type SelectFeatureFormValues = z.infer<typeof formSchema>;
@@ -58,18 +58,57 @@ interface SelectFeatureFormProps {
   initialData?: any;
   onSubmit: (values: any) => Promise<void>;
   isLoading: boolean;
+  /** Auto-computed next episode number (e.g. "004"). Used when creating a new feature. */
+  nextEpisodeNumber?: string;
+}
+
+/** Strip HTML tags and calculate read time in minutes. */
+function calculateReadTime(html: string): string {
+  const text = html
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  const words = text.split(' ').filter(Boolean).length;
+  const minutes = Math.max(1, Math.round(words / 200));
+  return `${minutes} min read`;
+}
+
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL ?? '';
+
+async function uploadImage(file: File, folder: string): Promise<string> {
+  const token = getCookie('mutuals_auth_token');
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('folder', folder);
+  formData.append('fileType', 'IMAGE');
+
+  const res = await fetch(`${BACKEND_URL}/api/v1/media/upload`, {
+    method: 'POST',
+    headers: token ? { authorization: `Bearer ${token}` } : {},
+    body: formData,
+    credentials: 'include',
+  });
+  if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+  const json = await res.json();
+  const url = json?.data?.filePath ?? json?.data?.url ?? json?.url;
+  if (!url) throw new Error('No URL returned from upload');
+  return url;
 }
 
 export function SelectFeatureForm({
   initialData,
   onSubmit,
   isLoading,
+  nextEpisodeNumber,
 }: SelectFeatureFormProps) {
-  const [uploadMedia, { isLoading: isUploading }] =
-    usePostMediaUploadMutation();
-  const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(
+  const [uploadedHeroUrl, setUploadedHeroUrl] = useState<string>(
     initialData?.heroMediaUrl || '',
   );
+  const [uploadedThumbnailUrl, setUploadedThumbnailUrl] = useState<string>(
+    initialData?.thumbnailUrl || '',
+  );
+  const [isUploadingHero, setIsUploadingHero] = useState(false);
+  const [isUploadingThumbnail, setIsUploadingThumbnail] = useState(false);
 
   // Parse existing article data back into form fields
   const parsedSubtitle = initialData?.subtitle?.includes('|')
@@ -94,64 +133,62 @@ export function SelectFeatureForm({
         ? parsedSubtitle[0] || initialData.title
         : '',
       creativeRole: initialData ? parsedSubtitle[1] || '' : '',
-      episodeNumber: existingEp ? existingEp.replace('EP:', '') : '',
+      episodeNumber: existingEp
+        ? existingEp.replace('EP:', '')
+        : (nextEpisodeNumber ?? ''),
       location: existingLocation || '',
       genre: existingGenre || '',
       description: initialData?.description || '',
       content: initialData?.content || '',
       heroMediaUrl: initialData?.heroMediaUrl || '',
+      thumbnailUrl: initialData?.thumbnailUrl || '',
       status: initialData?.status || 'DRAFT',
       featured: initialData?.featured || false,
-      readTime: initialData?.readTime || '',
     },
   });
 
-  const handleFileUpload = async (
+  const handleHeroUpload = async (
     event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     const file = event.target.files?.[0];
     if (!file) return;
-
     if (!file.type.startsWith('image/')) {
       toast.error('Please upload an image file');
       return;
     }
-
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error('File size must be less than 10MB');
-      return;
-    }
-
+    setIsUploadingHero(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('folder', 'select');
-      formData.append('type', 'IMAGE');
-
-      const result = await uploadMedia({
-        body: formData as any,
-      }).unwrap();
-
-      const mediaUrl =
-        (result as any)?.data?.filePath ||
-        (result as any)?.data?.url ||
-        (result as any)?.url;
-      if (mediaUrl) {
-        setUploadedImageUrl(mediaUrl);
-        form.setValue('heroMediaUrl', mediaUrl);
-        toast.success('Image uploaded successfully');
-      } else {
-        toast.error('Upload succeeded but no URL returned');
-      }
-    } catch (error: any) {
-      console.error('Upload error:', error);
-      toast.error(error?.data?.message || 'Failed to upload image');
+      const url = await uploadImage(file, 'select');
+      setUploadedHeroUrl(url);
+      form.setValue('heroMediaUrl', url);
+      toast.success('Hero image uploaded');
+    } catch {
+      toast.error('Failed to upload hero image');
+    } finally {
+      setIsUploadingHero(false);
     }
   };
 
-  const handleRemoveImage = () => {
-    setUploadedImageUrl('');
-    form.setValue('heroMediaUrl', '');
+  const handleThumbnailUpload = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please upload an image file');
+      return;
+    }
+    setIsUploadingThumbnail(true);
+    try {
+      const url = await uploadImage(file, 'select/thumbnails');
+      setUploadedThumbnailUrl(url);
+      form.setValue('thumbnailUrl', url);
+      toast.success('Thumbnail uploaded');
+    } catch {
+      toast.error('Failed to upload thumbnail');
+    } finally {
+      setIsUploadingThumbnail(false);
+    }
   };
 
   const handleFormSubmit = async (
@@ -173,9 +210,10 @@ export function SelectFeatureForm({
       category: 'Select+',
       heroMediaUrl: values.heroMediaUrl,
       heroMediaType: 'IMAGE',
+      thumbnailUrl: values.thumbnailUrl,
       status: values.status,
       featured: values.featured,
-      readTime: values.readTime,
+      readTime: calculateReadTime(values.content),
       tags,
     };
 
@@ -252,7 +290,9 @@ export function SelectFeatureForm({
                     <Input placeholder="e.g. 001" {...field} />
                   </FormControl>
                   <FormDescription>
-                    For SELECT+ EP. numbering
+                    {initialData
+                      ? 'Edit if needed'
+                      : 'Auto-assigned — override if needed'}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -350,8 +390,9 @@ export function SelectFeatureForm({
           )}
         />
 
-        {/* Media & Read Time */}
-        <div className="grid gap-4 md:grid-cols-2">
+        {/* Images */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Hero Image */}
           <FormField
             control={form.control}
             name="heroMediaUrl"
@@ -359,11 +400,11 @@ export function SelectFeatureForm({
               <FormItem>
                 <FormLabel>Hero Image</FormLabel>
                 <FormControl>
-                  <div className="space-y-4">
-                    {uploadedImageUrl ? (
+                  <div className="space-y-3">
+                    {uploadedHeroUrl ? (
                       <div className="relative">
                         <img
-                          src={uploadedImageUrl}
+                          src={uploadedHeroUrl}
                           alt="Hero preview"
                           className="w-full h-48 object-cover rounded-lg border border-zinc-800"
                         />
@@ -372,61 +413,104 @@ export function SelectFeatureForm({
                           variant="destructive"
                           size="icon"
                           className="absolute top-2 right-2"
-                          onClick={handleRemoveImage}>
+                          onClick={() => {
+                            setUploadedHeroUrl('');
+                            form.setValue('heroMediaUrl', '');
+                          }}>
                           <X className="h-4 w-4" />
                         </Button>
                       </div>
                     ) : (
-                      <div className="flex items-center justify-center w-full">
-                        <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-zinc-800 border-dashed rounded-lg cursor-pointer bg-zinc-900 hover:bg-zinc-800 transition-colors">
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                            <Upload className="w-10 h-10 mb-3 text-zinc-400" />
-                            <p className="mb-2 text-sm text-zinc-400">
-                              <span className="font-semibold">
-                                Click to upload
-                              </span>{' '}
-                              or drag and drop
-                            </p>
-                            <p className="text-xs text-zinc-500">
-                              PNG, JPG, GIF up to 10MB
-                            </p>
-                          </div>
-                          <input
-                            type="file"
-                            className="hidden"
-                            accept="image/*"
-                            onChange={handleFileUpload}
-                            disabled={isUploading}
-                          />
-                        </label>
-                      </div>
-                    )}
-                    {isUploading && (
-                      <div className="flex items-center gap-2 text-sm text-zinc-400">
-                        <Loader2 className="h-4 w-4 animate-spin" />
-                        Uploading image...
-                      </div>
+                      <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-zinc-800 border-dashed rounded-lg cursor-pointer bg-zinc-900 hover:bg-zinc-800 transition-colors">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          {isUploadingHero ? (
+                            <Loader2 className="w-8 h-8 animate-spin text-zinc-400" />
+                          ) : (
+                            <>
+                              <Upload className="w-8 h-8 mb-2 text-zinc-400" />
+                              <p className="text-sm text-zinc-400">
+                                <span className="font-semibold">Click to upload</span> or drag and drop
+                              </p>
+                              <p className="text-xs text-zinc-500 mt-1">PNG, JPG, WebP</p>
+                            </>
+                          )}
+                        </div>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleHeroUpload}
+                          disabled={isUploadingHero}
+                        />
+                      </label>
                     )}
                   </div>
                 </FormControl>
                 <FormDescription>
-                  Portrait or square images work best for split-screen
-                  layout.
+                  Portrait or square images work best for split-screen layout.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
+          {/* Thumbnail Image */}
           <FormField
             control={form.control}
-            name="readTime"
-            render={({ field }) => (
+            name="thumbnailUrl"
+            render={() => (
               <FormItem>
-                <FormLabel>Read Time</FormLabel>
+                <FormLabel>Thumbnail Image</FormLabel>
                 <FormControl>
-                  <Input placeholder="e.g. 5 min read" {...field} />
+                  <div className="space-y-3">
+                    {uploadedThumbnailUrl ? (
+                      <div className="relative">
+                        <img
+                          src={uploadedThumbnailUrl}
+                          alt="Thumbnail preview"
+                          className="w-full h-48 object-cover rounded-lg border border-zinc-800"
+                        />
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          className="absolute top-2 right-2"
+                          onClick={() => {
+                            setUploadedThumbnailUrl('');
+                            form.setValue('thumbnailUrl', '');
+                          }}>
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <label className="flex flex-col items-center justify-center w-full h-48 border-2 border-zinc-800 border-dashed rounded-lg cursor-pointer bg-zinc-900 hover:bg-zinc-800 transition-colors">
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          {isUploadingThumbnail ? (
+                            <Loader2 className="w-8 h-8 animate-spin text-zinc-400" />
+                          ) : (
+                            <>
+                              <Upload className="w-8 h-8 mb-2 text-zinc-400" />
+                              <p className="text-sm text-zinc-400">
+                                <span className="font-semibold">Click to upload</span> or drag and drop
+                              </p>
+                              <p className="text-xs text-zinc-500 mt-1">PNG, JPG, WebP</p>
+                            </>
+                          )}
+                        </div>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handleThumbnailUpload}
+                          disabled={isUploadingThumbnail}
+                        />
+                      </label>
+                    )}
+                  </div>
                 </FormControl>
+                <FormDescription>
+                  Small card image shown in carousels and grids.
+                </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -484,8 +568,8 @@ export function SelectFeatureForm({
           />
         </div>
 
-        <Button type="submit" disabled={isLoading}>
-          {isLoading && (
+        <Button type="submit" disabled={isLoading || isUploadingHero || isUploadingThumbnail}>
+          {(isLoading || isUploadingHero || isUploadingThumbnail) && (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />
           )}
           {initialData ? 'Update Feature' : 'Create Feature'}

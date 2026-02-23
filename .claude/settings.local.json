@@ -8,7 +8,9 @@
       "Bash(npm run lint:*)",
       "Bash(npx eslint:*)",
       "Bash(grep:*)",
-      "mcp__ide__getDiagnostics"
+      "mcp__ide__getDiagnostics",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma migrate dev --name add_thumbnail_url 2>&1)",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma db push 2>&1)"
     ]
   }
 }

@@ -52,6 +52,9 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+// Auth endpoints that should never trigger the re-auth / session-expired flow
+const AUTH_ENDPOINTS = ['/auth/login', '/auth/register', '/auth/refresh'];
+
 // Middleware function with re-authentication logic
 const baseQueryWithReauth: BaseQueryFn<
   string | FetchArgs,
@@ -63,8 +66,13 @@ const baseQueryWithReauth: BaseQueryFn<
 
   let result = await baseQuery(args, api, extraOptions);
 
+  // Skip re-auth logic for auth endpoints — a 401 there is a real credential
+  // failure and should propagate back to the calling code (e.g. login form).
+  const url = typeof args === 'string' ? args : args.url;
+  const isAuthEndpoint = AUTH_ENDPOINTS.some((p) => url.includes(p));
+
   // Handle 401 Unauthorized - session expired
-  if (result.error && result.error.status === 401) {
+  if (!isAuthEndpoint && result.error && result.error.status === 401) {
     if (!mutex.isLocked()) {
       const release = await mutex.acquire();
       try {
