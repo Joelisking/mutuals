@@ -52,9 +52,6 @@ export default function ShopSubNav({
         <button className="text-xs text-black/50 hover:text-black uppercase tracking-[0.15em] font-medium transition-colors">
           $ USD
         </button>
-        <button className="text-xs text-black/50 hover:text-black uppercase tracking-[0.15em] font-medium transition-colors">
-          SUPPORT
-        </button>
         <Link
           href="/shop/cart"
           className="relative flex items-center gap-2 text-black/50 hover:text-black transition-colors group">
