@@ -12,8 +12,13 @@ import {
   Image as ImageIcon,
   ChevronDown,
   Star,
+  ShoppingBag,
+  Users,
+  Music2,
 } from 'lucide-react';
 import { useState } from 'react';
+import { useSelector } from '@/lib/redux/store';
+import { selectUser } from '@/lib/redux/slices/auth';
 
 const sidebarItems = [
   {
@@ -35,6 +40,11 @@ const sidebarItems = [
     title: 'Events',
     href: '/admin/events',
     icon: Calendar,
+  },
+  {
+    title: 'Playlists',
+    href: '/admin/playlists',
+    icon: Music2,
   },
   {
     title: 'Media Library',
@@ -59,14 +69,33 @@ const submissionItems = [
   },
 ];
 
+const shopItems = [
+  {
+    title: 'Products',
+    href: '/admin/shop/products',
+  },
+  {
+    title: 'Orders',
+    href: '/admin/shop/orders',
+  },
+  {
+    title: 'Discounts',
+    href: '/admin/shop/discounts',
+  },
+];
+
 export function AdminSidebar() {
   const pathname = usePathname();
+  const user = useSelector(selectUser);
   const isSubmissionsActive = pathname.startsWith(
     '/admin/submissions'
   );
   const [isSubmissionsOpen, setIsSubmissionsOpen] = useState(
     isSubmissionsActive
   );
+
+  const isShopActive = pathname.startsWith('/admin/shop');
+  const [isShopOpen, setIsShopOpen] = useState(isShopActive);
 
   return (
     <div className="hidden border-r border-white/10 bg-zinc-950/95 lg:block text-white backdrop-blur-xl">
@@ -107,6 +136,26 @@ export function AdminSidebar() {
                 {item.title}
               </Link>
             ))}
+
+            {/* Users — SUPER_ADMIN only */}
+            {user?.role === 'SUPER_ADMIN' && (
+              <Link
+                href="/admin/users"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200',
+                  pathname === '/admin/users' || pathname.startsWith('/admin/users/')
+                    ? 'bg-white/10 text-white font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                )}>
+                <Users
+                  className={cn(
+                    'h-4 w-4',
+                    pathname === '/admin/users' ? 'text-white' : 'text-zinc-500'
+                  )}
+                />
+                Users
+              </Link>
+            )}
 
             {/* Submissions Dropdown */}
             <div>
@@ -155,13 +204,59 @@ export function AdminSidebar() {
                 </div>
               )}
             </div>
+
+            {/* Shop Dropdown */}
+            <div>
+              <button
+                onClick={() => setIsShopOpen(!isShopOpen)}
+                className={cn(
+                  'flex w-full items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200',
+                  isShopActive
+                    ? 'bg-white/10 text-white font-semibold shadow-sm'
+                    : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                )}>
+                <ShoppingBag
+                  className={cn(
+                    'h-4 w-4',
+                    isShopActive
+                      ? 'text-white'
+                      : 'text-zinc-500'
+                  )}
+                />
+                <span className="flex-1 text-left">Shop</span>
+                <ChevronDown
+                  className={cn(
+                    'h-4 w-4 transition-transform duration-200',
+                    isShopOpen ? 'rotate-180' : ''
+                  )}
+                />
+              </button>
+
+              {isShopOpen && (
+                <div className="mt-1 space-y-1 pl-7">
+                  {shopItems.map((item, index) => (
+                    <Link
+                      key={index}
+                      href={item.href}
+                      className={cn(
+                        'flex items-center gap-3 rounded-lg px-3 py-2 transition-all duration-200 text-sm',
+                        pathname.startsWith(item.href)
+                          ? 'bg-white/5 text-white font-medium'
+                          : 'text-zinc-400 hover:text-white hover:bg-white/5'
+                      )}>
+                      {item.title}
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
         </div>
         <div className="p-4 border-t border-white/10">
           <div className="rounded-lg bg-linear-to-br from-indigo-500/10 to-purple-500/10 p-4 border border-white/5">
             <p className="text-xs text-zinc-400">Logged in as</p>
             <p className="text-sm font-medium text-white truncate">
-              Admin User
+              {user?.firstName} {user?.lastName}
             </p>
           </div>
         </div>

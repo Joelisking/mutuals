@@ -1,17 +1,25 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product } from '@/lib/data/products-data';
+
+export interface CartProduct {
+  id: string;
+  name: string;
+  slug: string;
+  price: number;
+  images: string[];
+}
 
 export interface CartItem {
-  product: Product;
+  product: CartProduct;
   size: string;
   quantity: number;
+  variantId?: string;
 }
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (product: Product, size: string, quantity?: number) => void;
+  addToCart: (product: CartProduct, size: string, quantity?: number, variantId?: string) => void;
   removeFromCart: (productId: string, size: string) => void;
   updateQuantity: (productId: string, size: string, quantity: number) => void;
   clearCart: () => void;
@@ -37,7 +45,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('mutuals-cart', JSON.stringify(items));
   }, [items]);
 
-  const addToCart = (product: Product, size: string, quantity: number = 1) => {
+  const addToCart = (product: CartProduct, size: string, quantity: number = 1, variantId?: string) => {
     setItems(currentItems => {
       const existingItem = currentItems.find(
         item => item.product.id === product.id && item.size === size
@@ -46,12 +54,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       if (existingItem) {
         return currentItems.map(item =>
           item.product.id === product.id && item.size === size
-            ? { ...item, quantity: item.quantity + quantity }
+            ? { ...item, quantity: item.quantity + quantity, ...(variantId ? { variantId } : {}) }
             : item
         );
       }
 
-      return [...currentItems, { product, size, quantity }];
+      return [...currentItems, { product, size, quantity, variantId }];
     });
   };
 

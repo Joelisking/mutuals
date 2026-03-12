@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Icon } from '../ui/icon';
-import EventCard from './event-card';
-import { useGetEventsQuery } from '@/lib/redux/api/openapi.generated';
-import { Loader2 } from 'lucide-react';
-import { Event, ApiResponse } from '@/lib/types/api';
-import { events as staticEvents } from '@/lib/data/events-data';
+import Link from "next/link";
+import { Icon } from "../ui/icon";
+import EventCard from "./event-card";
+import { useGetEventsQuery } from "@/lib/redux/api/openapi.generated";
+import { Loader2 } from "lucide-react";
+import { Event, ApiResponse } from "@/lib/types/api";
+import { events as staticEvents } from "@/lib/data/events-data";
 
 export default function EventsSection() {
   const { data, isLoading } = useGetEventsQuery({
     limit: 8,
-    status: 'UPCOMING',
+    status: "UPCOMING",
   });
 
   // Handle response structure - cast to proper type
@@ -22,21 +22,30 @@ export default function EventsSection() {
   const fallbackEvents: Event[] = staticEvents.map((item, index) => ({
     id: `static-${index}`,
     title: item.title,
-    description: '',
+    description: "",
     flyerUrl: item.image,
     eventDate: item.date,
     venue: item.location,
     location: item.location,
     ticketStatus: item.status,
     type: item.type,
-    status: 'UPCOMING' as const,
-    creatorId: '',
+    status: "UPCOMING" as const,
+    creatorId: "",
     createdAt: item.date,
     updatedAt: item.date,
   }));
 
+  // Filter out events whose date has already passed
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const filterPast = (list: Event[]) =>
+    list.filter((event) => new Date(event.eventDate) >= now);
+
   // Use API data if available, otherwise fall back to static data
-  const events = apiEvents.length > 0 ? apiEvents : fallbackEvents;
+  const events =
+    apiEvents.length > 0
+      ? filterPast(apiEvents)
+      : filterPast(fallbackEvents);
 
   return (
     <section className="bg-[#050507] py-16 md:py-24 px-4 md:px-8 lg:px-16">
@@ -97,7 +106,9 @@ export default function EventsSection() {
         {/* Empty State */}
         {!isLoading && events.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-white/50">No upcoming events at the moment.</p>
+            <p className="text-white/50">
+              No upcoming events at the moment.
+            </p>
           </div>
         )}
       </div>

@@ -94,6 +94,38 @@ export const settingsApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Settings'],
     }),
+
+    // Get shop product categories
+    getShopProductCategories: build.query<ApiResponse<string[]>, void>({
+      query: () => '/settings/categories/shop-products',
+      providesTags: ['Settings'],
+    }),
+
+    // Update shop product categories
+    updateShopProductCategories: build.mutation<ApiResponse<SiteSetting>, { categories: string[] }>({
+      query: (body) => ({
+        url: '/settings/categories/shop-products',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Settings'],
+    }),
+
+    // Get artist submission roles
+    getArtistSubmissionRoles: build.query<ApiResponse<string[]>, void>({
+      query: () => '/settings/categories/artist-roles',
+      providesTags: ['Settings'],
+    }),
+
+    // Update artist submission roles
+    updateArtistSubmissionRoles: build.mutation<ApiResponse<SiteSetting>, { roles: string[] }>({
+      query: (body) => ({
+        url: '/settings/categories/artist-roles',
+        method: 'PUT',
+        body,
+      }),
+      invalidatesTags: ['Settings'],
+    }),
   }),
   overrideExisting: false,
 });
@@ -110,4 +142,8 @@ export const {
   useUpdateContactCategoriesMutation,
   useGetEventTypesQuery,
   useUpdateEventTypesMutation,
+  useGetShopProductCategoriesQuery,
+  useUpdateShopProductCategoriesMutation,
+  useGetArtistSubmissionRolesQuery,
+  useUpdateArtistSubmissionRolesMutation,
 } = settingsApi;

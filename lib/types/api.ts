@@ -186,5 +186,110 @@ export interface ProductVariant {
   stock: number;
 }
 
+// Order Types
+export type OrderStatus = 'PENDING' | 'PAID' | 'PROCESSING' | 'SHIPPED' | 'DELIVERED' | 'CANCELLED' | 'REFUNDED';
+
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  productId?: string;
+  variantId?: string;
+  productName: string;
+  sku?: string;
+  size?: string;
+  color?: string;
+  quantity: number;
+  unitPrice: number;
+  totalPrice: number;
+  createdAt: string;
+}
+
+export interface Order {
+  id: string;
+  stripeSessionId: string;
+  stripePaymentId?: string;
+  customerName?: string;
+  customerEmail: string;
+  shippingAddress?: {
+    line1?: string;
+    line2?: string;
+    city?: string;
+    state?: string;
+    postal_code?: string;
+    country?: string;
+  };
+  subtotal: number;
+  discountAmount: number;
+  shippingAmount: number;
+  total: number;
+  currency: string;
+  status: OrderStatus;
+  discountId?: string;
+  notes?: string;
+  items?: OrderItem[];
+  discount?: { id: string; code: string; type: string; value: number };
+  createdAt: string;
+  updatedAt: string;
+}
+
+// Discount Types
+export type DiscountType = 'PERCENTAGE' | 'FIXED_AMOUNT';
+
+export interface Discount {
+  id: string;
+  code: string;
+  description?: string;
+  type: DiscountType;
+  value: number;
+  minOrderAmount?: number;
+  maxUses?: number;
+  usedCount: number;
+  active: boolean;
+  isSitewide: boolean;
+  expiresAt?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ValidateDiscountResponse {
+  id: string;
+  code: string;
+  type: DiscountType;
+  value: number;
+  discountAmount: number;
+  description?: string;
+}
+
+// Admin User Types
+export interface AdminUser {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  role: 'SUPER_ADMIN' | 'ADMIN' | 'EDITOR' | 'CONTRIBUTOR';
+  isActive: boolean;
+  createdAt: string;
+}
+
+// Playlist Types
+export type PlaylistPlatform = 'SPOTIFY' | 'APPLE_MUSIC' | 'SOUNDCLOUD' | 'YOUTUBE';
+
+export interface Playlist {
+  id: string;
+  title: string;
+  curatorName: string;
+  description?: string;
+  embedUrl: string;
+  externalLink?: string;
+  platform: PlaylistPlatform;
+  seriesName?: string;
+  moodDescription?: string;
+  coverArtUrl?: string;
+  featured?: boolean;
+  order?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 // Helper type for API response extraction
 export type ExtractData<T> = T extends ApiResponse<infer D> ? D : T;

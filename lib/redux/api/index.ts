@@ -161,7 +161,10 @@ export const api = createApi({
     'Media',
     'Homepage',
     'User',
+    'Users',
     'Settings',
+    'Order',
+    'Discount',
   ],
   endpoints: (_builder) => ({}),
 });

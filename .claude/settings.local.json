@@ -10,7 +10,29 @@
       "Bash(grep:*)",
       "mcp__ide__getDiagnostics",
       "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma migrate dev --name add_thumbnail_url 2>&1)",
-      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma db push 2>&1)"
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma db push 2>&1)",
+      "Bash(find /Users/joel/Documents/mutuals/lib/redux/api -type f -name \"*.ts\" -o -name \"*.tsx\" 2>/dev/null | head -20)",
+      "Bash(find /Users/joel/Documents/mutuals/components/admin -type f -name \"*.ts\" -o -name \"*.tsx\" 2>/dev/null | head -30)",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma validate 2>&1)",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && echo \"\" | npx prisma migrate dev --name add_orders_and_discounts 2>&1)",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npx tsc --noEmit 2>&1)",
+      "Bash(grep -n \"useGetProductsByIdQuery\\\\|useGetProductByIdQuery\" /Users/joel/Documents/mutuals/app/admin/\\\\\\(dashboard\\\\\\)/shop/products/\\\\[id\\\\]/page.tsx)",
+      "Bash(npx tsc:*)",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && npx tsc --noEmit 2>&1 | head -40\")",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma db push 2>&1 | tail -5\")",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && npx tsc --noEmit 2>&1\")",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && npx prisma db push 2>&1 | tail -4\")",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && npx ts-node -e \\\\\"\nconst { PrismaClient } = require\\('@prisma/client'\\);\nconst prisma = new PrismaClient\\(\\);\nprisma.mediaFile.findMany\\({ take: 20, select: { filePath: true, originalName: true, fileType: true } }\\).then\\(r => { console.log\\(JSON.stringify\\(r, null, 2\\)\\); prisma.\\\\$disconnect\\(\\); }\\);\n\\\\\" 2>/dev/null\")",
+      "Bash(bash -c \"cd /Users/joel/Documents/hafiz_mutuals_backend && node -e \\\\\"\nconst { PrismaClient } = require\\('./node_modules/@prisma/client'\\);\nconst prisma = new PrismaClient\\(\\);\nprisma.mediaFile.findMany\\({ take: 20, select: { filePath: true, originalName: true, fileType: true } }\\).then\\(r => { console.log\\(JSON.stringify\\(r, null, 2\\)\\); prisma.\\\\$disconnect\\(\\); }\\);\n\\\\\" 2>/dev/null\")",
+      "Bash(node -e \"require\\('resend'\\); console.log\\('resend installed ok'\\)\" 2>&1)",
+      "Bash(find /Users/joel/Documents -type d -name \"*backend*\" 2>/dev/null | head -20)",
+      "Read(//Users/joel/Documents/hafiz_mutuals_backend/**)",
+      "Bash(npx prisma:*)",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && node -e \"\nconst { PrismaClient } = require\\('@prisma/client'\\);\nconst prisma = new PrismaClient\\(\\);\nprisma.user.findUnique\\({ where: { email: 'bennybuah1@gmail.com' }, select: { id: true, email: true, firstName: true, lastName: true, role: true, isActive: true } }\\)\n  .then\\(u => { console.log\\(JSON.stringify\\(u, null, 2\\)\\); prisma.\\\\$disconnect\\(\\); }\\)\n  .catch\\(e => { console.error\\(e\\); prisma.\\\\$disconnect\\(\\); }\\);\n\")",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && node -e \"\nconst { PrismaClient } = require\\('@prisma/client'\\);\nconst prisma = new PrismaClient\\(\\);\nprisma.user.update\\({ where: { email: 'bennybuah1@gmail.com' }, data: { role: 'SUPER_ADMIN' }, select: { email: true, role: true } }\\)\n  .then\\(u => { console.log\\('Updated:', JSON.stringify\\(u\\)\\); prisma.\\\\$disconnect\\(\\); }\\)\n  .catch\\(e => { console.error\\(e\\); prisma.\\\\$disconnect\\(\\); }\\);\n\")",
+      "Bash(curl -s -X PUT \"http://localhost:4000/api/v1/playlists/ce92195b-2434-4160-bbc3-3987ffd2aa19\" \\\\\n  -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTMwMDBlLWYyODUtNGQ0ZC1iMDJlLWRjZDQwOTM4NjQwOSIsImVtYWlsIjoiYmVubnlidWFoMUBnbWFpbC5jb20iLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NzMzNDEzNjQsImV4cCI6MTc3Mzk0NjE2NH0.exq3ICGK2Txk44JRlJtxS_m3s24Uzvp3DcmJhe9n1Vw\" \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -d '{\"title\":\"ALTE+\",\"curatorName\":\"Mutuals+\",\"description\":\"Test\",\"embedUrl\":\"https://open.spotify.com/embed/playlist/5SWGitla2ckYWNEY2GzZXX?utm_source=generator&theme=0\"}')",
+      "Bash(curl -s -X PUT \"http://localhost:4000/api/v1/playlists/ce92195b-2434-4160-bbc3-3987ffd2aa19\" \\\\\n  -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjZhNTMwMDBlLWYyODUtNGQ0ZC1iMDJlLWRjZDQwOTM4NjQwOSIsImVtYWlsIjoiYmVubnlidWFoMUBnbWFpbC5jb20iLCJyb2xlIjoiU1VQRVJfQURNSU4iLCJpYXQiOjE3NzMzNDEzNjQsImV4cCI6MTc3Mzk0NjE2NH0.exq3ICGK2Txk44JRlJtxS_m3s24Uzvp3DcmJhe9n1Vw\" \\\\\n  -H \"Content-Type: application/json\" \\\\\n  -d '{\"title\":\"ALTE+\",\"curatorName\":\"Mutuals+\",\"embedUrl\":\"https://open.spotify.com/embed/playlist/5SWGitla2ckYWNEY2GzZXX?utm_source=generator&theme=0\",\"order\":0}' | python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(d['success'], d.get\\('data',{}\\).get\\('order'\\)\\)\")",
+      "Bash(cd /Users/joel/Documents/hafiz_mutuals_backend && npm run build 2>&1)"
     ]
   }
 }

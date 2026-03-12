@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useCart } from '@/lib/context/cart-context';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCart } from "@/lib/context/cart-context";
 
 interface ShopSubNavProps {
   categories?: string[];
@@ -12,34 +12,34 @@ interface ShopSubNavProps {
 
 export default function ShopSubNav({
   categories = [
-    'ALL',
-    'NEW IN',
-    'T-SHIRTS & TOPS',
-    'HOODIES',
-    'ACCESSORIES',
-    'ICON TEES',
-    'SALE',
-    'COLLECTIONS',
+    "ALL",
+    "NEW IN",
+    "T-SHIRTS & TOPS",
+    "HOODIES",
+    "ACCESSORIES",
+    "ICON TEES",
+    "SALE",
+    "COLLECTIONS",
   ],
-  selectedCategory = 'ALL',
+  selectedCategory = "ALL",
   onCategoryChange,
 }: ShopSubNavProps) {
   const pathname = usePathname();
-  const isShopRoot = pathname === '/shop';
+  const isShopRoot = pathname === "/shop";
   const { totalItems } = useCart();
 
   return (
-    <div className="fixed top-16 md:top-20 left-0 right-0 z-40 bg-black border-b border-white/8 px-4 md:px-8 lg:px-16">
+    <div className="fixed top-16 md:top-20 left-0 right-0 z-40 bg-white border-b border-black/10 px-4 md:px-8 lg:px-16">
       <div className="max-w-screen-2xl mx-auto">
         <div className="flex items-center gap-6 overflow-x-auto scrollbar-hide py-4">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => onCategoryChange?.(category)}
-              className={`whitespace-nowrap text-xs md:text-xs uppercase tracking-[0.15em] font-medium transition-colors ${
+              className={`whitespace-nowrap text-xs uppercase tracking-[0.15em] font-medium transition-colors ${
                 selectedCategory === category
-                  ? 'text-white'
-                  : 'text-white/50 hover:text-white'
+                  ? "text-black border-b-2 border-black pb-0.5"
+                  : "text-black/40 hover:text-black"
               }`}>
               {category}
             </button>
@@ -48,16 +48,16 @@ export default function ShopSubNav({
       </div>
 
       {/* Right side actions - Currency, Support & Cart */}
-      <div className="absolute right-4 md:right-8 lg:right-16 top-0 bottom-0 flex items-center gap-4 md:gap-6 bg-black pl-8">
-        <button className="text-xs md:text-xs text-white/70 hover:text-white uppercase tracking-[0.15em] font-medium transition-colors">
+      <div className="absolute right-4 md:right-8 lg:right-16 top-0 bottom-0 flex items-center gap-4 md:gap-6 bg-white pl-8">
+        <button className="text-xs text-black/50 hover:text-black uppercase tracking-[0.15em] font-medium transition-colors">
           $ USD
         </button>
-        <button className="text-xs md:text-xs text-white/70 hover:text-white uppercase tracking-[0.15em] font-medium transition-colors">
+        <button className="text-xs text-black/50 hover:text-black uppercase tracking-[0.15em] font-medium transition-colors">
           SUPPORT
         </button>
         <Link
           href="/shop/cart"
-          className="relative flex items-center gap-2 text-white/70 hover:text-white transition-colors group">
+          className="relative flex items-center gap-2 text-black/50 hover:text-black transition-colors group">
           <svg
             className="w-5 h-5"
             fill="none"
@@ -71,11 +71,11 @@ export default function ShopSubNav({
             />
           </svg>
           {totalItems > 0 && (
-            <span className="absolute -top-2 -right-2 bg-[#1ecbe1] text-[#050507] text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            <span className="absolute -top-2 -right-2 bg-black text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
               {totalItems}
             </span>
           )}
-          <span className="hidden md:inline text-xs md:text-xs uppercase tracking-[0.15em] font-medium">
+          <span className="hidden md:inline text-xs uppercase tracking-[0.15em] font-medium">
             BASKET
           </span>
         </Link>

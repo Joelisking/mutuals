@@ -1,27 +1,27 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useCart } from '@/lib/context/cart-context';
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useCart } from "@/lib/context/cart-context";
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { totalItems } = useCart();
   const pathname = usePathname();
-  const isShopPage = pathname?.startsWith('/shop');
+  const isShopPage = pathname?.startsWith("/shop");
 
   // Prevent body scroll when sheet is open
   useEffect(() => {
     if (isSheetOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [isSheetOpen]);
 
@@ -51,7 +51,7 @@ export default function Navbar() {
                 Editorial
               </Link>
               <Link
-                href="/#playlists"
+                href="/playlists"
                 className="text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium">
                 Playlists
               </Link>
@@ -163,7 +163,7 @@ export default function Navbar() {
                 SELECT+
               </Link>
               <Link
-                href="/#playlists"
+                href="/playlists"
                 className="block text-sm text-white/70 hover:text-white transition-colors uppercase tracking-[0.12em] font-medium py-2">
                 Playlists
               </Link>
@@ -212,11 +212,20 @@ export default function Navbar() {
       {/* Sheet Panel */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-md bg-black z-[70] transform transition-transform duration-300 ease-out ${
-          isSheetOpen ? 'translate-x-0' : 'translate-x-full'
+          isSheetOpen ? "translate-x-0" : "translate-x-full"
         }`}>
         <div className="flex flex-col h-full p-8">
           {/* Close Button */}
-          <div className="flex justify-end mb-8">
+          <div className="flex justify-between items-center mb-8">
+            <Link href="/" onClick={() => setIsSheetOpen(false)}>
+              <Image
+                src="/assets/mutuals-logo.png"
+                alt="Mutuals+ Logo"
+                width={100}
+                height={33}
+                className="w-auto"
+              />
+            </Link>
             <button
               onClick={() => setIsSheetOpen(false)}
               className="text-white/70 hover:text-white p-2 transition-colors"

@@ -38,6 +38,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useGetEventTypesQuery } from "@/lib/redux/api/settings.api";
 
 const formSchema = z.object({
   title: z.string().min(1, "Title is required").max(255),
@@ -66,6 +67,8 @@ interface EventFormProps {
 }
 
 export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) {
+  const { data: eventTypesData } = useGetEventTypesQuery();
+  const eventTypes: string[] = (eventTypesData as any)?.data ?? ['Concert', 'Festival', 'Club Night', 'Pop-up', 'Exhibition', 'Workshop'];
   const [uploadMedia, { isLoading: isUploading }] = usePostMediaUploadMutation();
   const [uploadedFlyerUrl, setUploadedFlyerUrl] = useState<string>(initialData?.flyerUrl || "");
   const [uploadProgress, setUploadProgress] = useState<number>(0);
@@ -168,12 +171,9 @@ export function EventForm({ initialData, onSubmit, isLoading }: EventFormProps) 
                     </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                        <SelectItem value="Concert">Concert</SelectItem>
-                        <SelectItem value="Festival">Festival</SelectItem>
-                        <SelectItem value="Exhibition">Exhibition</SelectItem>
-                        <SelectItem value="Listening Party">Listening Party</SelectItem>
-                        <SelectItem value="Workshop">Workshop</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
+                        {eventTypes.map((t) => (
+                          <SelectItem key={t} value={t}>{t}</SelectItem>
+                        ))}
                     </SelectContent>
                 </Select>
                 <FormMessage />

@@ -1,20 +1,27 @@
-'use client';
+"use client";
 
-import EventCard from '@/components/sections/event-card';
-import Link from 'next/link';
-import { useGetEventsQuery } from '@/lib/redux/api/openapi.generated';
-import { Loader2 } from 'lucide-react';
-import { Event, ApiResponse } from '@/lib/types/api';
+import EventCard from "@/components/sections/event-card";
+import Link from "next/link";
+import { useGetEventsQuery } from "@/lib/redux/api/openapi.generated";
+import { Loader2 } from "lucide-react";
+import { Event, ApiResponse } from "@/lib/types/api";
 
 export default function EventsPage() {
   const { data, isLoading, error } = useGetEventsQuery({
     limit: 20,
-    status: 'UPCOMING',
+    status: "UPCOMING",
   });
 
   // Handle response structure - cast to proper type
   const response = data as ApiResponse<Event[]> | undefined;
-  const events: Event[] = response?.data || [];
+  const allEvents: Event[] = response?.data || [];
+
+  // Filter out events whose date has already passed
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const events: Event[] = allEvents.filter(
+    (event) => new Date(event.eventDate) >= now,
+  );
 
   return (
     <div className="min-h-screen bg-[#050507] pt-12 px-4 md:px-8 lg:px-16">

@@ -447,7 +447,7 @@ export function SelectFeatureForm({
                   </div>
                 </FormControl>
                 <FormDescription>
-                  Portrait or square images work best for split-screen layout.
+                  Full-screen image displayed at the top of the article page when a reader opens a Select+ feature.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -509,7 +509,7 @@ export function SelectFeatureForm({
                   </div>
                 </FormControl>
                 <FormDescription>
-                  Small card image shown in carousels and grids.
+                  Image shown in the Select+ preview carousel on the landing page. Use a high-quality portrait or square image.
                 </FormDescription>
                 <FormMessage />
               </FormItem>

@@ -9,6 +9,7 @@ import * as z from 'zod';
 import { Loader2, Upload, X, Video, Plus } from 'lucide-react';
 import { useState } from 'react';
 import { ArticleVideoItem } from '@/lib/types/api';
+import { useGetArticleCategoriesQuery } from '@/lib/redux/api/settings.api';
 import { getCookie } from 'cookies-next';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
@@ -136,14 +137,8 @@ export function ArticleForm({
     },
   });
 
-  const categories = [
-    'Art',
-    'Fashion',
-    'Music',
-    'Photography',
-    'Literature',
-    'Film',
-  ];
+  const { data: categoriesData } = useGetArticleCategoriesQuery();
+  const categories: string[] = (categoriesData as any)?.data ?? ['Art', 'Fashion', 'Music'];
 
   // New state to hold the selected file before upload
   const [selectedFile, setSelectedFile] = useState<File | null>(null);

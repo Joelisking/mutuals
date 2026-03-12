@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import Link from "next/link";
 import { Loader2, Eye, EyeOff } from "lucide-react";
 import { usePostAuthLoginMutation } from "@/lib/redux/api/openapi.generated";
 import { useDispatch } from "@/lib/redux/store";
@@ -134,6 +135,14 @@ export function AdminLoginForm() {
             </FormItem>
           )}
         />
+        <div className="flex items-center justify-end">
+          <Link
+            href="/admin/forgot-password"
+            className="text-xs text-zinc-400 hover:text-white transition-colors"
+          >
+            Forgot password?
+          </Link>
+        </div>
         <Button type="submit" className="w-full" disabled={isLoading}>
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Sign In

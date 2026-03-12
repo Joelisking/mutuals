@@ -75,15 +75,14 @@ export default function SelectArticlePage({
   return (
     <div className="relative min-h-screen bg-[#050507] text-white overflow-x-hidden">
       {/* ── Full-bleed hero — no overlay, no text ── */}
-      <div className="w-full mt-20">
+      <div className="relative w-full h-screen">
         <Image
           src={
             article.heroMediaUrl || '/images/placeholder-article.jpg'
           }
           alt={article.title}
-          width={1920}
-          height={1080}
-          className="w-full h-auto"
+          fill
+          className="object-cover"
           priority
           sizes="100vw"
         />
