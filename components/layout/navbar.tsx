@@ -27,7 +27,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050507]/80 backdrop-blur-xl border-b border-white/8 px-4 md:px-8 lg:px-16">
+      <nav className={`fixed top-0 left-0 right-0 z-50 backdrop-blur-xl border-b border-white/8 px-4 md:px-8 lg:px-16 ${isShopPage ? "bg-[#050507]" : "bg-[#050507]/80"}`}>
         <div className="max-w-screen-2xl mx-auto">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
