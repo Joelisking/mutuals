@@ -154,7 +154,7 @@ function ProductCard({ product }: ProductCardProps) {
 
         {/* Content */}
         <div className="flex flex-col flex-1">
-          <h4 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight group-hover:text-[#1ecbe1] transition-colors">
+          <h4 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight wrap-anywhere group-hover:text-[#1ecbe1] transition-colors">
             {product.name}
           </h4>
           <p className="text-base text-white/70 font-light">{price}</p>

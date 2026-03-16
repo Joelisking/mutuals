@@ -117,7 +117,7 @@ function EditorialCard({ article }: EditorialCardProps) {
           </div>
 
           {/* Title */}
-          <h3 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-2 group-hover:text-[#1ecbe1] transition-colors">
+          <h3 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight line-clamp-2 wrap-anywhere group-hover:text-[#1ecbe1] transition-colors">
             {article.title}
           </h3>
 

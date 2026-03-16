@@ -75,8 +75,8 @@ function EventCard({ event }: EventCardProps) {
           <div className="mb-1">
             <Link
               href={`/events/${event.id}`}
-              className="inline-flex">
-              <h3 className="text-base md:text-lg text-white tracking-[-0.01em] font-medium leading-tight line-clamp-2 hover:text-[#1ecbe1] transition-colors">
+              className="block w-full">
+              <h3 className="text-base md:text-lg text-white tracking-[-0.01em] font-medium leading-tight line-clamp-2 wrap-anywhere hover:text-[#1ecbe1] transition-colors">
                 {event.title}
               </h3>
             </Link>

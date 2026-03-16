@@ -163,7 +163,7 @@ function SelectCard({
         {/* Content */}
         <div className="flex flex-col flex-1">
           {/* Name */}
-          <h3 className="text-xl md:text-2xl text-white tracking-[-0.01em] font-medium mb-1 leading-tight line-clamp-1 group-hover:text-[#1ecbe1] transition-colors">
+          <h3 className="text-xl md:text-2xl text-white tracking-[-0.01em] font-medium mb-1 leading-tight line-clamp-1 wrap-anywhere group-hover:text-[#1ecbe1] transition-colors">
             {displayName}
           </h3>
 

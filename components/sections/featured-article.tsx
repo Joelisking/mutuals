@@ -1,18 +1,19 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useGetArticlesQuery } from '@/lib/redux/api/openapi.generated';
-import type { ApiResponse, Article } from '@/lib/types/api';
+import Link from "next/link";
+import { useGetArticlesQuery } from "@/lib/redux/api/openapi.generated";
+import type { ApiResponse, Article } from "@/lib/types/api";
 
 export default function FeaturedArticle() {
   const { data: response, isLoading } = useGetArticlesQuery({
     featured: true,
-    status: 'PUBLISHED',
-    excludeCategory: 'Select+',
+    status: "PUBLISHED",
+    excludeCategory: "Select+",
     limit: 1,
   });
 
-  const articles = (response as ApiResponse<Article[]> | undefined)?.data;
+  const articles = (response as ApiResponse<Article[]> | undefined)
+    ?.data;
   const article = articles?.[0];
 
   if (isLoading) {
@@ -30,16 +31,16 @@ export default function FeaturedArticle() {
   }
 
   const formattedDate = article.publishDate
-    ? new Date(article.publishDate).toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        year: 'numeric',
+    ? new Date(article.publishDate).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric",
       })
     : null;
 
   const authorName = article.author
     ? `${article.author.firstName} ${article.author.lastName}`
-    : 'Mutuals+ Editorial';
+    : "Mutuals+ Editorial";
 
   return (
     <section className="bg-[#050507] py-16 md:py-24 lg:py-32 px-4 md:px-8 lg:px-16">
@@ -88,7 +89,7 @@ export default function FeaturedArticle() {
                 </div>
 
                 {/* Title */}
-                <h2 className="text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] tracking-[-0.03em] font-medium drop-shadow-2xl">
+                <h2 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-white leading-[1.1] md:leading-[1.05] tracking-[-0.02em] md:tracking-[-0.03em] font-medium drop-shadow-2xl wrap-anywhere">
                   {article.title}
                 </h2>
 
