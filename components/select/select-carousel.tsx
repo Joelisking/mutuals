@@ -1,21 +1,21 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Article } from '@/lib/types/api';
+import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { Article } from "@/lib/types/api";
 import {
   getEpisodeNumber,
   parseCreativeInfo,
   getLocation,
-} from '@/lib/utils/select-helpers';
+} from "@/lib/utils/select-helpers";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
+} from "@/components/ui/carousel";
 
 interface SelectCarouselProps {
   articles: Article[];
@@ -38,7 +38,7 @@ export function SelectCarousel({
 
       <Carousel
         opts={{
-          align: 'start',
+          align: "start",
           slidesToScroll: 1,
         }}
         className="w-full">
@@ -76,13 +76,13 @@ function SelectCard({
   const creativeInfo = parseCreativeInfo(article.subtitle);
   const location = getLocation(article.tags);
   const categoryTag = article.tags?.find(
-    (t) => !t.startsWith('EP:') && !t.includes(','),
+    (t) => !t.startsWith("EP:") && !t.includes(","),
   );
 
   const displayName = creativeInfo?.name || article.title;
-  const displayRole = creativeInfo?.role || article.subtitle || '';
+  const displayRole = creativeInfo?.role || article.subtitle || "";
   const imageUrl =
-    article.heroMediaUrl || '/assets/editorial-visual-culture.png';
+    article.heroMediaUrl || "/assets/editorial-visual-culture.png";
 
   return (
     <Link
@@ -93,7 +93,7 @@ function SelectCard({
       <div className="flex flex-col h-full">
         {/* Image Container */}
         <div className="relative aspect-video overflow-hidden rounded-[2px] mb-4">
-          {article.heroMediaType === 'VIDEO' &&
+          {article.heroMediaType === "VIDEO" &&
           article.heroMediaUrl &&
           isHovered ? (
             <video
@@ -121,7 +121,7 @@ function SelectCard({
           {showEpisodeNumber && episodeNumber !== null && (
             <div className="absolute top-3 left-3">
               <span className="text-xs text-white uppercase tracking-[0.15em] font-semibold bg-black/60 backdrop-blur-sm px-2.5 py-1 rounded-sm">
-                EP {episodeNumber.toString().padStart(2, '0')}
+                EP {episodeNumber.toString().padStart(2, "0")}
               </span>
             </div>
           )}
@@ -176,7 +176,7 @@ function SelectCard({
 
           {/* Description */}
           <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 flex-1">
-            {article.description || ''}
+            {article.description || ""}
           </p>
         </div>
       </div>

@@ -1,25 +1,26 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { format } from 'date-fns';
-import { Event } from '@/lib/types/api';
+import Image from "next/image";
+import Link from "next/link";
+import { format } from "date-fns";
+import { Event } from "@/lib/types/api";
 
 interface EventCardProps {
   event: Event;
 }
 
 function EventCard({ event }: EventCardProps) {
-  const isSoldOut = event.ticketStatus?.toLowerCase() === 'sold out';
+  const isSoldOut = event.ticketStatus?.toLowerCase() === "sold out";
 
   // Format the date
   const formattedDate = event.eventDate
-    ? format(new Date(event.eventDate), 'MMM d, yyyy').toUpperCase()
-    : '';
+    ? format(new Date(event.eventDate), "MMM d, yyyy").toUpperCase()
+    : "";
 
   // Display location (city or location field)
   const displayLocation = event.city || event.location;
 
   // Image URL with fallback
-  const imageUrl = event.flyerUrl || '/assets/editorial-visual-culture.png';
+  const imageUrl =
+    event.flyerUrl || "/assets/editorial-visual-culture.png";
 
   return (
     <div className="">

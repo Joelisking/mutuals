@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { format } from 'date-fns';
+import Link from "next/link";
+import Image from "next/image";
+import { format } from "date-fns";
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from '@/components/ui/carousel';
-import { Article } from '@/lib/types/api';
+} from "@/components/ui/carousel";
+import { Article } from "@/lib/types/api";
 
 interface EditorialCarouselProps {
   articles: Article[];
@@ -31,7 +31,7 @@ export function EditorialCarousel({
 
       <Carousel
         opts={{
-          align: 'start',
+          align: "start",
           slidesToScroll: 1,
         }}
         className="w-full">
@@ -58,29 +58,28 @@ interface EditorialCardProps {
 function EditorialCard({ article }: EditorialCardProps) {
   // Format date helper
   const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
+    if (!dateString) return "";
     try {
-      return format(new Date(dateString), 'MMM d, yyyy');
+      return format(new Date(dateString), "MMM d, yyyy");
     } catch {
-      return '';
+      return "";
     }
   };
 
   // Get author name
   const authorName = article.author
     ? `${article.author.firstName} ${article.author.lastName}`
-    : 'Mutuals+';
+    : "Mutuals+";
 
   // Get image URL with fallback
-  const imageUrl = article.heroMediaUrl || '/assets/editorial-visual-culture.png';
+  const imageUrl =
+    article.heroMediaUrl || "/assets/editorial-visual-culture.png";
 
   // Get tag (first tag or category)
   const tag = article.tags?.[0] || article.category;
 
   return (
-    <Link
-      href={`/editorial/${article.slug}`}
-      className="group block">
+    <Link href={`/editorial/${article.slug}`} className="group block">
       <div className="flex flex-col h-full">
         {/* Image Container */}
         <div className="relative aspect-video overflow-hidden rounded-[2px] mb-4">
@@ -123,7 +122,9 @@ function EditorialCard({ article }: EditorialCardProps) {
 
           {/* Excerpt */}
           <p className="text-sm text-white/60 font-light leading-relaxed line-clamp-2 mb-3 flex-1">
-            {article.excerpt || article.subtitle || article.description}
+            {article.excerpt ||
+              article.subtitle ||
+              article.description}
           </p>
 
           {/* Author and Read Time */}

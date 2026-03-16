@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { merchItems } from '@/lib/data/merch-data';
-import { useGetProductsQuery } from '@/lib/redux/api/openapi.generated';
-import { Loader2 } from 'lucide-react';
-import { Product, ApiResponse } from '@/lib/types/api';
+import { merchItems } from "@/lib/data/merch-data";
+import { useGetProductsQuery } from "@/lib/redux/api/openapi.generated";
+import { Loader2 } from "lucide-react";
+import { Product, ApiResponse } from "@/lib/types/api";
 
 export default function MerchSection() {
   const { data, isLoading } = useGetProductsQuery({
     limit: 8,
-    status: 'ACTIVE',
+    status: "ACTIVE",
   });
 
   // Handle response structure - cast to proper type
@@ -16,20 +16,30 @@ export default function MerchSection() {
   const apiProducts: Product[] = response?.data || [];
 
   // Map static data to Product format for fallback
-  const fallbackProducts: Product[] = merchItems.map((item, index) => ({
-    id: `static-${index}`,
-    name: item.name,
-    slug: item.name.toLowerCase().replace(/\s+/g, '-'),
-    price: parseFloat(item.price.replace('$', '')),
-    category: item.tag,
-    status: 'ACTIVE' as const,
-    images: [{ id: `img-${index}`, productId: `static-${index}`, imageUrl: item.image, order: 0 }],
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  }));
+  const fallbackProducts: Product[] = merchItems.map(
+    (item, index) => ({
+      id: `static-${index}`,
+      name: item.name,
+      slug: item.name.toLowerCase().replace(/\s+/g, "-"),
+      price: parseFloat(item.price.replace("$", "")),
+      category: item.tag,
+      status: "ACTIVE" as const,
+      images: [
+        {
+          id: `img-${index}`,
+          productId: `static-${index}`,
+          imageUrl: item.image,
+          order: 0,
+        },
+      ],
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    }),
+  );
 
   // Use API data if available, otherwise fall back to static data
-  const products = apiProducts.length > 0 ? apiProducts : fallbackProducts;
+  const products =
+    apiProducts.length > 0 ? apiProducts : fallbackProducts;
   return (
     <section className="bg-[#0a0a0f] py-16 md:py-24 px-4 md:px-8 lg:px-16 relative overflow-hidden">
       {/* Background blurs */}
@@ -62,7 +72,9 @@ export default function MerchSection() {
               <div className="overflow-x-auto scrollbar-hide">
                 <div className="flex gap-3 pb-4">
                   {products.map((product) => (
-                    <div key={product.id} className="shrink-0 w-[85%]">
+                    <div
+                      key={product.id}
+                      className="shrink-0 w-[85%]">
                       <ProductCard product={product} />
                     </div>
                   ))}
@@ -107,8 +119,12 @@ interface ProductCardProps {
 }
 
 function ProductCard({ product }: ProductCardProps) {
-  const imageUrl = product.images?.[0]?.imageUrl || '/assets/featured-afrobeats.png';
-  const price = typeof product.price === 'number' ? `$${product.price}` : product.price;
+  const imageUrl =
+    product.images?.[0]?.imageUrl || "/assets/featured-afrobeats.png";
+  const price =
+    typeof product.price === "number"
+      ? `$${product.price}`
+      : product.price;
 
   return (
     <button className="group block text-left w-full">
@@ -134,9 +150,24 @@ function ProductCard({ product }: ProductCardProps) {
           {/* Add to Cart button - appears on hover */}
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
             <div className="bg-white hover:bg-white/95 transition-colors rounded-sm px-5 py-2.5 flex items-center gap-2">
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 16 16">
-                <circle cx="6" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
-                <circle cx="13" cy="13" r="1" stroke="#050507" strokeWidth="1.5" />
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 16 16">
+                <circle
+                  cx="6"
+                  cy="13"
+                  r="1"
+                  stroke="#050507"
+                  strokeWidth="1.5"
+                />
+                <circle
+                  cx="13"
+                  cy="13"
+                  r="1"
+                  stroke="#050507"
+                  strokeWidth="1.5"
+                />
                 <path
                   d="M1 1h2l2.68 7.39a1 1 0 00.95.68h6.74a1 1 0 00.95-.68L16 4H4"
                   stroke="#050507"
@@ -157,7 +188,9 @@ function ProductCard({ product }: ProductCardProps) {
           <h4 className="text-lg md:text-xl text-white tracking-[-0.01em] font-medium mb-2 leading-tight wrap-anywhere group-hover:text-[#1ecbe1] transition-colors">
             {product.name}
           </h4>
-          <p className="text-base text-white/70 font-light">{price}</p>
+          <p className="text-base text-white/70 font-light">
+            {price}
+          </p>
         </div>
       </div>
     </button>
